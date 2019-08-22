@@ -7,7 +7,7 @@
     "client:app": "yarn workspace @spot-stats/client start:app",
     "server": "yarn workspace @spot-stats/server start",
     "test": "yarn workspace @spot-stats/server test",
-    "start": "concurrently --kill-others-on-fail \"yarn server\"  \"yarn client:app\""
+    "start": "concurrently --kill-others-on-fail \"yarn server\"  \"yarn client\""
   },
   "dependencies": {
     "concurrently": "^4.1.2"
