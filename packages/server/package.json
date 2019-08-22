@@ -1,0 +1,75 @@
+{
+  "name": "@spot-stats/server",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "build": "rimraf dist && tsc -p tsconfig.build.json",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "start": "NODE_ENV=development ts-node -r tsconfig-paths/register src/main.ts",
+    "start:dev": "NODE_ENV=development tsc-watch -p tsconfig.build.json --onSuccess \"node dist/main.js\"",
+    "start:debug": "NODE_ENV=development tsc-watch -p tsconfig.build.json --onSuccess \"node --inspect-brk dist/main.js\"",
+    "start:prod": "NODE_ENV=production node dist/main.js",
+    "lint": "tslint -p tsconfig.json -c tslint.json",
+    "test": "NODE_ENV=test jest --runInBand --forceExit",
+    "test:watch": "NODE_ENV=test jest --runInBand --forceExit --watch",
+    "test:cov": "NODE_ENV=test jest --runInBand --forceExit --coverage",
+    "test:debug": "NODE_ENV=test node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
+    "test:e2e": "NODE_ENV=test jest --config ./test/jest-e2e.json"
+  },
+  "dependencies": {
+    "@hapi/joi": "^15.1.1",
+    "@nestjs/common": "^6.5.3",
+    "@nestjs/core": "^6.5.3",
+    "@nestjs/cqrs": "^6.0.1",
+    "@nestjs/microservices": "^6.5.3",
+    "@nestjs/mongoose": "^6.1.2",
+    "@nestjs/platform-express": "^6.5.3",
+    "amqp-connection-manager": "^3.0.0",
+    "amqplib": "^0.5.5",
+    "class-transformer": "^0.2.3",
+    "dotenv": "^8.1.0",
+    "fast-glob": "^3.0.4",
+    "glob": "^7.1.4",
+    "mongoose": "^5.6.8",
+    "nest-router": "^1.0.9",
+    "reflect-metadata": "^0.1.12",
+    "rimraf": "^2.6.2",
+    "rxjs": "^6.3.3",
+    "uuid": "^3.3.2"
+  },
+  "devDependencies": {
+    "@nestjs/testing": "6.1.1",
+    "@types/dotenv": "^6.1.1",
+    "@types/express": "4.16.1",
+    "@types/glob": "^7.1.1",
+    "@types/hapi__joi": "^15.0.3",
+    "@types/jest": "24.0.11",
+    "@types/node": "11.13.4",
+    "@types/supertest": "2.0.7",
+    "@types/uuid": "^3.4.5",
+    "jest": "24.7.1",
+    "prettier": "1.17.0",
+    "supertest": "4.0.2",
+    "ts-jest": "24.0.2",
+    "ts-node": "8.1.0",
+    "tsc-watch": "2.2.1",
+    "tsconfig-paths": "3.8.0",
+    "tslint": "5.16.0",
+    "typescript": "3.4.3"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "ts"
+    ],
+    "rootDir": "src",
+    "testRegex": ".spec.ts$",
+    "transform": {
+      "^.+\\.(t|j)s$": "ts-jest"
+    },
+    "coverageDirectory": "../coverage",
+    "testEnvironment": "node"
+  }
+}

@@ -1,0 +1,1 @@
+{"version":3,"file":"extract.schema.js","sourceRoot":"","sources":["../../../../src/infrastructure/courts/schemas/extract.schema.ts"],"names":[],"mappings":";;AAAA,qCAAqC;AAExB,QAAA,aAAa,GAAG,IAAI,QAAQ,CAAC,MAAM,CAAC;IAC/C,GAAG,EAAE,MAAM;IACX,IAAI,EAAE,MAAM;IACZ,SAAS,EAAE,OAAO;IAClB,OAAO,EAAE,MAAM;IACf,IAAI,EAAE,MAAM;CACb,CAAC,CAAC"}

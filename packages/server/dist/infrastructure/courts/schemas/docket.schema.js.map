@@ -1,0 +1,1 @@
+{"version":3,"file":"docket.schema.js","sourceRoot":"","sources":["../../../../src/infrastructure/courts/schemas/docket.schema.ts"],"names":[],"mappings":";;AAAA,qCAAqC;AACrC,qDAAiD;AAEpC,QAAA,YAAY,GAAG,IAAI,QAAQ,CAAC,MAAM,CAAC;IAC9C,GAAG,EAAE,MAAM;IACX,IAAI,EAAE,MAAM;IACZ,OAAO,EAAE,MAAM;IACf,QAAQ,EAAE,CAAC,8BAAa,CAAC;CAC1B,CAAC,CAAC"}
