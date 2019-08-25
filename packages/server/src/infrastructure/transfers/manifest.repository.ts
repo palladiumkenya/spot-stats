@@ -11,6 +11,14 @@ export class ManifestRepository extends BaseRepository<Manifest>
     super(model);
   }
 
+  async manifestExists(mId: string): Promise<boolean> {
+    const resuls = await this.model.findOne({ mId }).exec();
+    if (resuls) {
+      return true;
+    }
+    return false;
+  }
+
   async getCurrent(): Promise<any> {
     const resuls = await this.model.find({ isCurrent: true }).exec();
     return resuls;

@@ -8,10 +8,13 @@ export const manifestSchema = new mongoose.Schema({
   code: Number,
   name: String,
   facility: { type: String, ref: Facility.name },
+  facilityInfo: Schema.Types.Mixed,
   logDate: Date,
   buildDate: Date,
   docket: String,
   patientCount: Number,
+  recievedCount: Number,
+  recievedDate: Date,
   cargo: [Schema.Types.Mixed],
   isCurrent: Boolean,
 });

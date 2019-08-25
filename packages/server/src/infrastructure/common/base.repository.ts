@@ -24,7 +24,10 @@ export abstract class BaseRepository<T> implements IRepository<T> {
 
   async get(tid: any): Promise<T> {
     const result = await this.model.findById(tid).exec();
-    return result.toObject();
+    if (result) {
+      return result.toObject();
+    }
+    return null;
   }
 
   async getAll(criteria?: any): Promise<T[]> {

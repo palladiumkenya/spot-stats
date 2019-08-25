@@ -5,5 +5,4 @@ import { FacilityStatsDto } from './dtos/facility-stats.dto';
 export interface IFacilityRepository extends IRepository<Facility> {
   getStats(): Promise<FacilityStatsDto[]>;
   findByCode(code: number): Promise<Facility>;
-  manifestExists(id: string): Promise<boolean>;
 }

@@ -20,14 +20,6 @@ export class FacilityRepository extends BaseRepository<Facility>
     return undefined;
   }
 
-  async manifestExists(id: string): Promise<boolean> {
-    const facility = await this.model
-      .find({ 'manifests.mId': id })
-      .populate('manifests')
-      .exec();
-    return facility && facility.length > 0;
-  }
-
   async getStats(): Promise<FacilityStatsDto[]> {
     const facilties = await this.model
       .find({ 'manifests.isCurrent': true })

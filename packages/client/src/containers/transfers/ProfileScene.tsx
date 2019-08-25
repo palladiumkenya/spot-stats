@@ -8,7 +8,7 @@ interface State {
   profiles: Profile[];
 }
 
-const url = "./api/v1/transfers/facilities/";
+const url = "./api/v1/transfers/manifests/";
 
 export class ProfileScene extends Component<{}, State> {
   private messages: any;

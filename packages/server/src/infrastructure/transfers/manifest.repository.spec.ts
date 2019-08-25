@@ -35,6 +35,11 @@ describe('Manifest Repository  Tests', () => {
     expect(repository).toBeDefined();
   });
 
+  it('should check if manifests exisits', async () => {
+    const result = await repository.manifestExists(testManifests[0].mId);
+    expect(result).toBe(true);
+  });
+
   it('should load Current', async () => {
     const data = await repository.getCurrent();
     expect(data.length).toBeGreaterThan(0);

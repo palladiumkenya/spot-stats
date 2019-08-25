@@ -9,5 +9,7 @@ export class LogManifestCommand {
     public patientCount: number,
     public cargo: string,
     public isCurrent: boolean,
+    public recievedCount?: number,
+    public recievedDate?: Date,
   ) {}
 }

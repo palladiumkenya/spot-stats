@@ -18,9 +18,8 @@ export class Facility extends AggregateRoot {
     this.apply(new FacilityEnrolledEvent(this._id));
   }
 
-  addManifest(manifest: Manifest) {
-    this.manifests.push(manifest);
-    this.apply(new ManifestLoggedEvent(this._id, manifest.mId));
+  addManifest(manifestId: string) {
+    this.manifests.push(manifestId);
   }
 
   assignMasterFacility(masterFacility: MasterFacility) {

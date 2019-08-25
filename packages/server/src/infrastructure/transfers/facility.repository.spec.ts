@@ -46,13 +46,6 @@ describe('Facility Repository  Tests', () => {
     Logger.log(facility);
   });
 
-  it('should check if manifests exisits', async () => {
-    const result = await repository.manifestExists(
-      testFacilities[0].manifests[0].mId,
-    );
-    expect(result).toBe(true);
-  });
-
   it('should load Stats', async () => {
     const data = await repository.getStats();
     expect(data.length).toBeGreaterThan(0);

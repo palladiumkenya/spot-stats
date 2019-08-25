@@ -35,9 +35,10 @@ export const getTestFacilities = (count = 2) => {
     const fac = new Facility(uuid.v1(), i * 12, `fname${i}`);
     getManifests().map(m => {
       m.code = fac.code;
+      m.facility = fac._id;
       manifests.push(m);
     });
-    fac.manifests = manifests;
+    fac.manifests = manifests.map(n => n._id);
     fac.summaries = getSummaries();
     facilities.push(fac);
   }

@@ -10,6 +10,8 @@ import {
 import * as uuid from 'uuid';
 import { LogManifestCommand } from '../log-manifest.command';
 import { plainToClass } from 'class-transformer';
+import { IManifestRepository } from '../../../../domain/transfers/manifest-repository.interface';
+import { MasterFacilityRepository } from '../../../../infrastructure/registries';
 
 @CommandHandler(LogManifestCommand)
 export class LogManifestHandler implements ICommandHandler<LogManifestCommand> {
@@ -20,32 +22,31 @@ export class LogManifestHandler implements ICommandHandler<LogManifestCommand> {
     private readonly docketRepository: IDocketRepository,
     @Inject('IFacilityRepository')
     private readonly facilityRepository: IFacilityRepository,
+    @Inject('IManifestRepository')
+    private readonly manifestRepository: IManifestRepository,
     private readonly publisher: EventPublisher,
   ) {}
 
   async execute(command: LogManifestCommand): Promise<any> {
     // check if manifest Exists
-    const manifestExists = await this.facilityRepository.manifestExists(
-      command.id,
-    );
+    const manifestExists = await this.manifestRepository.get(command.id);
 
     if (manifestExists) {
       return;
     }
-
     // check or enroll Facility
     const facility = await this.enrollFacility(command);
 
-    if (!facility) {
-      return;
+    const newManifest = this.createManifest(command);
+    if (facility) {
+      newManifest.assignFacility(facility);
     }
 
     // log manifest
-    facility.addManifest(this.createManifest(command));
 
-    const updatedFacility = await this.facilityRepository.update(facility);
-    this.publisher.mergeObjectContext(facility).commit();
-    return updatedFacility;
+    const manifest = await this.manifestRepository.create(newManifest);
+    this.publisher.mergeObjectContext(newManifest).commit();
+    return newManifest;
   }
 
   async enrollFacility(command: LogManifestCommand): Promise<Facility> {
@@ -62,6 +63,13 @@ export class LogManifestHandler implements ICommandHandler<LogManifestCommand> {
       command.facilityCode,
       command.facilityName,
     );
+    const masterFacility = await this.masterFacilityRepository.findByCode(
+      command.facilityCode,
+    );
+
+    if (masterFacility) {
+      newFacility.masterFacility = masterFacility;
+    }
     const enrolledFacility = await this.facilityRepository.create(newFacility);
     this.publisher.mergeObjectContext(newFacility).commit();
     return newFacility;
