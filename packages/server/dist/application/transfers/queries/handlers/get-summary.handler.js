@@ -20,7 +20,7 @@ let GetSummaryHandler = class GetSummaryHandler {
         this.repository = repository;
     }
     async execute(query) {
-        return await this.repository.get(query._id);
+        return await this.repository.getSummary(query._id);
     }
 };
 GetSummaryHandler = __decorate([

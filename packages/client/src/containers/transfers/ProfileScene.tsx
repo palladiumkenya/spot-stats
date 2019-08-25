@@ -3,20 +3,26 @@ import { Profile } from "./models/profile";
 import axios from "axios";
 import { Growl } from "primereact/growl";
 import { ProfileList } from "./ProfileList";
+import { Redirect, Route } from "react-router";
+import { BrowserRouter } from "react-router-dom";
 
 interface State {
+  showSummary: boolean;
+  redirectTo: string;
   profiles: Profile[];
 }
 
 const url = "./api/v1/transfers/manifests/";
 
-export class ProfileScene extends Component<{}, State> {
+export class ProfileScene extends Component<any, State> {
   private messages: any;
 
-  constructor(props: Readonly<{}>) {
+  constructor(props: Readonly<any>) {
     super(props);
     this.state = {
-      profiles: []
+      profiles: [],
+      redirectTo: "",
+      showSummary: false
     };
   }
 
@@ -37,7 +43,10 @@ export class ProfileScene extends Component<{}, State> {
   };
 
   handleManage = (rowData: any) => {
-    console.log("show this", rowData);
+    this.setState({
+      redirectTo: `/showcase/${rowData.facility}`,
+      showSummary: true
+    });
   };
 
   async componentDidMount() {
@@ -45,20 +54,24 @@ export class ProfileScene extends Component<{}, State> {
   }
 
   render() {
-    return (
-      <div>
-        <Growl ref={el => (this.messages = el)} />
+    if (this.state.showSummary) {
+      return <Redirect to={this.state.redirectTo} />;
+    } else {
+      return (
         <div>
-          {this.state.profiles ? (
-            <ProfileList
-              profiles={this.state.profiles}
-              onManage={this.handleManage}
-            />
-          ) : (
-            <div />
-          )}
+          <Growl ref={el => (this.messages = el)} />
+          <div>
+            {this.state.profiles ? (
+              <ProfileList
+                profiles={this.state.profiles}
+                onManage={this.handleManage}
+              />
+            ) : (
+              <div />
+            )}
+          </div>
         </div>
-      </div>
-    );
+      );
+    }
   }
 }

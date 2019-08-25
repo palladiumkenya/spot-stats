@@ -15,20 +15,27 @@ const summary_1 = require("../../domain/transfers/summary");
 const summary_schema_1 = require("./schemas/summary.schema");
 const mainifest_schema_1 = require("./schemas/mainifest.schema");
 const facility_repository_1 = require("./facility.repository");
+const manifest_repository_1 = require("./manifest.repository");
 let TransfersInfrastructureModule = class TransfersInfrastructureModule {
 };
 TransfersInfrastructureModule = __decorate([
     common_1.Module({
         imports: [
-            mongoose_1.MongooseModule.forFeature([{ name: facility_1.Facility.name, schema: facility_schema_1.facilitySchema }]),
-            mongoose_1.MongooseModule.forFeature([{ name: manifest_1.Manifest.name, schema: mainifest_schema_1.manifestSchema }]),
+            mongoose_1.MongooseModule.forFeature([
+                { name: facility_1.Facility.name, schema: facility_schema_1.facilitySchema },
+            ]),
+            mongoose_1.MongooseModule.forFeature([
+                { name: manifest_1.Manifest.name, schema: mainifest_schema_1.manifestSchema },
+            ]),
             mongoose_1.MongooseModule.forFeature([{ name: summary_1.Summary.name, schema: summary_schema_1.summarySchema }]),
         ],
         providers: [
             { provide: 'IFacilityRepository', useClass: facility_repository_1.FacilityRepository },
+            { provide: 'IManifestRepository', useClass: manifest_repository_1.ManifestRepository },
         ],
         exports: [
             { provide: 'IFacilityRepository', useClass: facility_repository_1.FacilityRepository },
+            { provide: 'IManifestRepository', useClass: manifest_repository_1.ManifestRepository },
         ],
     })
 ], TransfersInfrastructureModule);

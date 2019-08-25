@@ -20,12 +20,12 @@ let GetStatsHandler = class GetStatsHandler {
         this.repository = repository;
     }
     async execute(query) {
-        return await this.repository.getAll();
+        return await this.repository.getCurrent();
     }
 };
 GetStatsHandler = __decorate([
     cqrs_1.QueryHandler(get_stats_query_1.GetStatsQuery),
-    __param(0, common_1.Inject('IFacilityRepository')),
+    __param(0, common_1.Inject('IManifestRepository')),
     __metadata("design:paramtypes", [Object])
 ], GetStatsHandler);
 exports.GetStatsHandler = GetStatsHandler;

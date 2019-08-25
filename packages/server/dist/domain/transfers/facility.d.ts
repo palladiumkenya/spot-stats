@@ -1,16 +1,15 @@
 import { AggregateRoot } from '@nestjs/cqrs';
-import { Manifest } from './manifest';
 import { Summary } from './summary';
 import { MasterFacility } from '../registries/master-facility';
 export declare class Facility extends AggregateRoot {
     _id: string;
     code: number;
     name: string;
-    manifests?: Manifest[];
+    manifests?: any[];
     summaries?: Summary[];
     masterFacility?: MasterFacility;
     constructor(_id: string, code: number, name: string);
-    addManifest(manifest: Manifest): void;
+    addManifest(manifestId: string): void;
     assignMasterFacility(masterFacility: MasterFacility): void;
     summaryHasExtract(_id: string): boolean;
     addSummary(summary: Summary): void;

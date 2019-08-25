@@ -43,7 +43,7 @@ class ConfigService {
         return String(this.envConfig.STATS_RABBITMQ_QUEUE);
     }
     get Database() {
-        return String(this.envConfig.GLOBE_MONGODB_URI);
+        return String(this.envConfig.STATS_MONGODB_URI);
     }
     get QueueConfig() {
         return {

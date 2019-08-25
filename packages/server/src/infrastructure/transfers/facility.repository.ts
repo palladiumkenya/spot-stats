@@ -20,10 +20,14 @@ export class FacilityRepository extends BaseRepository<Facility>
     return undefined;
   }
 
-  async getStats(): Promise<FacilityStatsDto[]> {
-    const facilties = await this.model
-      .find({ 'manifests.isCurrent': true })
+  async getSummary(id: string): Promise<Facility> {
+    const result = await this.model
+      .findById(id)
+      .populate('manifests')
       .exec();
-    return facilties;
+    if (result) {
+      return result.toObject();
+    }
+    return null;
   }
 }

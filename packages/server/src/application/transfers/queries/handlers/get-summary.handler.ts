@@ -10,6 +10,6 @@ export class GetSummaryHandler implements IQueryHandler<GetSummaryQuery, any> {
     private readonly repository: IFacilityRepository,
   ) {}
   async execute(query: GetSummaryQuery): Promise<any> {
-    return await this.repository.get(query._id);
+    return await this.repository.getSummary(query._id);
   }
 }

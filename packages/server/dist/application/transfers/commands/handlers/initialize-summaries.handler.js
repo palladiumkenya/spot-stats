@@ -18,16 +18,17 @@ const common_1 = require("@nestjs/common");
 const domain_1 = require("../../../../domain");
 const class_transformer_1 = require("class-transformer");
 let InitializeSummariesHandler = class InitializeSummariesHandler {
-    constructor(facilityRepository, docketRepository, publisher) {
+    constructor(facilityRepository, docketRepository, manifestRepository, publisher) {
         this.facilityRepository = facilityRepository;
         this.docketRepository = docketRepository;
+        this.manifestRepository = manifestRepository;
         this.publisher = publisher;
     }
     async execute(command) {
         let facility = await this.facilityRepository.get(command.facilityId);
         if (facility) {
             facility = class_transformer_1.plainToClass(domain_1.Facility, facility);
-            const manifest = facility.manifests.find(m => m.mId === command.manifestId);
+            const manifest = await this.manifestRepository.get(command.manifestId);
             if (manifest) {
                 let docket = await this.docketRepository.findByName(manifest.docket);
                 if (docket && docket.extracts && docket.extracts.length > 0) {
@@ -63,7 +64,8 @@ InitializeSummariesHandler = __decorate([
     cqrs_1.CommandHandler(initialize_summaries_command_1.InitializeSummariesCommand),
     __param(0, common_1.Inject('IFacilityRepository')),
     __param(1, common_1.Inject('IDocketRepository')),
-    __metadata("design:paramtypes", [Object, Object, cqrs_1.EventPublisher])
+    __param(2, common_1.Inject('IManifestRepository')),
+    __metadata("design:paramtypes", [Object, Object, Object, cqrs_1.EventPublisher])
 ], InitializeSummariesHandler);
 exports.InitializeSummariesHandler = InitializeSummariesHandler;
 //# sourceMappingURL=initialize-summaries.handler.js.map

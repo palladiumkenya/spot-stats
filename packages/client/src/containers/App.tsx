@@ -1,10 +1,17 @@
 import React from "react";
 import { Component } from "react";
 import { AppMenu } from "../components/AppMenu";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Link,
+  Switch,
+  HashRouter
+} from "react-router-dom";
 import "./App.css";
 import { DocketHome } from "./court/DocketHome";
 import { ProfileHome } from "./transfers/ProfileHome";
+import ProfileShowcase from "./transfers/ProfileShowcase";
 
 interface Props {
   menuClick?: boolean;
@@ -192,14 +199,14 @@ export class App extends Component<Props, State> {
         label: "Uploads",
         icon: "dashboard",
         command: () => {
-          window.location.href = "/";
+          window.location.hash = "/";
         }
       },
       {
         label: "Dockets",
         icon: "build",
         command: () => {
-          window.location.href = "/dockets";
+          window.location.hash = "/dockets";
         }
       }
     ];
@@ -224,10 +231,14 @@ export class App extends Component<Props, State> {
 
           <div className="layout-main">
             <div className="layout-content">
-              <Router>
-                <Route path="/" exact component={ProfileHome} />
-                <Route path="/dockets" exact component={DocketHome} />
-              </Router>
+              <HashRouter>
+                <Switch>
+                  <Route exact path="/" component={ProfileHome} />
+                  <Route path="/dockets/" component={DocketHome} />
+                  <Route path="/showcase/:id" component={ProfileShowcase} />
+                  <Route path="*" component={ProfileHome} />
+                </Switch>
+              </HashRouter>
             </div>
           </div>
           <div className="layout-mask" />

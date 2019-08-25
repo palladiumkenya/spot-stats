@@ -7,5 +7,8 @@ export declare class LogManifestCommand {
     buildDate: Date;
     patientCount: number;
     cargo: string;
-    constructor(id: string, facilityCode: number, facilityName: string, docket: string, logDate: Date, buildDate: Date, patientCount: number, cargo: string);
+    isCurrent: boolean;
+    recievedCount?: number;
+    recievedDate?: Date;
+    constructor(id: string, facilityCode: number, facilityName: string, docket: string, logDate: Date, buildDate: Date, patientCount: number, cargo: string, isCurrent: boolean, recievedCount?: number, recievedDate?: Date);
 }

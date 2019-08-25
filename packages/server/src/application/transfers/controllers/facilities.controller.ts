@@ -16,7 +16,8 @@ export class FacilitiesController {
 
   @Get(':id')
   async getFacilityStats(@Param('id') id) {
-    return this.queryBus.execute(new GetSummaryQuery(id));
+    const result = await this.queryBus.execute(new GetSummaryQuery(id));
+    return result;
   }
   @EventPattern('UpdateStatsEvent')
   async handleUpdateStats(data: any) {

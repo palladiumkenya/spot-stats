@@ -21,7 +21,10 @@ class BaseRepository {
     }
     async get(tid) {
         const result = await this.model.findById(tid).exec();
-        return result.toObject();
+        if (result) {
+            return result.toObject();
+        }
+        return null;
     }
     async getAll(criteria) {
         if (criteria) {

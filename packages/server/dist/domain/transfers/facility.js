@@ -2,7 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const cqrs_1 = require("@nestjs/cqrs");
 const facility_enrolled_event_1 = require("../../application/transfers/events/facility-enrolled.event");
-const manifest_logged_event_1 = require("../../application/transfers/events/manifest-logged.event");
 const facility_updated_event_1 = require("../../application/transfers/events/facility-updated.event");
 const facility_stats_updated_event_1 = require("../../application/transfers/events/facility-stats-updated.event");
 class Facility extends cqrs_1.AggregateRoot {
@@ -15,9 +14,9 @@ class Facility extends cqrs_1.AggregateRoot {
         this.summaries = [];
         this.apply(new facility_enrolled_event_1.FacilityEnrolledEvent(this._id));
     }
-    addManifest(manifest) {
-        this.manifests.push(manifest);
-        this.apply(new manifest_logged_event_1.ManifestLoggedEvent(this._id, manifest.mId));
+    addManifest(manifestId) {
+        this.manifests.push(manifestId);
+        this.apply(new facility_updated_event_1.FacilityUpdatedEvent(this._id));
     }
     assignMasterFacility(masterFacility) {
         this.masterFacility = masterFacility;

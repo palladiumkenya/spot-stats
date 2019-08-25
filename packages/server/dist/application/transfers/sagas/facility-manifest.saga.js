@@ -12,24 +12,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const common_1 = require("@nestjs/common");
 const cqrs_1 = require("@nestjs/cqrs");
 const operators_1 = require("rxjs/operators");
-const facility_enrolled_event_1 = require("../events/facility-enrolled.event");
-const assign_master_facility_command_1 = require("../commands/assign-master-facility.command");
 const manifest_logged_event_1 = require("../events/manifest-logged.event");
 const initialize_summaries_command_1 = require("../commands/initialize-summaries-command");
 let FacilityManifestSaga = class FacilityManifestSaga {
     constructor() {
-        this.facilityEnrolled = (events$) => {
-            return events$.pipe(cqrs_1.ofType(facility_enrolled_event_1.FacilityEnrolledEvent), operators_1.map(event => new assign_master_facility_command_1.AssignMasterFacilityCommand(event._id)));
-        };
         this.manifestLogged = (events$) => {
             return events$.pipe(cqrs_1.ofType(manifest_logged_event_1.ManifestLoggedEvent), operators_1.map(event => new initialize_summaries_command_1.InitializeSummariesCommand(event.facilityId, event.manifestId)));
         };
     }
 };
-__decorate([
-    cqrs_1.Saga(),
-    __metadata("design:type", Object)
-], FacilityManifestSaga.prototype, "facilityEnrolled", void 0);
 __decorate([
     cqrs_1.Saga(),
     __metadata("design:type", Object)

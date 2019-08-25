@@ -21,7 +21,7 @@ describe('Facility Repository  Tests', () => {
     }).compile();
 
     await dbHelper.initConnection();
-    await dbHelper.seedDb('facilities', testFacilities);
+    //  await dbHelper.seedDb('facilities', testFacilities);
     repository = module.get<IFacilityRepository>('IFacilityRepository');
   });
 
@@ -46,9 +46,10 @@ describe('Facility Repository  Tests', () => {
     Logger.log(facility);
   });
 
-  it('should load Stats', async () => {
-    const data = await repository.getStats();
-    expect(data.length).toBeGreaterThan(0);
-    data.forEach(d => Logger.debug(`${d.name}`));
+  it('should load Summary', async () => {
+    const id = '752ed210-c74e-11e9-8edc-a3e44ec34e24'; // testFacilities[0]._id;
+    const data = await repository.getSummary(id);
+    expect(data).not.toBeNull();
+    Logger.log(data);
   });
 });

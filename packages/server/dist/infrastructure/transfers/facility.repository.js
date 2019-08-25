@@ -28,12 +28,15 @@ let FacilityRepository = class FacilityRepository extends base_repository_1.Base
         }
         return undefined;
     }
-    async manifestExists(id) {
-        const facility = await this.model
-            .find({ 'manifests.mId': id })
+    async getSummary(id) {
+        const result = await this.model
+            .findById(id)
             .populate('manifests')
             .exec();
-        return facility && facility.length > 0;
+        if (result) {
+            return result.toObject();
+        }
+        return null;
     }
 };
 FacilityRepository = __decorate([

@@ -1,8 +1,8 @@
 import { IQueryHandler } from '@nestjs/cqrs';
-import { GetDocketsQuery } from '../../../courts/queries';
-import { IFacilityRepository } from '../../../../domain';
-export declare class GetStatsHandler implements IQueryHandler<GetDocketsQuery, any> {
+import { GetStatsQuery } from '../get-stats.query';
+import { IManifestRepository } from '../../../../domain/transfers/manifest-repository.interface';
+export declare class GetStatsHandler implements IQueryHandler<GetStatsQuery, any> {
     private readonly repository;
-    constructor(repository: IFacilityRepository);
-    execute(query: GetDocketsQuery): Promise<any>;
+    constructor(repository: IManifestRepository);
+    execute(query: GetStatsQuery): Promise<any>;
 }

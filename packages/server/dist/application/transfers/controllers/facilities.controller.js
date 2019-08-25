@@ -15,24 +15,16 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const common_1 = require("@nestjs/common");
 const cqrs_1 = require("@nestjs/cqrs");
 const microservices_1 = require("@nestjs/microservices");
-const get_stats_query_1 = require("../queries/get-stats.query");
 const get_summary_query_1 = require("../queries/get-summary.query");
-const log_manifest_command_1 = require("../commands/log-manifest.command");
 const update_stats_command_1 = require("../commands/update-stats.command");
 let FacilitiesController = class FacilitiesController {
     constructor(commandBus, queryBus) {
         this.commandBus = commandBus;
         this.queryBus = queryBus;
     }
-    async getStats() {
-        return this.queryBus.execute(new get_stats_query_1.GetStatsQuery());
-    }
     async getFacilityStats(id) {
-        return this.queryBus.execute(new get_summary_query_1.GetSummaryQuery(id));
-    }
-    async handleLogUpdated(data) {
-        common_1.Logger.log(`Recieved Manifest ${data}`);
-        return await this.commandBus.execute(new log_manifest_command_1.LogManifestCommand(data.id, data.facilityCode, data.facilityName, data.docket, data.logDate, data.buildDate, data.patientCount, data.cargo));
+        const result = await this.queryBus.execute(new get_summary_query_1.GetSummaryQuery(id));
+        return result;
     }
     async handleUpdateStats(data) {
         common_1.Logger.log(`Recieved Stats ${data}`);
@@ -40,24 +32,12 @@ let FacilitiesController = class FacilitiesController {
     }
 };
 __decorate([
-    common_1.Get(),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", Promise)
-], FacilitiesController.prototype, "getStats", null);
-__decorate([
     common_1.Get(':id'),
     __param(0, common_1.Param('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], FacilitiesController.prototype, "getFacilityStats", null);
-__decorate([
-    microservices_1.EventPattern('LogManifestEvent'),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
-    __metadata("design:returntype", Promise)
-], FacilitiesController.prototype, "handleLogUpdated", null);
 __decorate([
     microservices_1.EventPattern('UpdateStatsEvent'),
     __metadata("design:type", Function),

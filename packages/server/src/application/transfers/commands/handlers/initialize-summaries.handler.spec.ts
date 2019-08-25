@@ -32,10 +32,10 @@ describe('Initialize Facility Summary Command Tests', () => {
       ],
     }).compile();
 
+    liveData.code = masterfacilities[0].code;
     await dbHelper.initConnection();
     await dbHelper.seedDb('dockets', dockets);
     await dbHelper.seedDb('masterfacilities', masterfacilities);
-    liveData.code = masterfacilities[0].code;
     await dbHelper.seedDb('facilities', [liveData]);
     await dbHelper.seedDb('manifests', manifests);
 
@@ -48,7 +48,7 @@ describe('Initialize Facility Summary Command Tests', () => {
   });
 
   afterAll(async () => {
-    await dbHelper.clearDb();
+    // await dbHelper.clearDb();
     await dbHelper.closeConnection();
   });
 

@@ -19,25 +19,29 @@ const uuid = require("uuid");
 const log_manifest_command_1 = require("../log-manifest.command");
 const class_transformer_1 = require("class-transformer");
 let LogManifestHandler = class LogManifestHandler {
-    constructor(masterFacilityRepository, docketRepository, facilityRepository, publisher) {
+    constructor(masterFacilityRepository, docketRepository, facilityRepository, manifestRepository, publisher) {
         this.masterFacilityRepository = masterFacilityRepository;
         this.docketRepository = docketRepository;
         this.facilityRepository = facilityRepository;
+        this.manifestRepository = manifestRepository;
         this.publisher = publisher;
     }
     async execute(command) {
-        const manifestExists = await this.facilityRepository.manifestExists(command.id);
+        const manifestExists = await this.manifestRepository.get(command.id);
         if (manifestExists) {
             return;
         }
         const facility = await this.enrollFacility(command);
-        if (!facility) {
-            return;
+        const newManifest = this.createManifest(command);
+        if (facility) {
+            newManifest.assignFacility(facility);
+            facility.addManifest(newManifest._id);
         }
-        facility.addManifest(this.createManifest(command));
-        const updatedFacility = await this.facilityRepository.update(facility);
+        const manifest = await this.manifestRepository.create(newManifest);
+        this.publisher.mergeObjectContext(newManifest).commit();
+        const enrolledFacility = await this.facilityRepository.update(facility);
         this.publisher.mergeObjectContext(facility).commit();
-        return updatedFacility;
+        return newManifest;
     }
     async enrollFacility(command) {
         const facility = await this.facilityRepository.findByCode(command.facilityCode);
@@ -45,12 +49,16 @@ let LogManifestHandler = class LogManifestHandler {
             return class_transformer_1.plainToClass(domain_1.Facility, facility);
         }
         const newFacility = new domain_1.Facility(uuid.v1(), command.facilityCode, command.facilityName);
+        const masterFacility = await this.masterFacilityRepository.findByCode(command.facilityCode);
+        if (masterFacility) {
+            newFacility.masterFacility = masterFacility;
+        }
         const enrolledFacility = await this.facilityRepository.create(newFacility);
         this.publisher.mergeObjectContext(newFacility).commit();
         return newFacility;
     }
     createManifest(command) {
-        const manifest = new domain_1.Manifest(command.id, command.logDate, command.buildDate, command.docket, command.patientCount, command.cargo);
+        const manifest = new domain_1.Manifest(command.id, command.facilityCode, command.facilityName, command.logDate, command.buildDate, command.docket, command.patientCount, command.cargo, command.isCurrent);
         return manifest;
     }
 };
@@ -59,7 +67,8 @@ LogManifestHandler = __decorate([
     __param(0, common_1.Inject('IMasterFacilityRepository')),
     __param(1, common_1.Inject('IDocketRepository')),
     __param(2, common_1.Inject('IFacilityRepository')),
-    __metadata("design:paramtypes", [Object, Object, Object, cqrs_1.EventPublisher])
+    __param(3, common_1.Inject('IManifestRepository')),
+    __metadata("design:paramtypes", [Object, Object, Object, Object, cqrs_1.EventPublisher])
 ], LogManifestHandler);
 exports.LogManifestHandler = LogManifestHandler;
 //# sourceMappingURL=log-manifest.handler.js.map

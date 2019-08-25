@@ -5,5 +5,5 @@ import { Facility } from '../../domain/transfers/facility';
 export declare class FacilityRepository extends BaseRepository<Facility> implements IFacilityRepository {
     constructor(model: Model<Facility>);
     findByCode(code: number): Promise<Facility>;
-    manifestExists(id: string): Promise<boolean>;
+    getSummary(id: string): Promise<Facility>;
 }

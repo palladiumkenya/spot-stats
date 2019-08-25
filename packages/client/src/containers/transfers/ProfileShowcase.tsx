@@ -1,92 +1,89 @@
 import React, { Component } from "react";
-import { InputText } from "primereact/inputtext";
-import { Button } from "primereact/button";
-import { Profile } from "./models/profile";
+import {
+  BrowserRouter as Router,
+  Route,
+  RouteComponentProps,
+  withRouter
+} from "react-router-dom";
 
-interface Props {
-  onSave: any;
-  onCancel: any;
-  onDelete: any;
-  profile: Profile;
+import { ProfileSummary } from "./models/profile-summary";
+import axios from "axios";
+import { Growl } from "primereact/growl";
+import { Messages } from "primereact/messages";
+import { ProfileDetail } from "./ProfileDetail";
+
+interface MatchParams {
+  id: string;
 }
+
+interface Props extends RouteComponentProps<MatchParams> {}
 
 interface State {
-  profile: Profile;
+  profileSummary: ProfileSummary;
 }
 
-export class ProfileShowcase extends Component<Props, State> {
+let url = "./api/v1/transfers/facilities/";
+
+class ProfileShowcase extends Component<Props, State> {
+  private messages: any;
+
   constructor(props: Readonly<Props>) {
     super(props);
     this.state = {
-      profile: props.profile
+      profileSummary: {
+        summaries: [],
+        manifests: []
+      }
     };
   }
 
-  saveAction = (event: any) => {
-    event.preventDefault();
-    this.props.onSave(this.state.profile);
+  loadData = async (id: string) => {
+    this.messages.clear();
+    if (!id) {
+      this.messages.show({
+        severity: "error",
+        summary: "No facility specified !"
+      });
+      return;
+    }
+    try {
+      let res = await axios.get(`${url}${id}`);
+      let data = res.data;
+      this.setState({
+        profileSummary: data
+      });
+      console.log("ssssss", data);
+    } catch (e) {
+      this.messages.show({
+        severity: "error",
+        summary: "Error loading",
+        detail: `${e}`
+      });
+    }
   };
 
-  cancelAction = (event: any) => {
-    event.preventDefault();
-    this.props.onCancel(this.state.profile);
-  };
-
-  deleteAction = (event: any) => {
-    event.preventDefault();
-    this.props.onDelete(this.state.profile);
-  };
-
-  handleInputChange = (event: any) => {
-    const target = event.target;
-    const value = target.type === "checkbox" ? target.checked : target.value;
-    const name = target.name;
-    this.setState(prevState => ({
-      profile: {
-        ...prevState.profile,
-        [name]: value
-      }
-    }));
-  };
+  async componentDidMount() {
+    this.loadData(this.props.match.params.id);
+  }
 
   render() {
+    if (!this.state.profileSummary) {
+      return <div />;
+    }
     return (
       <div>
-        <form>
-          <InputText
-            type="text"
-            value={this.state.profile._id}
-            name="_id"
-            readOnly
-            onChange={this.handleInputChange}
-          />
-          <InputText
-            type="text"
-            value={this.state.profile.name}
-            name="name"
-            onChange={this.handleInputChange}
-          />
-
-          <Button
-            onClick={this.saveAction}
-            label="Save"
-            icon="pi pi-check"
-            className="p-button-success"
-          />
-          <Button
-            onClick={this.cancelAction}
-            label="Cancel"
-            icon="pi pi-times"
-          />
-          <Button
-            onClick={this.deleteAction}
-            label="Delete"
-            icon="pi pi-trash"
-            className="p-button-danger"
-            style={{ float: "right" }}
-          />
-        </form>
+        <Messages ref={el => (this.messages = el)} />
+        <hr />
+        {this.state.profileSummary ? (
+          <div>
+            <ProfileDetail profile={this.state.profileSummary} />
+          </div>
+        ) : (
+          <div />
+        )}
       </div>
     );
   }
 }
+
+export default withRouter(ProfileShowcase);
