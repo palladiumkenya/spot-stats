@@ -26,7 +26,7 @@ describe('Facility Repository  Tests', () => {
   });
 
   afterAll(async () => {
-    await dbHelper.clearDb();
+    //   await dbHelper.clearDb();
     await dbHelper.closeConnection();
   });
 
@@ -51,5 +51,11 @@ describe('Facility Repository  Tests', () => {
       testFacilities[0].manifests[0].mId,
     );
     expect(result).toBe(true);
+  });
+
+  it('should load Stats', async () => {
+    const data = await repository.getStats();
+    expect(data.length).toBeGreaterThan(0);
+    data.forEach(d => Logger.debug(`${d.name}`));
   });
 });

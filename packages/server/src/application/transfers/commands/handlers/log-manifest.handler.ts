@@ -70,11 +70,14 @@ export class LogManifestHandler implements ICommandHandler<LogManifestCommand> {
   createManifest(command: LogManifestCommand): Manifest {
     const manifest = new Manifest(
       command.id,
+      command.facilityCode,
+      command.facilityName,
       command.logDate,
       command.buildDate,
       command.docket,
       command.patientCount,
       command.cargo,
+      command.isCurrent,
     );
     return manifest;
   }

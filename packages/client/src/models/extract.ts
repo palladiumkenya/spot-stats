@@ -1,5 +1,3 @@
-import * as uuid from 'uuid';
-
 export interface Extract {
   _id?: string;
   name?: string;

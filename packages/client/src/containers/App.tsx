@@ -4,6 +4,7 @@ import { AppMenu } from "../components/AppMenu";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import "./App.css";
 import { DocketHome } from "./court/DocketHome";
+import { ProfileHome } from "./transfers/ProfileHome";
 
 interface Props {
   menuClick?: boolean;
@@ -188,17 +189,17 @@ export class App extends Component<Props, State> {
   createMenu = () => {
     this.menu = [
       {
-        label: "Partners",
+        label: "Uploads",
         icon: "dashboard",
         command: () => {
           window.location.href = "/";
         }
       },
       {
-        label: "Facilities",
+        label: "Dockets",
         icon: "build",
         command: () => {
-          window.location.href = "/facility";
+          window.location.href = "/dockets";
         }
       }
     ];
@@ -224,7 +225,8 @@ export class App extends Component<Props, State> {
           <div className="layout-main">
             <div className="layout-content">
               <Router>
-                <Route path="/" exact component={DocketHome} />
+                <Route path="/" exact component={ProfileHome} />
+                <Route path="/dockets" exact component={DocketHome} />
               </Router>
             </div>
           </div>

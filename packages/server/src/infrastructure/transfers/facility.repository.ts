@@ -3,6 +3,8 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { IFacilityRepository } from '../../domain/transfers/facility-repository.interface';
 import { Facility } from '../../domain/transfers/facility';
+import { FacilityStatsDto } from '../../domain/transfers/dtos/facility-stats.dto';
+import { Summary } from '../../domain';
 
 export class FacilityRepository extends BaseRepository<Facility>
   implements IFacilityRepository {
@@ -24,5 +26,12 @@ export class FacilityRepository extends BaseRepository<Facility>
       .populate('manifests')
       .exec();
     return facility && facility.length > 0;
+  }
+
+  async getStats(): Promise<FacilityStatsDto[]> {
+    const facilties = await this.model
+      .find({ 'manifests.isCurrent': true })
+      .exec();
+    return facilties;
   }
 }

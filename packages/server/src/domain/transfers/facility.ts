@@ -9,7 +9,7 @@ import { FacilityUpdatedEvent } from '../../application/transfers/events/facilit
 import { FacilityStatsUpdatedEvent } from '../../application/transfers/events/facility-stats-updated.event';
 
 export class Facility extends AggregateRoot {
-  manifests?: Manifest[] = [];
+  manifests?: any[] = [];
   summaries?: Summary[] = [];
   masterFacility?: MasterFacility;
 
