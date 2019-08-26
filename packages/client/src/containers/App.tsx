@@ -211,7 +211,9 @@ export class App extends Component<Props, State> {
       }
     ];
   };
-
+  componentDidCatch(error: Error, errorInfo: React.ErrorInfo): void {
+    console.error(error,errorInfo)
+  }
   render() {
     return (
       <div className="layout-wrapper" onClick={this.onDocumentClick}>

@@ -22,7 +22,7 @@ interface State {
   profileSummary: ProfileSummary;
 }
 
-let url = "./api/v1/transfers/facilities/";
+let url = "http://localhost:4720/api/v1/transfers/facilities/";
 
 class ProfileShowcase extends Component<Props, State> {
   private messages: any;
