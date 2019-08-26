@@ -10,6 +10,7 @@ import {
   Summary,
 } from '../../../../domain';
 import { plainToClass } from 'class-transformer';
+import { IManifestRepository } from '../../../../domain/transfers/manifest-repository.interface';
 
 @CommandHandler(InitializeSummariesCommand)
 export class InitializeSummariesHandler
@@ -19,6 +20,8 @@ export class InitializeSummariesHandler
     private readonly facilityRepository: IFacilityRepository,
     @Inject('IDocketRepository')
     private readonly docketRepository: IDocketRepository,
+    @Inject('IManifestRepository')
+    private readonly manifestRepository: IManifestRepository,
     private readonly publisher: EventPublisher,
   ) {}
 
@@ -26,9 +29,9 @@ export class InitializeSummariesHandler
     let facility = await this.facilityRepository.get(command.facilityId);
     if (facility) {
       facility = plainToClass(Facility, facility);
-      const manifest = facility.manifests.find(
-        m => m.mId === command.manifestId,
-      );
+
+      const manifest = await this.manifestRepository.get(command.manifestId);
+
       if (manifest) {
         let docket = await this.docketRepository.findByName(manifest.docket);
         if (docket && docket.extracts && docket.extracts.length > 0) {

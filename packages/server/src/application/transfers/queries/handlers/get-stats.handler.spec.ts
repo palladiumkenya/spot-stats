@@ -12,10 +12,10 @@ import { CourtsInfrastructureModule } from '../../../../infrastructure/courts';
 import { GetStatsQuery } from '../get-stats.query';
 import { GetStatsHandler } from './get-stats.handler';
 
-describe('Get Facility Stats', () => {
+describe('Get Manifests Stats', () => {
   let module: TestingModule;
   const { dockets, masterfacilities } = getTestStatsData();
-  const { facilities } = getTestFacilities();
+  const { facilities, manifests } = getTestFacilities();
   const dbHelper = new TestDbHelper();
   const liveData = facilities[0];
   liveData.summaries = [];
@@ -35,6 +35,7 @@ describe('Get Facility Stats', () => {
     await dbHelper.seedDb('masterfacilities', masterfacilities);
     liveData.code = masterfacilities[0].code;
     await dbHelper.seedDb('facilities', [liveData]);
+    await dbHelper.seedDb('manifests', manifests);
 
     const handler = module.get<GetStatsHandler>(GetStatsHandler);
 
@@ -47,7 +48,7 @@ describe('Get Facility Stats', () => {
     await dbHelper.closeConnection();
   });
 
-  it('should get Facility Stats', async () => {
+  it('should get Manifest Stats', async () => {
     const query = new GetStatsQuery();
     const result = await queryBus.execute<GetStatsQuery, any>(query);
     expect(result.length).toBeGreaterThan(0);

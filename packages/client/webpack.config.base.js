@@ -22,6 +22,7 @@ module.exports = {
   },
   devServer: {
     host: "0.0.0.0",
+    publicPath: "/",
     historyApiFallback: true,
     headers: {
       "Access-Control-Allow-Origin": "*"
