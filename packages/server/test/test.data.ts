@@ -79,7 +79,9 @@ export const getTestStatsData = () => {
   const dockets = JSON.parse(
     '[\n' +
       '  {\n' +
-      '    "_id": "6dc92fe4-bf1e-11e9-9cb5-2a2ae2dbcce4",\n' +
+      '    "_id": "' +
+      uuid.v1() +
+      '",\n' +
       '    "name": "DWH",\n' +
       '    "display": "DWH",\n' +
       '    "extracts": [\n' +
@@ -100,7 +102,9 @@ export const getTestStatsData = () => {
       '    ]\n' +
       '  },\n' +
       '  {\n' +
-      '    "_id": "6dc93278-bf1e-11e9-9cb5-2a2ae2dbcce4",\n' +
+      '    "_id": "' +
+      uuid.v1() +
+      '",\n' +
       '    "name": "HTS",\n' +
       '    "display": "HTS",\n' +
       '    "extracts": [\n' +
@@ -126,7 +130,9 @@ export const getTestStatsData = () => {
   const masterfacilities = JSON.parse(
     '[\n' +
       '  {\n' +
-      '    "_id": "9eb13e4a-bb7b-11e9-9cb5-2a2ae2dbcce4",\n' +
+      '    "_id": "' +
+      uuid.v1() +
+      '",\n' +
       '    "code": 12618,\n' +
       '    "name": "Mwala Hospital",\n' +
       '    "county": {\n' +
@@ -143,7 +149,9 @@ export const getTestStatsData = () => {
       '    }\n' +
       '  },\n' +
       '  {\n' +
-      '    "_id": "9eb140ca-bb7b-11e9-9cb5-2a2ae2dbcce4",\n' +
+      '    "_id": "' +
+      uuid.v1() +
+      '",\n' +
       '    "code": 14950,\n' +
       '    "name": "Kitengela Health Centre",\n' +
       '    "county": {\n' +
