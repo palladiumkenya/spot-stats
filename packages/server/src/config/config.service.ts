@@ -2,6 +2,7 @@ import * as dotenv from 'dotenv';
 import * as Joi from '@hapi/joi';
 import * as fs from 'fs';
 import { MicroserviceOptions, Transport } from '@nestjs/microservices';
+import { Logger } from '@nestjs/common';
 
 export interface EnvConfig {
   [key: string]: string;
@@ -13,6 +14,7 @@ export class ConfigService {
   constructor(filePath: string) {
     const config = dotenv.parse(fs.readFileSync(filePath));
     this.envConfig = this.validateInput(config);
+    Logger.log(`running in ${filePath}`);
   }
 
   /**
@@ -72,6 +74,8 @@ export class ConfigService {
       options: {
         urls: [this.QueueHost],
         queue: this.QueueName,
+        user: this.QueueUser,
+        pass: this.QueuePassword,
         queueOptions: { durable: true },
       },
     };
