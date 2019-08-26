@@ -5,7 +5,6 @@ import { TestDbHelper } from '../test/test-db.helper';
 import { AppModule } from './app.module';
 
 describe('AppController', () => {
-
   let module: TestingModule;
   let appController: AppController;
   const dbHelper = new TestDbHelper();
@@ -27,8 +26,8 @@ describe('AppController', () => {
   });
 
   describe('root', () => {
-    it('should return "dwapi Globe"', () => {
-      expect(appController.getAppName()).toBe('dwapi Globe');
+    it('should return "dwapi Stats"', () => {
+      expect(appController.getAppName()).toBe('dwapi Stats');
     });
   });
 });
