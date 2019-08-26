@@ -21,12 +21,12 @@ describe('Facility Repository  Tests', () => {
     }).compile();
 
     await dbHelper.initConnection();
-    await dbHelper.seedDb('facilities', testFacilities);
+    //  await dbHelper.seedDb('facilities', testFacilities);
     repository = module.get<IFacilityRepository>('IFacilityRepository');
   });
 
   afterAll(async () => {
-    await dbHelper.clearDb();
+    //   await dbHelper.clearDb();
     await dbHelper.closeConnection();
   });
 
@@ -46,10 +46,10 @@ describe('Facility Repository  Tests', () => {
     Logger.log(facility);
   });
 
-  it('should check if manifests exisits', async () => {
-    const result = await repository.manifestExists(
-      testFacilities[0].manifests[0].mId,
-    );
-    expect(result).toBe(true);
+  it('should load Summary', async () => {
+    const id = '752ed210-c74e-11e9-8edc-a3e44ec34e24'; // testFacilities[0]._id;
+    const data = await repository.getSummary(id);
+    expect(data).not.toBeNull();
+    Logger.log(data);
   });
 });

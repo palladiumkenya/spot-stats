@@ -3,14 +3,15 @@ import { GetDocketsQuery } from '../../../courts/queries';
 import { GetStatsQuery } from '../get-stats.query';
 import { Inject } from '@nestjs/common';
 import { IFacilityRepository } from '../../../../domain';
+import { IManifestRepository } from '../../../../domain/transfers/manifest-repository.interface';
 
 @QueryHandler(GetStatsQuery)
-export class GetStatsHandler implements IQueryHandler<GetDocketsQuery, any> {
+export class GetStatsHandler implements IQueryHandler<GetStatsQuery, any> {
   constructor(
-    @Inject('IFacilityRepository')
-    private readonly repository: IFacilityRepository,
+    @Inject('IManifestRepository')
+    private readonly repository: IManifestRepository,
   ) {}
-  async execute(query: GetDocketsQuery): Promise<any> {
-    return await this.repository.getAll();
+  async execute(query: GetStatsQuery): Promise<any> {
+    return await this.repository.getCurrent();
   }
 }

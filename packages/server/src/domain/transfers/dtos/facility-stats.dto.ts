@@ -1,7 +1,9 @@
 import { Manifest, MasterFacility, Summary } from '../..';
 
 export interface FacilityStatsDto {
-  manifests?: Manifest[];
-  summaries?: Summary[];
+  code: number;
+  name: string;
+  activeManifest?: Manifest;
+  patientSummary?: Summary;
   masterFacility?: MasterFacility;
 }

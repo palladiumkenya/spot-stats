@@ -7,28 +7,31 @@ import { LogManifestCommand } from '../commands/log-manifest.command';
 import * as uuid from 'uuid';
 import { UpdateStatsCommand } from '../commands/update-stats.command';
 
-@Controller('facilities')
-export class FacilitiesController {
+@Controller('manifests')
+export class ManifestsController {
   constructor(
     private readonly commandBus: CommandBus,
     private readonly queryBus: QueryBus,
   ) {}
 
-  @Get(':id')
-  async getFacilityStats(@Param('id') id) {
-    const result = await this.queryBus.execute(new GetSummaryQuery(id));
-    return result;
+  @Get()
+  async getStats(): Promise<any> {
+    return this.queryBus.execute(new GetStatsQuery());
   }
-  @EventPattern('UpdateStatsEvent')
-  async handleUpdateStats(data: any) {
-    Logger.log(`Recieved Stats ${data}`);
+  @EventPattern('LogManifestEvent')
+  async handleLogUpdated(data: any) {
+    Logger.log(`Recieved Manifest ${data}`);
     return await this.commandBus.execute(
-      new UpdateStatsCommand(
+      new LogManifestCommand(
+        data.id,
         data.facilityCode,
+        data.facilityName,
         data.docket,
-        data.stats,
-        data.updated,
-        data.manifestId,
+        data.logDate,
+        data.buildDate,
+        data.patientCount,
+        data.cargo,
+        true,
       ),
     );
   }

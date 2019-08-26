@@ -8,5 +8,8 @@ export class LogManifestCommand {
     public buildDate: Date,
     public patientCount: number,
     public cargo: string,
+    public isCurrent: boolean,
+    public recievedCount?: number,
+    public recievedDate?: Date,
   ) {}
 }

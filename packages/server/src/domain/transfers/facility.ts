@@ -9,7 +9,7 @@ import { FacilityUpdatedEvent } from '../../application/transfers/events/facilit
 import { FacilityStatsUpdatedEvent } from '../../application/transfers/events/facility-stats-updated.event';
 
 export class Facility extends AggregateRoot {
-  manifests?: Manifest[] = [];
+  manifests?: any[] = [];
   summaries?: Summary[] = [];
   masterFacility?: MasterFacility;
 
@@ -18,9 +18,9 @@ export class Facility extends AggregateRoot {
     this.apply(new FacilityEnrolledEvent(this._id));
   }
 
-  addManifest(manifest: Manifest) {
-    this.manifests.push(manifest);
-    this.apply(new ManifestLoggedEvent(this._id, manifest.mId));
+  addManifest(manifestId: string) {
+    this.manifests.push(manifestId);
+    this.apply(new FacilityUpdatedEvent(this._id));
   }
 
   assignMasterFacility(masterFacility: MasterFacility) {

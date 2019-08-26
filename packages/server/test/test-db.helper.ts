@@ -3,9 +3,9 @@ import * as mongoose from 'mongoose';
 
 export class TestDbHelper {
   const;
-  useLocal = false;
+  useLocal = true;
   url = `mongodb+srv://livetest:maun@cluster0-v6fcj.mongodb.net/dwapiGlobeTest?retryWrites=true&w=majority`;
-  localUrl = `mongodb://localhost/dwapiGlobeTest`;
+  localUrl = `mongodb://192.168.100.3/dwapiStats`;
   localQueue = 'amqp://localhost:5672/spot';
   cloudQueue = this.localQueue;
 

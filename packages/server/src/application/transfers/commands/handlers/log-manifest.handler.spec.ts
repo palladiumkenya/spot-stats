@@ -13,6 +13,7 @@ import { LogManifestCommand } from '../log-manifest.command';
 import { LogManifestHandler } from './log-manifest.handler';
 import { TransfersModule } from '../../transfers.module';
 import { CourtsInfrastructureModule } from '../../../../infrastructure/courts';
+import { IManifestRepository } from '../../../../domain/transfers/manifest-repository.interface';
 
 describe('Log Manifest Command Tests', () => {
   let module: TestingModule;
@@ -21,6 +22,7 @@ describe('Log Manifest Command Tests', () => {
   const dbHelper = new TestDbHelper();
   const liveData = facilities[0];
   let facilityRepository: IFacilityRepository;
+  let manifestRepository: IManifestRepository;
 
   beforeAll(async () => {
     module = await Test.createTestingModule({
@@ -34,21 +36,22 @@ describe('Log Manifest Command Tests', () => {
     await dbHelper.initConnection();
     await dbHelper.seedDb('dockets', dockets);
     await dbHelper.seedDb('masterfacilities', masterFacilities);
-    liveData.code = masterFacilities[0].code;
     await dbHelper.seedDb('facilities', [liveData]);
+    liveData.code = masterFacilities[0].code;
 
     const handler = module.get<LogManifestHandler>(LogManifestHandler);
     facilityRepository = module.get<IFacilityRepository>('IFacilityRepository');
+    manifestRepository = module.get<IManifestRepository>('IManifestRepository');
     commandBus = module.get<CommandBus>(CommandBus);
     commandBus.bind(handler, LogManifestCommand.name);
   });
 
   afterAll(async () => {
-    await dbHelper.clearDb();
+    // await dbHelper.clearDb();
     await dbHelper.closeConnection();
   });
 
-  it('should log Manifest-New', async () => {
+  it('should log Manifest-New Facility', async () => {
     const newFacility = facilities[1];
     newFacility.code = masterFacilities[1].code;
     const command = new LogManifestCommand(
@@ -60,19 +63,21 @@ describe('Log Manifest Command Tests', () => {
       new Date(),
       100,
       '',
+      true,
     );
     const result = await commandBus.execute(command);
     expect(result).not.toBeNull();
-
     const facility = await facilityRepository.findByCode(newFacility.code);
     expect(facility).not.toBeNull();
-    expect(facility.manifests.length).toBeGreaterThan(0);
-    Logger.log(facility);
+    expect(facility.masterFacility).not.toBeNull();
+    Logger.log(result);
+    Logger.log(facility.masterFacility);
   });
 
-  it('should log Manifest-Existing', async () => {
+  it('should log Manifest-Existing Facility', async () => {
     const existingFacility = facilities[0];
     existingFacility.code = masterFacilities[0].code;
+    // existingFacility.name = 'Mwala Hospital';
     const command = new LogManifestCommand(
       uuid.v1(),
       existingFacility.code,
@@ -82,13 +87,13 @@ describe('Log Manifest Command Tests', () => {
       new Date(),
       100,
       '',
+      true,
     );
     const result = await commandBus.execute(command);
     expect(result).not.toBeNull();
 
     const facility = await facilityRepository.findByCode(existingFacility.code);
     expect(facility).not.toBeNull();
-    expect(facility.manifests.length).toBeGreaterThan(1);
     Logger.log(facility);
   });
 });

@@ -1,8 +1,8 @@
 {
   "presets": [
-    "@babel/env",
-    "@babel/typescript",
-    "@babel/react"
+    "@babel/preset-env",
+    "@babel/preset-typescript",
+    "@babel/preset-react"
   ],
   "plugins": [
     "@babel/plugin-proposal-numeric-separator",

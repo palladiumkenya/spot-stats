@@ -7,14 +7,9 @@ import {
   getTestFacilities,
   getTestStatsData,
 } from '../../../../../test/test.data';
-import * as uuid from 'uuid';
 import { IFacilityRepository } from '../../../../domain';
-import { LogManifestCommand } from '../log-manifest.command';
-import { LogManifestHandler } from './log-manifest.handler';
 import { TransfersModule } from '../../transfers.module';
 import { CourtsInfrastructureModule } from '../../../../infrastructure/courts';
-import { AssignMasterFacilityCommand } from '../assign-master-facility.command';
-import { AssignMasterFacilityHandler } from './assign-master-facility.handler';
 import { InitializeSummariesCommand } from '../initialize-summaries-command';
 import { InitializeSummariesHandler } from './initialize-summaries.handler';
 
@@ -22,7 +17,7 @@ describe('Initialize Facility Summary Command Tests', () => {
   let module: TestingModule;
   let commandBus: CommandBus;
   const { dockets, masterfacilities } = getTestStatsData();
-  const { facilities } = getTestFacilities();
+  const { facilities, manifests } = getTestFacilities();
   const dbHelper = new TestDbHelper();
   const liveData = facilities[0];
   liveData.summaries = [];
@@ -37,11 +32,12 @@ describe('Initialize Facility Summary Command Tests', () => {
       ],
     }).compile();
 
+    liveData.code = masterfacilities[0].code;
     await dbHelper.initConnection();
     await dbHelper.seedDb('dockets', dockets);
     await dbHelper.seedDb('masterfacilities', masterfacilities);
-    liveData.code = masterfacilities[0].code;
     await dbHelper.seedDb('facilities', [liveData]);
+    await dbHelper.seedDb('manifests', manifests);
 
     const handler = module.get<InitializeSummariesHandler>(
       InitializeSummariesHandler,
@@ -52,7 +48,7 @@ describe('Initialize Facility Summary Command Tests', () => {
   });
 
   afterAll(async () => {
-    await dbHelper.clearDb();
+    // await dbHelper.clearDb();
     await dbHelper.closeConnection();
   });
 
@@ -61,7 +57,7 @@ describe('Initialize Facility Summary Command Tests', () => {
     existingFacility.code = masterfacilities[0].code;
     const command = new InitializeSummariesCommand(
       existingFacility._id,
-      existingFacility.manifests[0].mId,
+      manifests[0]._id,
     );
     const result = await commandBus.execute(command);
     expect(result).not.toBeNull();
@@ -77,7 +73,7 @@ describe('Initialize Facility Summary Command Tests', () => {
     existingFacility.code = masterfacilities[0].code;
     const command = new InitializeSummariesCommand(
       existingFacility._id,
-      existingFacility.manifests[0].mId,
+      manifests[0]._id,
     );
     const result = await commandBus.execute(command);
     expect(result).not.toBeNull();
