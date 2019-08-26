@@ -44,7 +44,7 @@ export class ProfileScene extends Component<any, State> {
 
   handleManage = (rowData: any) => {
     this.setState({
-      redirectTo: `/showcase/${rowData.facility}`,
+      redirectTo: `/stats/showcase/${rowData.facility}`,
       showSummary: true
     });
   };
