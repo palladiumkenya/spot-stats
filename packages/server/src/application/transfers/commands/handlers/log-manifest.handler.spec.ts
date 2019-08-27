@@ -81,6 +81,7 @@ describe('Log Manifest Command Tests', () => {
       true,
     );
     const result = await commandBus.execute(command);
+    const result2 = await commandBus.execute(command);
     expect(result).not.toBeNull();
     const facility = await facilityRepository.findByCode(newFacility.code);
     expect(facility).not.toBeNull();

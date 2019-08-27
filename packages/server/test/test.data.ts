@@ -34,6 +34,7 @@ export const getTestFacilities = (count = 2) => {
     const mfs = getManifests();
     const fac = new Facility(uuid.v1(), i * 12, `fname${i}`);
     getManifests().map(m => {
+      m.docket = i === 1 ? 'HTS' : 'NDWH';
       m.code = fac.code;
       m.facility = fac._id;
       manifests.push(m);
@@ -272,8 +273,8 @@ export const getTestManifestMessages = () => {
       '    "facilityCode": 12618,\n' +
       '    "facilityName": "Mwala Hospital",\n' +
       '    "docket": "HTS",\n' +
-      '    "logDate": 20190802,\n' +
-      '    "buildDate": 20190802,\n' +
+      '    "logDate": "2019-08-01",\n' +
+      '    "buildDate": "2019-08-01",\n' +
       '    "patientCount": 40,\n' +
       '    "cargo": "",\n' +
       '    "isCurrent": true\n' +
@@ -285,8 +286,8 @@ export const getTestManifestMessages = () => {
       '    "facilityCode": 12618,\n' +
       '    "facilityName": "Mwala Hospital",\n' +
       '    "docket": "NDWH",\n' +
-      '    "logDate": 20190801,\n' +
-      '    "buildDate": 20190801,\n' +
+      '    "logDate": "2019-08-02",\n' +
+      '    "buildDate": "2019-08-02",\n' +
       '    "patientCount": 40,\n' +
       '    "cargo": "",\n' +
       '    "isCurrent": false\n' +
@@ -298,8 +299,8 @@ export const getTestManifestMessages = () => {
       '    "facilityCode": 14950,\n' +
       '    "facilityName": "Kitengela Health Centre",\n' +
       '    "docket": "NDWH",\n' +
-      '    "logDate": 20190802,\n' +
-      '    "buildDate": 20190802,\n' +
+      '    "logDate": "2019-08-02",\n' +
+      '    "buildDate": "2019-08-02",\n' +
       '    "patientCount": 50,\n' +
       '    "cargo": "",\n' +
       '    "isCurrent": true\n' +
@@ -311,8 +312,8 @@ export const getTestManifestMessages = () => {
       '    "facilityCode": 14950,\n' +
       '    "facilityName": "Kitengela Health Centre",\n' +
       '    "docket": "HTS",\n' +
-      '    "logDate": 20190801,\n' +
-      '    "buildDate": 20190801,\n' +
+      '    "logDate": "2019-08-01",\n' +
+      '    "buildDate": "2019-08-01",\n' +
       '    "patientCount": 50,\n' +
       '    "cargo": "",\n' +
       '    "isCurrent": false\n' +

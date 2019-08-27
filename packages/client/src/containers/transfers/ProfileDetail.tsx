@@ -14,7 +14,7 @@ export class ProfileDetail extends Component<Prop, {}> {
       return <div />;
     } else {
       const dwhSummaries = this.props.profile.summaries!.filter(
-        x => x.docket.name === "DWH"
+        x => x.docket.name === "NDWH"
       );
       const htsSummaries = this.props.profile.summaries!.filter(
         x => x.docket.name === "HTS"
@@ -32,7 +32,7 @@ export class ProfileDetail extends Component<Prop, {}> {
             </div>
             <div className="p-col-8">
               <TabView>
-                <TabPanel header="DWH">
+                <TabPanel header="NDWH">
                   <DataTable value={dwhSummaries}>
                     <Column field="extract.display" header="Extract" />
                     <Column field="recieved" header="Recieved" />

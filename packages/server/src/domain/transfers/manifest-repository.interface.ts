@@ -4,4 +4,5 @@ import { Manifest } from './manifest';
 export interface IManifestRepository extends IRepository<Manifest> {
   manifestExists(mId: string): Promise<boolean>;
   getCurrent(): Promise<any>;
+  updateCurrent(code: number): Promise<any>;
 }

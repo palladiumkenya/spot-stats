@@ -46,6 +46,7 @@ export class LogManifestHandler implements ICommandHandler<LogManifestCommand> {
     // log manifest
 
     const manifest = await this.manifestRepository.create(newManifest);
+    await this.manifestRepository.updateCurrent(newManifest.code);
     this.publisher.mergeObjectContext(newManifest).commit();
 
     const enrolledFacility = await this.facilityRepository.update(facility);
