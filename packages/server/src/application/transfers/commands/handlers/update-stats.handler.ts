@@ -1,6 +1,6 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
 import { LogManifestCommand } from '../log-manifest.command';
-import { Inject } from '@nestjs/common';
+import { Inject, Logger } from '@nestjs/common';
 import {
   Facility,
   IDocketRepository,
@@ -30,6 +30,7 @@ export class UpdateStatsHandler implements ICommandHandler<UpdateStatsCommand> {
 
       const updatedFacility = await this.facilityRepository.update(facility);
       this.publisher.mergeObjectContext(facility).commit();
+      Logger.log(`Updated Stats ${facility.name}`);
       return updatedFacility;
     }
     return null;

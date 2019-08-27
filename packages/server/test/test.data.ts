@@ -477,3 +477,39 @@ export const getTestFacSummaries = () => {
       '}]',
   );
 };
+
+export const getTestStatsMessage = () => {
+  return JSON.parse(
+    '[{\n' +
+      '          "facilityCode" : 12618,\n' +
+      '          "docket" : {\n' +
+      '              "name" : "HTS"},\n' +
+      '          "stats" : [\n' +
+      '            { "name": "HtsClientExtract", "recieved": 25 },\n' +
+      '            { "name": "HtsClientTestsExtract", "recieved": 57 },\n' +
+      '            { "name": "HtsClientLinkageExtract", "recieved": 25 },\n' +
+      '            { "name": "HtsTestKitsExtract", "recieved": 124 },\n' +
+      '            { "name": "HtsClientTracingExtract", "recieved": 13 },\n' +
+      '            { "name": "HtsPartnerTracingExtract", "recieved": 1 },\n' +
+      '            { "name": "HtsPartnerNotificationServicesExtract", "recieved": 89 }\n' +
+      '          ],\n' +
+      '          "updated": "2019-08-01"\n' +
+      '      },\n' +
+      '      {\n' +
+      '          "facilityCode" : 14950,\n' +
+      '          "docket" : {\n' +
+      '              "name" : "HTS"},\n' +
+      '          "stats" : [\n' +
+      '            { "name": "HtsClientExtract", "recieved": 253 },\n' +
+      '            { "name": "HtsClientTestsExtract", "recieved": 517 },\n' +
+      '            { "name": "HtsClientLinkageExtract", "recieved": 225 },\n' +
+      '            { "name": "HtsTestKitsExtract", "recieved": 1324 },\n' +
+      '            { "name": "HtsClientTracingExtract", "recieved": 413 },\n' +
+      '            { "name": "HtsPartnerTracingExtract", "recieved": 14 },\n' +
+      '            { "name": "HtsPartnerNotificationServicesExtract", "recieved": 289 }\n' +
+      '          ],\n' +
+      '          "updated": "2019-08-01"\n' +
+      '      }\n' +
+      '      ]',
+  );
+};
