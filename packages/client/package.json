@@ -7,9 +7,9 @@
     "type-check": "tsc --noEmit",
     "type-check:watch": "yarn type-check -- --watch",
     "build": "webpack --progress --colors --mode=production",
-    "start:app": "webpack-dev-server --config webpack.config.app.js --progress --colors --mode=development",
-    "start": "webpack-dev-server --config webpack.config.lib.js --progress --colors --mode=development",
-    "start:prod": "webpack-dev-server --config webpack.config.lib.js --colors --mode=production"
+    "start:app": "webpack-dev-server --config webpack.app.js --progress --colors --mode=development",
+    "start": "webpack-dev-server --config webpack.lib.js --progress --colors --mode=development",
+    "start:prod": "webpack-dev-server --config webpack.lib.prod.js --colors --mode=production"
   },
   "dependencies": {
     "axios": "^0.19.0",
@@ -57,6 +57,7 @@
     "typescript": "^3.5.3",
     "webpack": "^4.39.2",
     "webpack-cli": "^3.3.7",
-    "webpack-dev-server": "^3.8.0"
+    "webpack-dev-server": "^3.8.0",
+    "webpack-merge": "^4.2.1"
   }
 }

@@ -14,7 +14,7 @@
     "start": "concurrently --kill-others-on-fail \"yarn server\"  \"yarn client\"",
     "build": "yarn server:build",
     "start:prod": "concurrently --kill-others-on-fail \"yarn server:prod\"  \"yarn client\"",
-    "startall:dev": "concurrently --kill-others-on-fail \"yarn server\"  \"yarn client:app\""
+    "startall:dev": "concurrently --kill-others-on-fail \"yarn server\"  \"yarn client\""
   },
   "dependencies": {
     "concurrently": "^4.1.2"
