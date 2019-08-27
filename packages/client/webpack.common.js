@@ -3,6 +3,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const path = require("path");
 const APP_PATH = path.resolve(__dirname, "src");
+const webpack = require("webpack");
 
 module.exports = {
   resolve: {
@@ -21,6 +22,7 @@ module.exports = {
     ]
   },
   devServer: {
+    port: 4721,
     host: "0.0.0.0",
     publicPath: "/",
     historyApiFallback: true,
@@ -32,17 +34,9 @@ module.exports = {
     },
     proxy: {
       "/api": "http://localhost:4720"
-    },
-    port: 4721
+    }
   },
   devtool: "source-map",
   externals: [],
-  plugins: [
-    new CleanWebpackPlugin(),
-    new HtmlWebpackPlugin({
-      template: path.join(APP_PATH, "index.html"),
-      favicon: path.join(APP_PATH, "favicon.ico")
-    }),
-    new ForkTsCheckerWebpackPlugin()
-  ]
+  plugins: [new CleanWebpackPlugin(), new ForkTsCheckerWebpackPlugin()]
 };
