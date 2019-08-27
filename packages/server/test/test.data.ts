@@ -67,10 +67,22 @@ const getSummaries = () => {
   const data: Summary[] = [];
 
   data.push(
-    new Summary({ name: 'HTS' }, { name: 'Clients' }, 100, 100, new Date()),
+    new Summary(
+      { name: 'HTS' },
+      { name: 'HtsClientExtract' },
+      100,
+      100,
+      new Date(),
+    ),
   );
   data.push(
-    new Summary({ name: 'HTS' }, { name: 'HtsTests' }, 200, 0, new Date()),
+    new Summary(
+      { name: 'HTS' },
+      { name: 'HtsClientTestsExtract' },
+      200,
+      0,
+      new Date(),
+    ),
   );
   return data;
 };
@@ -82,22 +94,64 @@ export const getTestStatsData = () => {
       '    "_id": "' +
       uuid.v1() +
       '",\n' +
-      '    "name": "DWH",\n' +
-      '    "display": "DWH",\n' +
+      '    "name": "NDWH",\n' +
+      '    "display": "NDWH",\n' +
       '    "extracts": [\n' +
       '      {\n' +
       '        "_id": "6dc933e0-bf1e-11e9-9cb5-2a2ae2dbcce4",\n' +
-      '        "name": "Patient",\n' +
+      '        "name": "PatientExtract",\n' +
       '        "display": "All Patients",\n' +
       '        "isPatient": true,\n' +
       '        "rank": 1\n' +
       '      },\n' +
       '      {\n' +
-      '        "_id": "6dc93746-bf1e-11e9-9cb5-2a2ae2dbcce4",\n' +
-      '        "name": "Visits",\n' +
-      '        "display": "Visits",\n' +
+      '        "_id": "6dc934e0-bf1e-11e9-9cb5-2a2ae2dbcce4",\n' +
+      '        "name": "PatientArtExtract",\n' +
+      '        "display": "ART Patients",\n' +
       '        "isPatient": false,\n' +
       '        "rank": 2\n' +
+      '      },\n' +
+      '      {\n' +
+      '        "_id": "6dc935e0-bf1e-11e9-9cb5-2a2ae2dbcce4",\n' +
+      '        "name": "PatientBaselineExtract",\n' +
+      '        "display": "Patient Baselines",\n' +
+      '        "isPatient": false,\n' +
+      '        "rank": 3\n' +
+      '      },\n' +
+      '      {\n' +
+      '        "_id": "6dc936e0-bf1e-11e9-9cb5-2a2ae2dbcce4",\n' +
+      '        "name": "PatientStatusExtract",\n' +
+      '        "display": "Patient Status",\n' +
+      '        "isPatient": false,\n' +
+      '        "rank": 4\n' +
+      '      },\n' +
+      '      {\n' +
+      '        "_id": "6dc937e0-bf1e-11e9-9cb5-2a2ae2dbcce4",\n' +
+      '        "name": "PatientLabExtract",\n' +
+      '        "display": "Patient Labs",\n' +
+      '        "isPatient": false,\n' +
+      '        "rank": 5\n' +
+      '      },\n' +
+      '      {\n' +
+      '        "_id": "6dc938e0-bf1e-11e9-9cb5-2a2ae2dbcce4",\n' +
+      '        "name": "PatientPharmacyExtract",\n' +
+      '        "display": "Patient Pharmacy",\n' +
+      '        "isPatient": false,\n' +
+      '        "rank": 6\n' +
+      '      },\n' +
+      '      {\n' +
+      '        "_id": "6dc93746-bf1e-11e9-9cb5-2a2ae2dbcce4",\n' +
+      '        "name": "PatientVisitExtract",\n' +
+      '        "display": "Patient Visit",\n' +
+      '        "isPatient": false,\n' +
+      '        "rank": 7\n' +
+      '      },\n' +
+      '      {\n' +
+      '        "_id": "6dc939e0-bf1e-11e9-9cb5-2a2ae2dbcce4",\n' +
+      '        "name": "PatientAdverseEventExtract",\n' +
+      '        "display": "Patient Adverse Events",\n' +
+      '        "isPatient": false,\n' +
+      '        "rank": 8\n' +
       '      }\n' +
       '    ]\n' +
       '  },\n' +
@@ -110,21 +164,56 @@ export const getTestStatsData = () => {
       '    "extracts": [\n' +
       '      {\n' +
       '        "_id": "6dc93890-bf1e-11e9-9cb5-2a2ae2dbcce4",\n' +
-      '        "name": "Clients",\n' +
-      '        "display": "HTS Clients",\n' +
+      '        "name": "HtsClientExtract",\n' +
+      '        "display": "Hts Clients",\n' +
       '        "isPatient": true,\n' +
       '        "rank": 1\n' +
       '      },\n' +
       '      {\n' +
       '        "_id": "6dc939bc-bf1e-11e9-9cb5-2a2ae2dbcce4",\n' +
-      '        "name": "HtsTests",\n' +
-      '        "display": "Client Tests",\n' +
+      '        "name": "HtsClientTestsExtract",\n' +
+      '        "display": "Hts Client Tests",\n' +
       '        "isPatient": false,\n' +
       '        "rank": 2\n' +
+      '      },\n' +
+      '      {\n' +
+      '        "_id": "6dc949bc-bf1e-11e9-9cb5-2a2ae2dbcce4",\n' +
+      '        "name": "HtsClientLinkageExtract",\n' +
+      '        "display": "Hts Client Linkage",\n' +
+      '        "isPatient": false,\n' +
+      '        "rank": 3\n' +
+      '      },\n' +
+      '      {\n' +
+      '        "_id": "6dc959bc-bf1e-11e9-9cb5-2a2ae2dbcce4",\n' +
+      '        "name": "HtsTestKitsExtract",\n' +
+      '        "display": "Hts Test Kits",\n' +
+      '        "isPatient": false,\n' +
+      '        "rank": 4\n' +
+      '      },\n' +
+      '      {\n' +
+      '        "_id": "6dc969bc-bf1e-11e9-9cb5-2a2ae2dbcce4",\n' +
+      '        "name": "HtsClientTracingExtract",\n' +
+      '        "display": "Hts Client Tracing",\n' +
+      '        "isPatient": false,\n' +
+      '        "rank": 5\n' +
+      '      },\n' +
+      '      {\n' +
+      '        "_id": "6dc979bc-bf1e-11e9-9cb5-2a2ae2dbcce4",\n' +
+      '        "name": "HtsPartnerTracingExtract",\n' +
+      '        "display": "Hts Partner Tracing",\n' +
+      '        "isPatient": false,\n' +
+      '        "rank": 6\n' +
+      '      },\n' +
+      '      {\n' +
+      '        "_id": "6dc989bc-bf1e-11e9-9cb5-2a2ae2dbcce4",\n' +
+      '        "name": "HtsPartnerNotificationServicesExtract",\n' +
+      '        "display": "Hts Partner Notification Services",\n' +
+      '        "isPatient": false,\n' +
+      '        "rank": 7\n' +
       '      }\n' +
       '    ]\n' +
       '  }\n' +
-      ']\n',
+      ']',
   );
 
   const masterfacilities = JSON.parse(
