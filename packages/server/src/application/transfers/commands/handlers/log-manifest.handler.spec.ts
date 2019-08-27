@@ -1,10 +1,11 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { MongooseModule } from '@nestjs/mongoose';
-import { CommandBus, CqrsModule } from '@nestjs/cqrs';
-import { Logger } from '@nestjs/common';
+import { CommandBus, CqrsModule, QueryBus } from '@nestjs/cqrs';
+import { Controller, Injectable, Logger } from '@nestjs/common';
 import { TestDbHelper } from '../../../../../test/test-db.helper';
 import {
   getTestFacilities,
+  getTestManifestMessages,
   getTestStatsData,
 } from '../../../../../test/test.data';
 import * as uuid from 'uuid';
@@ -14,6 +15,19 @@ import { LogManifestHandler } from './log-manifest.handler';
 import { TransfersModule } from '../../transfers.module';
 import { CourtsInfrastructureModule } from '../../../../infrastructure/courts';
 import { IManifestRepository } from '../../../../domain/transfers/manifest-repository.interface';
+import { ClientProxyFactory, EventPattern } from '@nestjs/microservices';
+import { DocketsController } from '../../../courts/controllers';
+import {
+  DeleteDocketHandler,
+  SaveDocketHandler,
+} from '../../../courts/commands';
+import { GetDocketsHandler } from '../../../courts/queries';
+import {
+  DocketCreatedEventHandler,
+  DocketDeletedEventHandler,
+  DocketUpdatedEventHandler,
+} from '../../../courts/events';
+import { queue } from 'rxjs/internal/scheduler/queue';
 
 describe('Log Manifest Command Tests', () => {
   let module: TestingModule;
@@ -27,6 +41,7 @@ describe('Log Manifest Command Tests', () => {
   beforeAll(async () => {
     module = await Test.createTestingModule({
       imports: [
+        CqrsModule,
         MongooseModule.forRoot(dbHelper.url, dbHelper.options),
         TransfersModule,
         CourtsInfrastructureModule,
@@ -95,5 +110,19 @@ describe('Log Manifest Command Tests', () => {
     const facility = await facilityRepository.findByCode(existingFacility.code);
     expect(facility).not.toBeNull();
     Logger.log(facility);
+  });
+
+  it('should log Manifests From Queue', async () => {
+    const manifests: any[] = getTestManifestMessages();
+    const rmq = dbHelper.config.QueueConfig;
+    rmq.options.queue = 'stats_dev_queue';
+    const client = ClientProxyFactory.create(rmq);
+    expect(client).toBeDefined();
+    await client.connect();
+
+    for (const m of manifests) {
+      await client.emit('LogManifestEvent', m).toPromise();
+    }
+    client.close();
   });
 });

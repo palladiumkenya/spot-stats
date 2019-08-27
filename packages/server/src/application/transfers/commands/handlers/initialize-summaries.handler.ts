@@ -1,7 +1,7 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
 import { LogManifestCommand } from '../log-manifest.command';
 import { InitializeSummariesCommand } from '../initialize-summaries-command';
-import { Inject } from '@nestjs/common';
+import { Inject, Logger } from '@nestjs/common';
 import {
   Docket,
   Facility,
@@ -61,6 +61,7 @@ export class InitializeSummariesHandler
           const updatedFacility = await this.facilityRepository.update(
             facility,
           );
+          Logger.log(`Summaries ${facility.name} initialized`);
           this.publisher.mergeObjectContext(facility).commit();
         }
       }

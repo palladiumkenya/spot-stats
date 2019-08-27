@@ -63,4 +63,12 @@ export class Facility extends AggregateRoot {
       }
     });
   }
+
+  getStats(docket: string, extract: string) {
+    const s = this.summaries.find(f => f.extract.name === extract);
+    if (s) {
+      return s;
+    }
+    return null;
+  }
 }
