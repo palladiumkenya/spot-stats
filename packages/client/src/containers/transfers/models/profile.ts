@@ -9,6 +9,7 @@ export interface Profile {
   buildDate?: Date;
   docket: string;
   patientCount: number;
+  recieved: number;
   manifests?: Manifest[];
   facilityInfo: any;
 }

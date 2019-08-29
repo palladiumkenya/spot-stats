@@ -45,7 +45,7 @@ export const getTestFacilities = (count = 2) => {
   }
   return { dockets, masterFacilities, facilities, manifests };
 };
-const getManifests = (count = 2) => {
+export const getManifests = (count = 2) => {
   const data: Manifest[] = [];
   for (let i = 0; i < count; i++) {
     data.push(

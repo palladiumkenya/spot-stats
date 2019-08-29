@@ -4,6 +4,7 @@ import { CommandBus, CqrsModule, QueryBus } from '@nestjs/cqrs';
 import { Controller, Injectable, Logger } from '@nestjs/common';
 import { TestDbHelper } from '../../../../../test/test-db.helper';
 import {
+  getManifests,
   getTestFacilities,
   getTestManifestMessages,
   getTestStatsData,
@@ -37,6 +38,7 @@ describe('Log Manifest Command Tests', () => {
   const liveData = facilities[0];
   let facilityRepository: IFacilityRepository;
   let manifestRepository: IManifestRepository;
+  const manifest = getManifests(1)[0];
 
   beforeAll(async () => {
     module = await Test.createTestingModule({
@@ -51,9 +53,10 @@ describe('Log Manifest Command Tests', () => {
     await dbHelper.initConnection();
     await dbHelper.seedDb('dockets', dockets);
     await dbHelper.seedDb('masterfacilities', masterFacilities);
+    manifest.name = liveData.name = masterFacilities[0].name;
+    manifest.code = liveData.code = masterFacilities[0].code;
     await dbHelper.seedDb('facilities', [liveData]);
-    liveData.code = masterFacilities[0].code;
-
+    await dbHelper.seedDb('manifests', [manifest]);
     const handler = module.get<LogManifestHandler>(LogManifestHandler);
     facilityRepository = module.get<IFacilityRepository>('IFacilityRepository');
     manifestRepository = module.get<IManifestRepository>('IManifestRepository');
@@ -62,12 +65,13 @@ describe('Log Manifest Command Tests', () => {
   });
 
   afterAll(async () => {
-    // await dbHelper.clearDb();
+    await dbHelper.clearDb();
     await dbHelper.closeConnection();
   });
 
   it('should log Manifest-New Facility', async () => {
     const newFacility = facilities[1];
+    newFacility.name = masterFacilities[1].name;
     newFacility.code = masterFacilities[1].code;
     const command = new LogManifestCommand(
       uuid.v1(),
@@ -81,10 +85,11 @@ describe('Log Manifest Command Tests', () => {
       true,
     );
     const result = await commandBus.execute(command);
-    const result2 = await commandBus.execute(command);
     expect(result).not.toBeNull();
+
     const facility = await facilityRepository.findByCode(newFacility.code);
     expect(facility).not.toBeNull();
+    expect(facility.manifests.length).toBe(1);
     expect(facility.masterFacility).not.toBeNull();
     Logger.log(result);
     Logger.log(facility.masterFacility);
@@ -105,11 +110,12 @@ describe('Log Manifest Command Tests', () => {
       '',
       true,
     );
-    const result = await commandBus.execute(command);
-    expect(result).not.toBeNull();
+    const resultA = await commandBus.execute(command);
+    expect(resultA).not.toBeNull();
 
     const facility = await facilityRepository.findByCode(existingFacility.code);
     expect(facility).not.toBeNull();
+    expect(facility.manifests.length).toBeGreaterThan(1);
     Logger.log(facility);
   });
 
