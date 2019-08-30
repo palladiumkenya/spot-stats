@@ -76,6 +76,7 @@ export class ConfigService {
         queue: this.QueueName,
         user: this.QueueUser,
         pass: this.QueuePassword,
+        prefetchCount: 1,
         queueOptions: { durable: true },
       },
     };
