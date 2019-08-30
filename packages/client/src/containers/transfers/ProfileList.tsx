@@ -36,7 +36,7 @@ export class ProfileList extends Component<Props, {}> {
     return (
       <DataTable value={this.props.profiles} header={header}>
         <Column field="code" header="Code" />
-        <Column field="facilityInfo.masterFacility.name" header="Facility" />
+        <Column field="name" header="Facility" />
         <Column
           field="facilityInfo.masterFacility.county.name"
           header="County"
