@@ -1,5 +1,5 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
-import { Inject } from '@nestjs/common';
+import { Inject, Logger } from '@nestjs/common';
 import {
   Facility,
   IDocketRepository,
@@ -46,10 +46,13 @@ export class LogManifestHandler implements ICommandHandler<LogManifestCommand> {
     // log manifest
 
     const manifest = await this.manifestRepository.create(newManifest);
+    await this.manifestRepository.updateCurrent(newManifest.code);
     this.publisher.mergeObjectContext(newManifest).commit();
 
     const enrolledFacility = await this.facilityRepository.update(facility);
     this.publisher.mergeObjectContext(facility).commit();
+
+    Logger.log(`Manifest processed ${facility.name}`);
 
     return newManifest;
   }

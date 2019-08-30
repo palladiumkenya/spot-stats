@@ -4,6 +4,7 @@ import { ConfigService } from '../src/config/config.service';
 
 export class TestDbHelper {
   url: string;
+  config: ConfigService;
   options = {
     useNewUrlParser: true,
     useFindAndModify: false,
@@ -12,8 +13,8 @@ export class TestDbHelper {
 
   constructor() {
     jest.setTimeout(30000);
-    const config = new ConfigService(`${process.env.NODE_ENV}.env`);
-    this.url = config.Database;
+    this.config = new ConfigService(`${process.env.NODE_ENV}.env`);
+    this.url = this.config.Database;
   }
 
   async initConnection(dbname?: string) {

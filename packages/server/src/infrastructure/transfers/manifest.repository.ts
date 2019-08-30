@@ -23,4 +23,23 @@ export class ManifestRepository extends BaseRepository<Manifest>
     const resuls = await this.model.find({ isCurrent: true }).exec();
     return resuls;
   }
+
+  async updateCurrent(code: number): Promise<any> {
+    await this.model.updateMany(
+      { code, isCurrent: true },
+      { isCurrent: false },
+    );
+
+    for (const docket of ['HTS', 'NDWH']) {
+      const latest = await this.model
+        .find({ code, docket })
+        .sort({ logDate: -1 })
+        .limit(1);
+
+      if (latest && latest.length > 0) {
+        latest[0].isCurrent = true;
+        await this.update(latest[0]);
+      }
+    }
+  }
 }

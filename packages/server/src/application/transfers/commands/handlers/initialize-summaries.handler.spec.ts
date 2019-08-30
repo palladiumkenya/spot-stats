@@ -48,7 +48,7 @@ describe('Initialize Facility Summary Command Tests', () => {
   });
 
   afterAll(async () => {
-    // await dbHelper.clearDb();
+    await dbHelper.clearDb();
     await dbHelper.closeConnection();
   });
 

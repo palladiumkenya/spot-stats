@@ -7,7 +7,7 @@ export interface ProfileSummary {
   code?: string;
   name?: string;
   mId?: string;
-  summaries?: any[];
+  summaries?: Summary[];
   manifests?: Manifest[];
-  masterFacility?: any;
+  masterFacility?: MasterFacility;
 }

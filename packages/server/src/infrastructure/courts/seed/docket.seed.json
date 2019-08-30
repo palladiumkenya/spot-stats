@@ -1,22 +1,64 @@
 [
   {
     "_id": "6dc92fe4-bf1e-11e9-9cb5-2a2ae2dbcce4",
-    "name": "DWH",
-    "display": "DWH",
+    "name": "NDWH",
+    "display": "NDWH",
     "extracts": [
       {
         "_id": "6dc933e0-bf1e-11e9-9cb5-2a2ae2dbcce4",
-        "name": "Patient",
+        "name": "PatientExtract",
         "display": "All Patients",
         "isPatient": true,
         "rank": 1
       },
       {
-        "_id": "6dc93746-bf1e-11e9-9cb5-2a2ae2dbcce4",
-        "name": "Visits",
-        "display": "Visits",
+        "_id": "6dc934e0-bf1e-11e9-9cb5-2a2ae2dbcce4",
+        "name": "PatientArtExtract",
+        "display": "ART Patients",
         "isPatient": false,
         "rank": 2
+      },
+      {
+        "_id": "6dc935e0-bf1e-11e9-9cb5-2a2ae2dbcce4",
+        "name": "PatientBaselineExtract",
+        "display": "Patient Baselines",
+        "isPatient": false,
+        "rank": 3
+      },
+      {
+        "_id": "6dc936e0-bf1e-11e9-9cb5-2a2ae2dbcce4",
+        "name": "PatientStatusExtract",
+        "display": "Patient Status",
+        "isPatient": false,
+        "rank": 4
+      },
+      {
+        "_id": "6dc937e0-bf1e-11e9-9cb5-2a2ae2dbcce4",
+        "name": "PatientLabExtract",
+        "display": "Patient Labs",
+        "isPatient": false,
+        "rank": 5
+      },
+      {
+        "_id": "6dc938e0-bf1e-11e9-9cb5-2a2ae2dbcce4",
+        "name": "PatientPharmacyExtract",
+        "display": "Patient Pharmacy",
+        "isPatient": false,
+        "rank": 6
+      },
+      {
+        "_id": "6dc93746-bf1e-11e9-9cb5-2a2ae2dbcce4",
+        "name": "PatientVisitExtract",
+        "display": "Patient Visit",
+        "isPatient": false,
+        "rank": 7
+      },
+      {
+        "_id": "6dc939e0-bf1e-11e9-9cb5-2a2ae2dbcce4",
+        "name": "PatientAdverseEventExtract",
+        "display": "Patient Adverse Events",
+        "isPatient": false,
+        "rank": 8
       }
     ]
   },
@@ -27,17 +69,52 @@
     "extracts": [
       {
         "_id": "6dc93890-bf1e-11e9-9cb5-2a2ae2dbcce4",
-        "name": "Clients",
-        "display": "HTS Clients",
+        "name": "HtsClientExtract",
+        "display": "Hts Clients",
         "isPatient": true,
         "rank": 1
       },
       {
         "_id": "6dc939bc-bf1e-11e9-9cb5-2a2ae2dbcce4",
-        "name": "HtsTests",
-        "display": "Client Tests",
+        "name": "HtsClientTestsExtract",
+        "display": "Hts Client Tests",
         "isPatient": false,
         "rank": 2
+      },
+      {
+        "_id": "6dc949bc-bf1e-11e9-9cb5-2a2ae2dbcce4",
+        "name": "HtsClientLinkageExtract",
+        "display": "Hts Client Linkage",
+        "isPatient": false,
+        "rank": 3
+      },
+      {
+        "_id": "6dc959bc-bf1e-11e9-9cb5-2a2ae2dbcce4",
+        "name": "HtsTestKitsExtract",
+        "display": "Hts Test Kits",
+        "isPatient": false,
+        "rank": 4
+      },
+      {
+        "_id": "6dc969bc-bf1e-11e9-9cb5-2a2ae2dbcce4",
+        "name": "HtsClientTracingExtract",
+        "display": "Hts Client Tracing",
+        "isPatient": false,
+        "rank": 5
+      },
+      {
+        "_id": "6dc979bc-bf1e-11e9-9cb5-2a2ae2dbcce4",
+        "name": "HtsPartnerTracingExtract",
+        "display": "Hts Partner Tracing",
+        "isPatient": false,
+        "rank": 6
+      },
+      {
+        "_id": "6dc989bc-bf1e-11e9-9cb5-2a2ae2dbcce4",
+        "name": "HtsPartnerNotificationServicesExtract",
+        "display": "Hts Partner Notification Services",
+        "isPatient": false,
+        "rank": 7
       }
     ]
   }

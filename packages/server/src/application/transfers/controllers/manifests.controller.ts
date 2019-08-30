@@ -35,4 +35,9 @@ export class ManifestsController {
       ),
     );
   }
+
+  @EventPattern('LogManifestEvent_ack')
+  ackMessageTestData(data: any) {
+    return 'Message Received';
+  }
 }
