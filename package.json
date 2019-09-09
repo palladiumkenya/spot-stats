@@ -15,7 +15,7 @@
     "test": "yarn workspace @spot-stats/server test",
     "start": "concurrently --kill-others-on-fail \"yarn server\"  \"yarn client\"",
     "build": "yarn server:build && yarn client:build ",
-    "start:prod": "concurrently --kill-others-on-fail \"yarn server:prod\"  \"yarn client:prod\"",
+    "start:prod": "concurrently --kill-others-on-fail \"yarn server:prod\"",
     "startall:dev": "concurrently --kill-others-on-fail \"yarn server\"  \"yarn client:app\""
   },
   "dependencies": {

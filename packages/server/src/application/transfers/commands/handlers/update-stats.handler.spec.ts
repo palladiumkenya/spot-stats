@@ -81,18 +81,4 @@ describe('Update Stats Command Tests', () => {
       );
     });
   });
-
-  it('should Update Stats From Queue', async () => {
-    const statsMessage: any[] = getTestStatsMessage();
-    const rmq = dbHelper.config.QueueConfig;
-    rmq.options.queue = 'stats_dev_queue';
-    const client = ClientProxyFactory.create(rmq);
-    expect(client).toBeDefined();
-    await client.connect();
-
-    for (const m of statsMessage) {
-      await client.emit('UpdateStatsEvent', m).toPromise();
-    }
-    client.close();
-  });
 });
