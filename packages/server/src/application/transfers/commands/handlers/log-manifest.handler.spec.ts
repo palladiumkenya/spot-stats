@@ -118,18 +118,4 @@ describe('Log Manifest Command Tests', () => {
     expect(facility.manifests.length).toBeGreaterThan(1);
     Logger.log(facility);
   });
-
-  it('should log Manifests From Queue', async () => {
-    const manifests: any[] = getTestManifestMessages();
-    const rmq = dbHelper.config.QueueConfig;
-    rmq.options.queue = 'stats_dev_queue';
-    const client = ClientProxyFactory.create(rmq);
-    expect(client).toBeDefined();
-    await client.connect();
-
-    for (const m of manifests) {
-      await client.emit('LogManifestEvent', m).toPromise();
-    }
-    client.close();
-  });
 });
