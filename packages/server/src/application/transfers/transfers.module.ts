@@ -12,7 +12,6 @@ import { CourtsInfrastructureModule } from '../../infrastructure/courts';
 import { GetStatsHandler } from './queries/handlers/get-stats.handler';
 import { GetSummaryHandler } from './queries/handlers/get-summary.handler';
 import { FacilitiesController } from './controllers/facilities.controller';
-import { MessagingModule } from '../../infrastructure/messging/messaging.module';
 import { ManifestsController } from './controllers/manifests.controller';
 
 const CommandHandlers = [
@@ -26,7 +25,6 @@ const Sagas = [FacilityManifestSaga];
 @Module({
   imports: [
     CqrsModule,
-    MessagingModule,
     TransfersInfrastructureModule,
     RegistriesInfrastructureModule,
     CourtsInfrastructureModule,

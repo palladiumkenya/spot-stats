@@ -8,11 +8,9 @@ import { DocketCreatedEventHandler } from './events/handlers/docket-created.hand
 import { DocketDeletedEventHandler } from './events/handlers/docket-deleted.handler';
 import { DocketUpdatedEventHandler } from './events/handlers/docket-updated.handler';
 import { CourtsInfrastructureModule } from '../../infrastructure/courts/courts-infrastructure.module';
-import { ClientsModule, Transport } from '@nestjs/microservices';
-import { MessagingModule } from '../../infrastructure/messging/messaging.module';
 
 @Module({
-  imports: [CqrsModule, MessagingModule, CourtsInfrastructureModule],
+  imports: [CqrsModule, CourtsInfrastructureModule],
   controllers: [DocketsController],
   providers: [
     SaveDocketHandler,

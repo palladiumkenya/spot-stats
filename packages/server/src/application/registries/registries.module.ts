@@ -9,16 +9,12 @@ import { MasterFacilitiesController } from './controllers/master-facilities.cont
 import { SaveMasterFacilityHandler } from './commands/handlers/save-master-facility.handler';
 import { DeleteMasterFacilityHandler } from './commands/handlers/delete-master-facility.handler';
 import { MasterFacilityCreatedHandler } from './events/handlers/master-facility-created.handler';
-import { MasterFacilityDeletedEvent } from './events/master-facility-deleted.event';
 import { MasterFacilityDeletedHandler } from './events/handlers/master-facility-deleted.handler';
 import { MasterFacilityUpdatedHandler } from './events/handlers/master-facility-updated.handler';
-import { ClientsModule, Transport } from '@nestjs/microservices';
-import { MessagingModule } from '../../infrastructure/messging/messaging.module';
 
 @Module({
   imports: [
     CqrsModule,
-    MessagingModule,
     RegistriesInfrastructureModule,
     CourtsInfrastructureModule,
   ],
