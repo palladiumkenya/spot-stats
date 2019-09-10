@@ -13,7 +13,7 @@ interface State {
 }
 
 // @ts-ignore
-const url = `http://${window.location.hostname}:4720/api/v1/transfers/manifests/`;
+const url = `https://${window.location.hostname}:4720/api/v1/transfers/manifests/`;
 
 export class ProfileScene extends Component<any, State> {
   private messages: any;
