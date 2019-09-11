@@ -19,7 +19,16 @@ export class ManifestRepository extends BaseRepository<Manifest>
     return false;
   }
 
-  async getCurrent(): Promise<any> {
+  async getCurrent(facId?: string): Promise<any> {
+    if (facId) {
+      const facResuls = await this.model
+        .find({ isCurrent: true, facility: facId })
+        .exec();
+      if (facResuls && facResuls.length > 0) {
+        return facResuls[0].toObject();
+      }
+      return undefined;
+    }
     const resuls = await this.model.find({ isCurrent: true }).exec();
     return resuls;
   }

@@ -53,6 +53,12 @@ describe('Manifest Repository  Tests', () => {
     data.forEach(d => Logger.debug(`${d.name}`));
   });
 
+  it('should load Current by Fac', async () => {
+    const data = await repository.getCurrent(manifests[3].facility);
+    expect(data.length).toBeGreaterThan(0);
+    data.forEach(d => Logger.debug(`${d.name}`));
+  });
+
   it('should update Current', async () => {
     const data = await repository.updateCurrent(100);
 
