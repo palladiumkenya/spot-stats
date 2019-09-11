@@ -7,6 +7,7 @@ import { UpdateStatsCommand } from '../../application/transfers/commands/update-
 import { manifestSchema } from '../transfers';
 import { plainToClass } from 'class-transformer';
 import { Manifest } from '../../domain';
+import { InitializeSummariesCommand } from '../../application/transfers/commands/initialize-summaries-command';
 
 @Injectable()
 export class MessagingService {
@@ -38,6 +39,7 @@ export class MessagingService {
     const manifest = JSON.parse(data);
     Logger.log(`+++++++++++ ${manifest.docket} +++++++++`);
     Logger.log(`Received Manifest  ${manifest.facilityName}`);
+
     await this.commandBus.execute(
       new LogManifestCommand(
         manifest.id,

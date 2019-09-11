@@ -27,9 +27,9 @@ export class Manifest extends AggregateRoot {
   }
 
   assignFacility(facility: Facility) {
-    facility.manifests = [];
-    this.facility = facility._id;
-    this.facilityInfo = facility;
-    this.apply(new ManifestLoggedEvent(facility._id, this._id));
+    const fac = facility;
+    this.facility = fac._id;
+    this.facilityInfo = { ...fac };
+    this.facilityInfo.manifests = [];
   }
 }

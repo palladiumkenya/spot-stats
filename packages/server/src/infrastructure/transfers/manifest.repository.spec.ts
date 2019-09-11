@@ -24,6 +24,7 @@ describe('Manifest Repository  Tests', () => {
       m.isCurrent = false;
       m.logDate = new Date(2009, 1, 1);
     });
+    manifests[3].isCurrent = true;
     manifests[3].logDate = new Date();
     testManifests = manifests;
     await dbHelper.initConnection();
