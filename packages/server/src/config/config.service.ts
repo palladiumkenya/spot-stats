@@ -42,6 +42,8 @@ export class ConfigService {
         'practice.route|practice.queue',
       ),
       STATS_MONGODB_URI: Joi.string().default('mongodb://localhost/dwapiStats'),
+      STATS_KEY: Joi.string().default('koskedk.com+5-key.pem'),
+      STATS_CERT: Joi.string().default('koskedk.com+5.pem'),
     });
 
     const { error, value: validatedEnvConfig } = Joi.validate(
@@ -92,5 +94,11 @@ export class ConfigService {
 
   get Database(): string {
     return String(this.envConfig.STATS_MONGODB_URI);
+  }
+  get SslKey(): string {
+    return String(this.envConfig.STATS_KEY);
+  }
+  get SslCert(): string {
+    return String(this.envConfig.STATS_CERT);
   }
 }

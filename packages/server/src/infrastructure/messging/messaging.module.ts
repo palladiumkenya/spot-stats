@@ -1,11 +1,12 @@
 import { Module } from '@nestjs/common';
 import { messagingProviders } from './messaging.providers';
 import { ConfigModule } from '../../config/config.module';
-import { TransfersModule } from '../../application/transfers/transfers.module';
-import { ConfigService } from '../../config/config.service';
+import { MessagingService } from './messaging.service';
+import { CqrsModule } from '@nestjs/cqrs';
 
 @Module({
-  imports: [...messagingProviders, ConfigModule, TransfersModule],
-  exports: [...messagingProviders],
+  imports: [...messagingProviders, ConfigModule, CqrsModule],
+  exports: [...messagingProviders, MessagingService],
+  providers: [MessagingService],
 })
 export class MessagingModule {}

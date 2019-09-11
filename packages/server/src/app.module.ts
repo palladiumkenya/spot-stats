@@ -29,6 +29,5 @@ const localUrl = 'mongodb://localhost/dwapiGlobe';
     TransfersModule,
   ],
   controllers: [AppController],
-  providers: [MessagingService],
 })
 export class AppModule {}

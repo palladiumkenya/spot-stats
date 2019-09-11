@@ -22,6 +22,7 @@ module.exports = {
     ]
   },
   devServer: {
+    https: true,
     port: 4721,
     host: "0.0.0.0",
     publicPath: "/",
@@ -33,7 +34,7 @@ module.exports = {
         "X-Requested-With, content-type, Authorization"
     },
     proxy: {
-      "/api": "http://localhost:4720"
+      "/api": "https://localhost:4720"
     }
   },
   devtool: "source-map",
