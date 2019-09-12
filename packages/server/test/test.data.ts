@@ -20,7 +20,7 @@ export const getTestDockets = (count = 2, dcount = 2) => {
 export const getTestMasterFacilities = (count = 2) => {
   const data: MasterFacility[] = [];
   for (let i = 0; i < count; i++) {
-    data.push(new MasterFacility(uuid.v1(), i * 12, `Fname${i}`));
+    data.push(new MasterFacility(uuid.v1(), (i + 1) * 12, `Fname${i}`));
   }
   return data;
 };
@@ -32,14 +32,17 @@ export const getTestFacilities = (count = 2) => {
   const manifests: Manifest[] = [];
   for (let i = 0; i < count; i++) {
     const mfs = getManifests();
-    const fac = new Facility(uuid.v1(), i * 12, `fname${i}`);
+    const fac = new Facility(uuid.v1(), (i + 1) * 12, `fname${i}`);
     getManifests().map(m => {
       m.docket = i === 1 ? 'HTS' : 'NDWH';
       m.code = fac.code;
+      m.name = fac.name;
       m.facility = fac._id;
       manifests.push(m);
     });
-    fac.manifests = manifests.map(n => n._id);
+    fac.manifests = manifests
+      .filter(x => x.facility === fac._id)
+      .map(n => n._id);
     fac.summaries = getSummaries();
     facilities.push(fac);
   }

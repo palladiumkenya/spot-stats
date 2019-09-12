@@ -33,12 +33,16 @@ import { queue } from 'rxjs/internal/scheduler/queue';
 describe('Log Manifest Command Tests', () => {
   let module: TestingModule;
   let commandBus: CommandBus;
-  const { dockets, masterFacilities, facilities } = getTestFacilities();
+  const {
+    dockets,
+    masterFacilities,
+    facilities,
+    manifests,
+  } = getTestFacilities();
   const dbHelper = new TestDbHelper();
   const liveData = facilities[0];
   let facilityRepository: IFacilityRepository;
   let manifestRepository: IManifestRepository;
-  const manifest = getManifests(1)[0];
 
   beforeAll(async () => {
     module = await Test.createTestingModule({
@@ -53,10 +57,16 @@ describe('Log Manifest Command Tests', () => {
     await dbHelper.initConnection();
     await dbHelper.seedDb('dockets', dockets);
     await dbHelper.seedDb('masterfacilities', masterFacilities);
-    manifest.name = liveData.name = masterFacilities[0].name;
-    manifest.code = liveData.code = masterFacilities[0].code;
+    const manifestsTosave = manifests.filter(
+      x => x.facility === facilities[0]._id,
+    );
+    manifestsTosave.forEach(m => {
+      m.name = liveData.name = masterFacilities[0].name;
+      m.code = liveData.code = masterFacilities[0].code;
+    });
+
     await dbHelper.seedDb('facilities', [liveData]);
-    await dbHelper.seedDb('manifests', [manifest]);
+    await dbHelper.seedDb('manifests', manifestsTosave);
     const handler = module.get<LogManifestHandler>(LogManifestHandler);
     facilityRepository = module.get<IFacilityRepository>('IFacilityRepository');
     manifestRepository = module.get<IManifestRepository>('IManifestRepository');
@@ -91,14 +101,13 @@ describe('Log Manifest Command Tests', () => {
     expect(facility).not.toBeNull();
     expect(facility.manifests.length).toBe(1);
     expect(facility.masterFacility).not.toBeNull();
+
     Logger.log(result);
     Logger.log(facility.masterFacility);
   });
 
   it('should log Manifest-Existing Facility', async () => {
-    const existingFacility = facilities[0];
-    existingFacility.code = masterFacilities[0].code;
-    // existingFacility.name = 'Mwala Hospital';
+    const existingFacility = liveData;
     const command = new LogManifestCommand(
       uuid.v1(),
       existingFacility.code,

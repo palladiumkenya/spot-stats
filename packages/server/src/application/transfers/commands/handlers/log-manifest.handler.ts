@@ -1,4 +1,9 @@
-import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
+import {
+  CommandHandler,
+  EventBus,
+  EventPublisher,
+  ICommandHandler,
+} from '@nestjs/cqrs';
 import { Inject, Logger } from '@nestjs/common';
 import {
   Facility,
@@ -12,6 +17,7 @@ import { LogManifestCommand } from '../log-manifest.command';
 import { plainToClass } from 'class-transformer';
 import { IManifestRepository } from '../../../../domain/transfers/manifest-repository.interface';
 import { MasterFacilityRepository } from '../../../../infrastructure/registries';
+import { ManifestLoggedEvent } from '../../events/manifest-logged.event';
 
 @CommandHandler(LogManifestCommand)
 export class LogManifestHandler implements ICommandHandler<LogManifestCommand> {
@@ -25,12 +31,12 @@ export class LogManifestHandler implements ICommandHandler<LogManifestCommand> {
     @Inject('IManifestRepository')
     private readonly manifestRepository: IManifestRepository,
     private readonly publisher: EventPublisher,
+    private readonly eventBus: EventBus,
   ) {}
 
   async execute(command: LogManifestCommand): Promise<any> {
     // check if manifest Exists
     const manifestExists = await this.manifestRepository.get(command.id);
-
     if (manifestExists) {
       return;
     }
@@ -53,6 +59,8 @@ export class LogManifestHandler implements ICommandHandler<LogManifestCommand> {
     this.publisher.mergeObjectContext(facility).commit();
 
     Logger.log(`Manifest processed ${facility.name}`);
+
+    this.eventBus.publish(new ManifestLoggedEvent(facility._id, manifest._id));
 
     return newManifest;
   }

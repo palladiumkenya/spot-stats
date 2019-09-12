@@ -43,7 +43,7 @@ export class ProfileList extends Component<Props, {}> {
         />
         <Column field="docket" header="Docket" />
         <Column field="patientCount" header="Expected" />
-        <Column field="recieved" header="Recieved" />
+        <Column field="recievedCount" header="Recieved" />
         <Column field="logDate" header="Updated" />
         <Column
           body={this.manageTemplate}

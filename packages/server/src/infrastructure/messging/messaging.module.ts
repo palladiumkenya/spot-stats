@@ -1,19 +1,12 @@
 import { Module } from '@nestjs/common';
-import { ClientProxyFactory } from '@nestjs/microservices';
-import { ConfigService } from '../../config/config.service';
+import { messagingProviders } from './messaging.providers';
 import { ConfigModule } from '../../config/config.module';
-
-const messagingFactory = {
-  provide: 'GLOBE_SERVICE',
-  useFactory: (configService: ConfigService) => {
-    return ClientProxyFactory.create(configService.QueueConfig);
-  },
-  inject: [ConfigService],
-};
+import { MessagingService } from './messaging.service';
+import { CqrsModule } from '@nestjs/cqrs';
 
 @Module({
-  imports: [ConfigModule],
-  providers: [messagingFactory],
-  exports: [messagingFactory],
+  imports: [...messagingProviders, ConfigModule, CqrsModule],
+  exports: [...messagingProviders, MessagingService],
+  providers: [MessagingService],
 })
 export class MessagingModule {}

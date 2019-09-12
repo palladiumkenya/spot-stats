@@ -53,7 +53,16 @@ export class Facility extends AggregateRoot {
       });
     this.apply(new FacilityStatsUpdatedEvent(this._id));
   }
+  getPatientSummary(docket: string): any {
+    const psum = this.summaries.find(
+      s => s.docket.name === docket && s.extract.isPatient,
+    );
 
+    if (psum) {
+      return psum.recieved;
+    }
+    return null;
+  }
   resetSummary(_id: string, expected: any, updated: Date) {
     this.summaries.forEach(s => {
       if (s.extract._id === _id) {
@@ -69,6 +78,6 @@ export class Facility extends AggregateRoot {
     if (s) {
       return s;
     }
-    return null;
+    return undefined;
   }
 }

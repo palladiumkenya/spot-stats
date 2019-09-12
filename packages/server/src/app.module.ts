@@ -10,6 +10,8 @@ import { DatabaseModule } from './database/database.module';
 import { CourtsModule } from './application/courts/courts.module';
 import { TransfersModule } from './application/transfers/transfers.module';
 import { RegistriesModule } from './application/registries';
+import { MessagingModule } from './infrastructure/messging/messaging.module';
+import { MessagingService } from './infrastructure/messging/messaging.service';
 
 const cloudUrl = `mongodb+srv://livetest:maun@cluster0-v6fcj.mongodb.net/dwapiGlobe?retryWrites=true&w=majority`;
 const localUrl = 'mongodb://localhost/dwapiGlobe';
@@ -17,6 +19,7 @@ const localUrl = 'mongodb://localhost/dwapiGlobe';
 @Module({
   imports: [
     ConfigModule,
+    MessagingModule,
     RouterModule.forRoutes(routes),
     CqrsModule,
     DatabaseModule,
@@ -26,6 +29,5 @@ const localUrl = 'mongodb://localhost/dwapiGlobe';
     TransfersModule,
   ],
   controllers: [AppController],
-  providers: [],
 })
 export class AppModule {}

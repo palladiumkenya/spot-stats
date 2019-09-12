@@ -24,6 +24,7 @@ describe('Manifest Repository  Tests', () => {
       m.isCurrent = false;
       m.logDate = new Date(2009, 1, 1);
     });
+    manifests[3].isCurrent = true;
     manifests[3].logDate = new Date();
     testManifests = manifests;
     await dbHelper.initConnection();
@@ -50,6 +51,11 @@ describe('Manifest Repository  Tests', () => {
     const data = await repository.getCurrent();
     expect(data.length).toBeGreaterThan(0);
     data.forEach(d => Logger.debug(`${d.name}`));
+  });
+
+  it('should load Current by Fac', async () => {
+    const data = await repository.getCurrent(manifests[3].facility);
+    expect(data).not.toBeUndefined();
   });
 
   it('should update Current', async () => {
