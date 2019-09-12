@@ -51,6 +51,7 @@
     "@types/supertest": "2.0.7",
     "@types/uuid": "^3.4.5",
     "jest": "24.7.1",
+    "jest-junit": "^8.0.0",
     "prettier": "1.17.0",
     "supertest": "4.0.2",
     "ts-jest": "24.0.2",
@@ -73,6 +74,11 @@
       "^.+\\.(t|j)s$": "ts-jest"
     },
     "coverageDirectory": "../coverage",
-    "testEnvironment": "node"
+    "testEnvironment": "node",
+    "reporters": [
+      "default",
+      "jest-junit"
+    ],
+    "testResultsProcessor": "jest-junit"
   }
 }
