@@ -74,4 +74,15 @@ export class MessagingService {
       ),
     );
   }
+
+  @RabbitSubscribe({
+    exchange: 'globe.exchange',
+    routingKey: 'practice.route',
+    queue: 'practice.queue',
+  })
+  public async subscribeToGlobe(data: any) {
+    const message = JSON.parse(data);
+    Logger.log(`+++++++++++ ${message.label} +++++++++`);
+    Logger.log(`Received  ${message}`);
+  }
 }

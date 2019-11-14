@@ -7,11 +7,13 @@ import { FacilityEnrolledEvent } from '../../application/transfers/events/facili
 import { ManifestLoggedEvent } from '../../application/transfers/events/manifest-logged.event';
 import { FacilityUpdatedEvent } from '../../application/transfers/events/facility-updated.event';
 import { FacilityStatsUpdatedEvent } from '../../application/transfers/events/facility-stats-updated.event';
+import { Metric } from '../metrices/metric';
 
 export class Facility extends AggregateRoot {
   manifests?: any[] = [];
   summaries?: Summary[] = [];
   masterFacility?: MasterFacility;
+  metrics?: Metric[] = [];
 
   constructor(public _id: string, public code: number, public name: string) {
     super();
@@ -53,6 +55,7 @@ export class Facility extends AggregateRoot {
       });
     this.apply(new FacilityStatsUpdatedEvent(this._id));
   }
+
   getPatientSummary(docket: string): any {
     const psum = this.summaries.find(
       s => s.docket.name === docket && s.extract.isPatient,
@@ -63,6 +66,7 @@ export class Facility extends AggregateRoot {
     }
     return null;
   }
+
   resetSummary(_id: string, expected: any, updated: Date) {
     this.summaries.forEach(s => {
       if (s.extract._id === _id) {

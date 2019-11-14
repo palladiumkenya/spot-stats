@@ -4,6 +4,8 @@ import { MasterFacility } from '../src/domain/registries/master-facility';
 import * as uuid from 'uuid';
 import { Facility } from '../src/domain/transfers/facility';
 import { Manifest, Summary } from '../src/domain';
+import { Metric } from '../src/domain/metrices/metric';
+import { Measure } from '../src/domain/metrices/measure';
 
 export const getTestDockets = (count = 2, dcount = 2) => {
   const data: Docket[] = [];
@@ -89,6 +91,19 @@ const getSummaries = () => {
     ),
   );
   return data;
+};
+
+export const getTestMeasures = (facid, count = 2) => {
+  const testMeasures: Measure[] = [];
+  for (let i = 0; i < count; i++) {
+    testMeasures.push(new Measure(`m${i}`, 'MPI', `m${i}`, `m${i}`));
+  }
+
+  const testMetrics: Metric[] = [];
+  for (let i = 0; i < count; i++) {
+    testMetrics.push(new Metric(testMeasures[i]._id, facid, `Fname${i}`));
+  }
+  return { testMeasures, testMetrics };
 };
 
 export const getTestStatsData = () => {
