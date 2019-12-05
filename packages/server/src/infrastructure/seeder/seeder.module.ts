@@ -5,20 +5,23 @@ import { MasterFacilitySeeder } from './master-facility.seeder';
 import { DocketSeeder } from './docket.seeder';
 import { RegistriesInfrastructureModule } from '../registries/registries-infrastructure.module';
 import { TransfersInfrastructureModule } from '../transfers/transfers-infrastructure.module';
+import { MeasureSeeder } from './measure.seeder';
+import { MetricsInfrastructureModule } from '../metrices/metrics-infrastructure.module';
 
 @Module({
-  imports: [CourtsInfrastructureModule, RegistriesInfrastructureModule,
-    TransfersInfrastructureModule],
-  providers: [
-    SeedReader, MasterFacilitySeeder, DocketSeeder,
+  imports: [
+    CourtsInfrastructureModule,
+    RegistriesInfrastructureModule,
+    TransfersInfrastructureModule,
+    MetricsInfrastructureModule,
   ],
+  providers: [SeedReader, MasterFacilitySeeder, DocketSeeder, MeasureSeeder],
 })
 export class SeederModule {
-
   constructor(
     private readonly docketSeeder: DocketSeeder,
-    private readonly masterFacilitySeeder: MasterFacilitySeeder) {
-  }
+    private readonly masterFacilitySeeder: MasterFacilitySeeder,
+  ) {}
 
   async seedData() {
     await this.docketSeeder.seed();

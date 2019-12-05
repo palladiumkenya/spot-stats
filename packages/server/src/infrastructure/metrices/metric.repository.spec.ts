@@ -5,6 +5,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { MetricsInfrastructureModule } from './metrics-infrastructure.module';
 import { IMetricRepository } from '../../domain/metrices/metric-repository.interface';
 import { getTestFacilities, getTestMeasures } from '../../../test/test.data';
+import { TransfersInfrastructureModule } from '../transfers';
 
 describe('Metric Repository Tests', () => {
   let module: TestingModule;
@@ -18,13 +19,15 @@ describe('Metric Repository Tests', () => {
     module = await Test.createTestingModule({
       imports: [
         MetricsInfrastructureModule,
+        TransfersInfrastructureModule,
         MongooseModule.forRoot(dbHelper.url, dbHelper.options),
       ],
     }).compile();
 
     await dbHelper.initConnection();
     await dbHelper.seedDb('facilities', facilities);
-    await dbHelper.seedDb('measures', testMetrics);
+    await dbHelper.seedDb('measures', testMeasures);
+    await dbHelper.seedDb('metrics', testMetrics);
     repository = module.get<IMetricRepository>('IMetricRepository');
   });
 
@@ -37,9 +40,9 @@ describe('Metric Repository Tests', () => {
     expect(repository).toBeDefined();
   });
 
-  it('should load Metrics', async () => {
-    const data = await repository.getAll();
+  it('should load Facility Metrics', async () => {
+    const data = await repository.findById(testFacilities[0]._id);
     expect(data.length).toBeGreaterThan(0);
-    data.forEach(d => Logger.debug(`${d.name}`));
+    data.forEach(d => Logger.debug(`${d.report}`));
   });
 });

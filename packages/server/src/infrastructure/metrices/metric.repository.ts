@@ -9,4 +9,12 @@ export class MetricRepository extends BaseRepository<Metric>
   constructor(@InjectModel(Metric.name) model: Model<Metric>) {
     super(model);
   }
+
+  async findById(id: string): Promise<Metric[]> {
+    const result = await this.model
+      .find({ facility: id })
+      .populate('measure')
+      .exec();
+    return result;
+  }
 }

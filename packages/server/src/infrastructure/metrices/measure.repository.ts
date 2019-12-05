@@ -9,4 +9,12 @@ export class MeasureRepository extends BaseRepository<Measure>
   constructor(@InjectModel(Measure.name) model: Model<Measure>) {
     super(model);
   }
+
+  async getByName(area: string, name: string): Promise<Measure> {
+    const result = await this.model.find({ area, name }).exec();
+    if (result && result.length > 0) {
+      return result[0].toObject();
+    }
+    return undefined;
+  }
 }

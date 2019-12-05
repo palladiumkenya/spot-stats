@@ -19,6 +19,9 @@ export class ProfileDetail extends Component<Prop, {}> {
       const htsSummaries = this.props.profile.summaries!.filter(
         x => x.docket.name === "HTS"
       );
+      const mpiSummaries = this.props.profile.summaries!.filter(
+        x => x.docket.name === "MPI"
+      );
       return (
         <div>
           <div className="p-grid">
@@ -40,8 +43,18 @@ export class ProfileDetail extends Component<Prop, {}> {
                     <Column field="updated" header="Update" />
                   </DataTable>
                 </TabPanel>
+
                 <TabPanel header="HTS">
                   <DataTable value={htsSummaries}>
+                    <Column field="extract.display" header="Extract" />
+                    <Column field="recieved" header="Recieved" />
+                    <Column field="expected" header="Expected" />
+                    <Column field="updated" header="Update" />
+                  </DataTable>
+                </TabPanel>
+
+                <TabPanel header="MPI">
+                  <DataTable value={mpiSummaries}>
                     <Column field="extract.display" header="Extract" />
                     <Column field="recieved" header="Recieved" />
                     <Column field="expected" header="Expected" />
@@ -60,6 +73,7 @@ export class ProfileDetail extends Component<Prop, {}> {
                 <Column field="patientCount" header="Patient Count" />
               </DataTable>
             </div>
+            <div className="p-col-8">METRICS</div>
           </div>
         </div>
       );

@@ -10,17 +10,15 @@ import {
   IDocketRepository,
   IFacilityRepository,
   IMasterFacilityRepository,
-  Manifest,
 } from '../../../../domain';
 import * as uuid from 'uuid';
-import { LogManifestCommand } from '../log-manifest.command';
 import { plainToClass } from 'class-transformer';
-import { IManifestRepository } from '../../../../domain/transfers/manifest-repository.interface';
-import { MasterFacilityRepository } from '../../../../infrastructure/registries';
-import { ManifestLoggedEvent } from '../../events/manifest-logged.event';
+import { IMetricRepository } from '../../../../domain/metrices/metric-repository.interface';
+import { LogMetricCommand } from '../log-metric.command';
+import { MetricLoggedEvent } from '../../events/metric-logged.event';
+import { Metric } from '../../../../domain/metrices/metric';
 
-@CommandHandler(LogManifestCommand)
-export class LogManifestHandler implements ICommandHandler<LogManifestCommand> {
+export class LogMetricHandler implements ICommandHandler<LogMetricCommand> {
   constructor(
     @Inject('IMasterFacilityRepository')
     private readonly masterFacilityRepository: IMasterFacilityRepository,
@@ -28,44 +26,44 @@ export class LogManifestHandler implements ICommandHandler<LogManifestCommand> {
     private readonly docketRepository: IDocketRepository,
     @Inject('IFacilityRepository')
     private readonly facilityRepository: IFacilityRepository,
-    @Inject('IManifestRepository')
-    private readonly manifestRepository: IManifestRepository,
+    @Inject('IMetricRepository')
+    private readonly metricRepository: IMetricRepository,
     private readonly publisher: EventPublisher,
     private readonly eventBus: EventBus,
   ) {}
 
-  async execute(command: LogManifestCommand): Promise<any> {
-    // check if manifest Exists
-    const manifestExists = await this.manifestRepository.get(command.id);
-    if (manifestExists) {
+  async execute(command: LogMetricCommand): Promise<any> {
+    // check if metric Exists
+    const metricExists = await this.metricRepository.get(command.id);
+    if (metricExists) {
       return;
     }
 
     // check or enroll Facility
     const facility = await this.enrollFacility(command);
 
-    const newManifest = this.createManifest(command);
+    const newMetric = this.createMetric(command);
     if (facility) {
-      newManifest.assignFacility(facility);
-      facility.addManifest(newManifest._id);
+      newMetric.facility(facility._id);
+      facility.addMetric(newMetric._id);
     }
 
-    // log manifest
-    const manifest = await this.manifestRepository.create(newManifest);
-    await this.manifestRepository.updateCurrent(newManifest.code);
-    this.publisher.mergeObjectContext(newManifest).commit();
+    // log metric
+    const metric = await this.metricRepository.create(newMetric);
+    await this.metricRepository.updateCurrent(newMetric.code);
+    this.publisher.mergeObjectContext(newMetric).commit();
 
     const enrolledFacility = await this.facilityRepository.update(facility);
     this.publisher.mergeObjectContext(facility).commit();
 
-    Logger.log(`Manifest processed ${facility.name}`);
+    Logger.log(`Metric processed ${facility.name}`);
 
-    this.eventBus.publish(new ManifestLoggedEvent(facility._id, manifest._id));
+    this.eventBus.publish(new MetricLoggedEvent(facility._id, metric._id));
 
-    return newManifest;
+    return newMetric;
   }
 
-  async enrollFacility(command: LogManifestCommand): Promise<Facility> {
+  async enrollFacility(command: LogMetricCommand): Promise<Facility> {
     const facility = await this.facilityRepository.findByCode(
       command.facilityCode,
     );
@@ -91,18 +89,15 @@ export class LogManifestHandler implements ICommandHandler<LogManifestCommand> {
     return newFacility;
   }
 
-  createManifest(command: LogManifestCommand): Manifest {
-    const manifest = new Manifest(
+  createMetric(command: LogMetricCommand): Metric {
+    const metric = new Metric(
       command.id,
       command.facilityCode,
       command.facilityName,
+      command.area,
       command.logDate,
-      command.buildDate,
-      command.docket,
-      command.patientCount,
-      command.cargo,
-      command.isCurrent,
+      command.logReport,
     );
-    return manifest;
+    return metric;
   }
 }

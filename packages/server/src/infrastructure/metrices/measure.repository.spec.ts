@@ -37,9 +37,12 @@ describe('Measure Repository Tests', () => {
     expect(repository).toBeDefined();
   });
 
-  it('should load Measures', async () => {
-    const data = await repository.getAll();
-    expect(data.length).toBeGreaterThan(0);
-    data.forEach(d => Logger.debug(`${d.name}`));
+  it('should load Measures by Name', async () => {
+    const data = await repository.getByName(
+      testMeasures[0].area,
+      testMeasures[0].name,
+    );
+    expect(data).not.toBeUndefined();
+    Logger.debug(`${data.name}`);
   });
 });

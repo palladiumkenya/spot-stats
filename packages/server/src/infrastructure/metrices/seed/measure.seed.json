@@ -1,0 +1,51 @@
+[
+  {
+    "_id": "7eb13e4a-bb7b-11e9-9cb5-2a2ae2dbcce4",
+    "name": "EmrName",
+    "area": "App",
+    "display": "Emr Name",
+    "description": "Emr Name"
+  },
+  {
+    "_id": "7eb14e4a-bb7b-11e9-9cb5-2a2ae2dbcce4",
+    "name": "EmrVersion",
+    "area": "App",
+    "display": "Emr Version",
+    "description": "Emr Version"
+  },
+  {
+    "_id": "7eb15e4a-bb7b-11e9-9cb5-2a2ae2dbcce4",
+    "name": "LastLoginDate",
+    "area": "App",
+    "display": "Last Login Date",
+    "description": "Last Login Date"
+  },
+  {
+    "_id": "7eb16e4a-bb7b-11e9-9cb5-2a2ae2dbcce4",
+    "name": "LastMOH731RunDate",
+    "area": "App",
+    "display": "Last MOH 731 Run Date",
+    "description": "Last MOH731 Run Date"
+  },
+  {
+    "_id": "7eb17e4a-bb7b-11e9-9cb5-2a2ae2dbcce4",
+    "name": "DwapiVersion",
+    "area": "MasterPatientIndex",
+    "display": "Dwapi Version",
+    "description": "Dwapi Version"
+  },
+  {
+    "_id": "7eb18e4a-bb7b-11e9-9cb5-2a2ae2dbcce4",
+    "name": "ExtractLoaded",
+    "area": "MasterPatientIndex",
+    "display": "Extract Loaded",
+    "description": "Extract Loaded"
+  },
+  {
+    "_id": "7eb19e4a-bb7b-11e9-9cb5-2a2ae2dbcce4",
+    "name": "ExtractSent",
+    "area": "MasterPatientIndex",
+    "display": "Extract Sent",
+    "description": "Extract Sent"
+  }
+]

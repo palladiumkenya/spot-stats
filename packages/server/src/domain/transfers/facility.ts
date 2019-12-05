@@ -13,7 +13,7 @@ export class Facility extends AggregateRoot {
   manifests?: any[] = [];
   summaries?: Summary[] = [];
   masterFacility?: MasterFacility;
-  metrics?: Metric[] = [];
+  metrics?: any[] = [];
 
   constructor(public _id: string, public code: number, public name: string) {
     super();
@@ -22,6 +22,11 @@ export class Facility extends AggregateRoot {
 
   addManifest(manifestId: string) {
     this.manifests.push(manifestId);
+    this.apply(new FacilityUpdatedEvent(this._id));
+  }
+
+  addMetric(metricId: string) {
+    this.metrics.push(metricId);
     this.apply(new FacilityUpdatedEvent(this._id));
   }
 
