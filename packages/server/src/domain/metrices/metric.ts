@@ -4,7 +4,13 @@ import { AggregateRoot } from '@nestjs/cqrs';
 export class Metric extends AggregateRoot {
   public _id: string;
 
-  constructor(public measure: any, public facility: any, public report: any) {
+  constructor(
+    public mId: string,
+    public measure: any,
+    public facility: any,
+    public report: any,
+    public facilityManifestId: string,
+  ) {
     super();
     this._id = uuid.v1();
   }

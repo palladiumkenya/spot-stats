@@ -4,7 +4,9 @@ import { Facility, Manifest } from '../../../domain';
 
 export const metricSchema = new mongoose.Schema({
   _id: String,
+  mId: String,
   measure: [{ type: String, ref: Facility.name }],
   facility: [{ type: String, ref: Facility.name }],
   report: Schema.Types.Mixed,
+  facilityManifestId: String,
 });

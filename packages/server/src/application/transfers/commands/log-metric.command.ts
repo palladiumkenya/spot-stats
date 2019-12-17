@@ -3,8 +3,8 @@ export class LogMetricCommand {
     public id: string,
     public facilityCode: number,
     public facilityName: string,
-    public area: string,
-    public logDate: Date,
-    public logReport: any,
+    public cargo: any,
+    public cargoType: number,
+    public facilityManifestId: string,
   ) {}
 }

@@ -101,7 +101,9 @@ export const getTestMeasures = (facid, count = 2) => {
 
   const testMetrics: Metric[] = [];
   for (let i = 0; i < count; i++) {
-    testMetrics.push(new Metric(testMeasures[i]._id, facid, `Fname${i}`));
+    testMetrics.push(
+      new Metric(uuid.v1(), testMeasures[i]._id, facid, `Fname${i}`, uuid.v1()),
+    );
   }
   return { testMeasures, testMetrics };
 };

@@ -17,6 +17,7 @@ import { IMetricRepository } from '../../../../domain/metrices/metric-repository
 import { LogMetricCommand } from '../log-metric.command';
 import { MetricLoggedEvent } from '../../events/metric-logged.event';
 import { Metric } from '../../../../domain/metrices/metric';
+import { getTestMeasures } from '../../../../../test/test.data';
 
 export class LogMetricHandler implements ICommandHandler<LogMetricCommand> {
   constructor(
@@ -34,7 +35,7 @@ export class LogMetricHandler implements ICommandHandler<LogMetricCommand> {
 
   async execute(command: LogMetricCommand): Promise<any> {
     // check if metric Exists
-    const metricExists = await this.metricRepository.get(command.id);
+    const metricExists = await this.metricRepository.findByMetricId(command.id);
     if (metricExists) {
       return;
     }
@@ -50,7 +51,7 @@ export class LogMetricHandler implements ICommandHandler<LogMetricCommand> {
 
     // log metric
     const metric = await this.metricRepository.create(newMetric);
-    await this.metricRepository.updateCurrent(newMetric.code);
+    // await this.metricRepository.updateCurrent(newMetric.code);
     this.publisher.mergeObjectContext(newMetric).commit();
 
     const enrolledFacility = await this.facilityRepository.update(facility);
@@ -90,14 +91,18 @@ export class LogMetricHandler implements ICommandHandler<LogMetricCommand> {
   }
 
   createMetric(command: LogMetricCommand): Metric {
+    const measure = this.generateMeasure(command.cargoType, command.cargo);
     const metric = new Metric(
       command.id,
       command.facilityCode,
       command.facilityName,
-      command.area,
-      command.logDate,
-      command.logReport,
+      measure,
+      command.facilityManifestId,
     );
     return metric;
+  }
+
+  generateMeasure(any: number, cargo: any) {
+    return '';
   }
 }

@@ -8,6 +8,7 @@ import { manifestSchema } from '../transfers';
 import { plainToClass } from 'class-transformer';
 import { Manifest } from '../../domain';
 import { InitializeSummariesCommand } from '../../application/transfers/commands/initialize-summaries-command';
+import { LogMetricCommand } from '../../application/transfers/commands/log-metric.command';
 
 @Injectable()
 export class MessagingService {
@@ -71,6 +72,28 @@ export class MessagingService {
         stats.stats,
         stats.updated,
         stats.manifestId,
+      ),
+    );
+  }
+
+  @RabbitSubscribe({
+    exchange: 'stats.exchange',
+    routingKey: 'metric.route',
+    queue: 'metric.queue',
+  })
+  public async subscribeToMetric(data: any) {
+    const metric = JSON.parse(data);
+    Logger.log(`+++++++++++++++++++++++++++++++++++++`);
+    Logger.log(`Received Metric ${metric.facilityName}`);
+
+    await this.commandBus.execute(
+      new LogMetricCommand(
+        metric.id,
+        metric.facilityCode,
+        metric.facilityName,
+        metric.cargo,
+        metric.cargoType,
+        metric.facilityManifestId,
       ),
     );
   }
