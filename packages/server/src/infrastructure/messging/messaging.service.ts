@@ -83,6 +83,9 @@ export class MessagingService {
   })
   public async subscribeToMetric(data: any) {
     const metric = JSON.parse(data);
+    if (metric && metric.cargo) {
+      metric.cargo = JSON.parse(metric.cargo);
+    }
     Logger.log(`+++++++++++++++++++++++++++++++++++++`);
     Logger.log(`Received Metric ${metric.facilityName}`);
 

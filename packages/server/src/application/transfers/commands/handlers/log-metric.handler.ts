@@ -3,6 +3,7 @@ import {
   EventBus,
   EventPublisher,
   ICommandHandler,
+  IMessageSource,
 } from '@nestjs/cqrs';
 import { Inject, Logger } from '@nestjs/common';
 import {
@@ -18,6 +19,8 @@ import { LogMetricCommand } from '../log-metric.command';
 import { MetricLoggedEvent } from '../../events/metric-logged.event';
 import { Metric } from '../../../../domain/metrices/metric';
 import { getTestMeasures } from '../../../../../test/test.data';
+import { IMeasureRepository } from '../../../../domain/metrices/measure-repository.interface';
+import { forEachComment } from 'tslint';
 
 export class LogMetricHandler implements ICommandHandler<LogMetricCommand> {
   constructor(
@@ -29,6 +32,8 @@ export class LogMetricHandler implements ICommandHandler<LogMetricCommand> {
     private readonly facilityRepository: IFacilityRepository,
     @Inject('IMetricRepository')
     private readonly metricRepository: IMetricRepository,
+    @Inject('IMeasureRepository')
+    private readonly measureRepository: IMeasureRepository,
     private readonly publisher: EventPublisher,
     private readonly eventBus: EventBus,
   ) {}
@@ -43,25 +48,27 @@ export class LogMetricHandler implements ICommandHandler<LogMetricCommand> {
     // check or enroll Facility
     const facility = await this.enrollFacility(command);
 
-    const newMetric = this.createMetric(command);
-    if (facility) {
-      newMetric.facility(facility._id);
-      facility.addMetric(newMetric._id);
+    const newMetrics = await this.createMetrics(command);
+    for (const newMetric of newMetrics) {
+      if (facility) {
+        newMetric.facility(facility._id);
+        facility.addMetric(newMetric._id);
+      }
+
+      // log metric
+      const metric = await this.metricRepository.create(newMetric);
+      // await this.metricRepository.updateCurrent(newMetric.code);
+      this.publisher.mergeObjectContext(newMetric).commit();
+
+      const enrolledFacility = await this.facilityRepository.update(facility);
+      this.publisher.mergeObjectContext(facility).commit();
+
+      Logger.log(`Metric processed ${facility.name}`);
+
+      this.eventBus.publish(new MetricLoggedEvent(facility._id, metric._id));
     }
 
-    // log metric
-    const metric = await this.metricRepository.create(newMetric);
-    // await this.metricRepository.updateCurrent(newMetric.code);
-    this.publisher.mergeObjectContext(newMetric).commit();
-
-    const enrolledFacility = await this.facilityRepository.update(facility);
-    this.publisher.mergeObjectContext(facility).commit();
-
-    Logger.log(`Metric processed ${facility.name}`);
-
-    this.eventBus.publish(new MetricLoggedEvent(facility._id, metric._id));
-
-    return newMetric;
+    return newMetrics;
   }
 
   async enrollFacility(command: LogMetricCommand): Promise<Facility> {
@@ -102,7 +109,83 @@ export class LogMetricHandler implements ICommandHandler<LogMetricCommand> {
     return metric;
   }
 
-  generateMeasure(any: number, cargo: any) {
+  async createMetrics(command: LogMetricCommand): Promise<Metric[]> {
+    const metrics: Metric[] = [];
+    if (command.cargoType === 1) {
+      // EmrName
+      const metric1 = new Metric(
+        command.id,
+        '7eb13e4a-bb7b-11e9-9cb5-2a2ae2dbcce4',
+        command.facilityCode,
+        command.cargo.EmrName,
+        command.facilityManifestId,
+      );
+      metrics.push(metric1);
+
+      // EmrVersion
+      const metric2 = new Metric(
+        command.id,
+        '7eb14e4a-bb7b-11e9-9cb5-2a2ae2dbcce4',
+        command.facilityCode,
+        command.cargo.EmrVersion,
+        command.facilityManifestId,
+      );
+      metrics.push(metric2);
+
+      // LastLoginDate
+      const metric3 = new Metric(
+        command.id,
+        '7eb15e4a-bb7b-11e9-9cb5-2a2ae2dbcce4',
+        command.facilityCode,
+        command.cargo.LastLoginDate,
+        command.facilityManifestId,
+      );
+      metrics.push(metric3);
+
+      // LastMOH731RunDate
+      const metric4 = new Metric(
+        command.id,
+        '7eb16e4a-bb7b-11e9-9cb5-2a2ae2dbcce4',
+        command.facilityCode,
+        command.cargo.LastMOH731RunDate,
+        command.facilityManifestId,
+      );
+      metrics.push(metric4);
+    }
+
+    if (command.cargoType === 2) {
+      const measure = await this.generateMeasure(
+        command.cargoType,
+        command.cargo,
+      );
+      const metric = new Metric(
+        command.id,
+        measure,
+        command.facilityCode,
+        command.cargo.LogDate,
+        command.facilityManifestId,
+      );
+      metrics.push(metric);
+    }
+
+    return metrics;
+  }
+
+  async generateMeasure(any: number, cargo: any): Promise<string> {
+    const area = cargo.Name;
+    let name;
+
+    if (cargo.Action === 'Sent') {
+      name = 'ExtractSent';
+    }
+    if (cargo.Action === 'Loaded') {
+      name = 'ExtractLoaded';
+    }
+
+    const m = await this.measureRepository.getByName(area, name);
+    if (m) {
+      return m._id;
+    }
     return '';
   }
 }
