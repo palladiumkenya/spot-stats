@@ -14,13 +14,18 @@ import { FacilitiesController } from './controllers/facilities.controller';
 import { ManifestsController } from './controllers/manifests.controller';
 import { FacilityEnrolledHandler } from './events/handlers/facility-enrolled.handler';
 import { ManifestLoggedHandler } from './events/handlers/manifest-logged.handler';
+import { MetricLoggedHandler } from './events/handlers/metric-logged.handler';
 
 const CommandHandlers = [
   LogManifestHandler,
   UpdateStatsHandler,
   InitializeSummariesHandler,
 ];
-const EventHandlers = [FacilityEnrolledHandler, ManifestLoggedHandler];
+const EventHandlers = [
+  FacilityEnrolledHandler,
+  ManifestLoggedHandler,
+  MetricLoggedHandler,
+];
 const QueryHandlers = [GetStatsHandler, GetSummaryHandler];
 
 @Module({

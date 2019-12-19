@@ -12,6 +12,7 @@ import { TransfersModule } from './application/transfers/transfers.module';
 import { RegistriesModule } from './application/registries';
 import { MessagingModule } from './infrastructure/messging/messaging.module';
 import { MessagingService } from './infrastructure/messging/messaging.service';
+import { MetricesModule } from './application/metrices/metrices.module';
 
 const cloudUrl = `mongodb+srv://livetest:maun@cluster0-v6fcj.mongodb.net/dwapiGlobe?retryWrites=true&w=majority`;
 const localUrl = 'mongodb://localhost/dwapiGlobe';
@@ -27,6 +28,7 @@ const localUrl = 'mongodb://localhost/dwapiGlobe';
     RegistriesModule,
     SeederModule,
     TransfersModule,
+    MetricesModule,
   ],
   controllers: [AppController],
 })

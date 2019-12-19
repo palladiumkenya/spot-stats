@@ -4,10 +4,6 @@ import { ConfigService } from '../../config/config.service';
 import { CommandBus } from '@nestjs/cqrs';
 import { LogManifestCommand } from '../../application/transfers/commands/log-manifest.command';
 import { UpdateStatsCommand } from '../../application/transfers/commands/update-stats.command';
-import { manifestSchema } from '../transfers';
-import { plainToClass } from 'class-transformer';
-import { Manifest } from '../../domain';
-import { InitializeSummariesCommand } from '../../application/transfers/commands/initialize-summaries-command';
 import { LogMetricCommand } from '../../application/transfers/commands/log-metric.command';
 
 @Injectable()
