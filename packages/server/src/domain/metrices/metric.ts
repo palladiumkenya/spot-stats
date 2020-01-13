@@ -14,4 +14,8 @@ export class Metric extends AggregateRoot {
     super();
     this._id = uuid.v1();
   }
+
+  showDisplay(): string {
+    return `${this.measure}:${this.report}`;
+  }
 }

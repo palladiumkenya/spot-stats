@@ -40,8 +40,14 @@ describe('Metric Repository Tests', () => {
     expect(repository).toBeDefined();
   });
 
+  it('should load By Metric Id', async () => {
+    const data = await repository.findByMetricId(testMetrics[0].mId);
+    expect(data).not.toBeUndefined();
+    Logger.debug(`${data.measure}`);
+  });
+
   it('should load Facility Metrics', async () => {
-    const data = await repository.findById(testFacilities[0]._id);
+    const data = await repository.findByFacilityId(testFacilities[0]._id);
     expect(data.length).toBeGreaterThan(0);
     data.forEach(d => Logger.debug(`${d.report}`));
   });

@@ -49,7 +49,7 @@ export class LogMetricHandler implements ICommandHandler<LogMetricCommand> {
     const newMetrics = await this.createMetrics(command);
     for (const newMetric of newMetrics) {
       if (facility) {
-        newMetric.facility(facility._id);
+        newMetric.facility = facility._id;
         facility.addMetric(newMetric._id);
       }
 

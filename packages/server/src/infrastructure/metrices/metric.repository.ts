@@ -10,8 +10,11 @@ export class MetricRepository extends BaseRepository<Metric>
     super(model);
   }
 
-  async findByMetricId(id: string): Promise<Metric[]> {
-    const result = await this.model.find({ mId: id }).exec();
+  async findByMetricId(id: string): Promise<Metric> {
+    const result = await this.model
+      .find({ mId: id })
+      .populate('measure')
+      .exec();
 
     if (result && result.length > 0) {
       return result[0].toObject();
@@ -19,7 +22,7 @@ export class MetricRepository extends BaseRepository<Metric>
     return undefined;
   }
 
-  async findById(id: string): Promise<Metric[]> {
+  async findByFacilityId(id: string): Promise<Metric[]> {
     const result = await this.model
       .find({ facility: id })
       .populate('measure')
