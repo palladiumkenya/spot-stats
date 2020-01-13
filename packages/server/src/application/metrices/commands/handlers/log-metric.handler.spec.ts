@@ -77,20 +77,20 @@ describe('Log Metric Command Tests', () => {
 
     const facility = await facilityRepository.findByCode(command.facilityCode);
     expect(facility).not.toBeNull();
-    const metrics = await metricRepository.findByFacilityId(facility._id);
-    expect(metrics.length).toBeGreaterThan(0);
-    metrics.forEach(m => Logger.debug(`${m.measure}:${m.report}`));
+    const facMetrics = await metricRepository.findByFacilityId(facility._id);
+    expect(facMetrics.length).toBeGreaterThan(0);
+    facMetrics.forEach(m => Logger.debug(`${m.measure.name}:${m.report}`));
   });
 
   it('should log Dwapi Metric-New Facility', async () => {
-    const command = plainToClass(LogMetricCommand, metrices[0]);
+    const command = plainToClass(LogMetricCommand, metrices[1]);
     const result = await commandBus.execute(command);
     expect(result).not.toBeNull();
 
     const facility = await facilityRepository.findByCode(command.facilityCode);
     expect(facility).not.toBeNull();
-    const metrics = await metricRepository.findByFacilityId(facility._id);
-    expect(metrics.length).toBeGreaterThan(0);
-    metrics.forEach(m => Logger.debug(`${m.measure}:${m.report}`));
+    const facMetrics = await metricRepository.findByFacilityId(facility._id);
+    expect(facMetrics.length).toBeGreaterThan(0);
+    facMetrics.forEach(m => Logger.debug(`${m.measure.name}:${m.report}`));
   });
 });

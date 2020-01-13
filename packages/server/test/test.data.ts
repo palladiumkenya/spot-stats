@@ -553,10 +553,11 @@ export const getTestMetrices = () => {
       '  },\n' +
       '  "cargoType": 1,\n' +
       '  "facilityManifestId": "595BDE32-534A-4D0A-B7B9-1611E02F027F"\n' +
-      '},{\n' +
+      '},' +
+      '{\n' +
       '  "id": "3636D8AA-7E63-4283-99F9-AB4100796454",\n' +
-      '  "facilityCode": 10001,\n' +
-      '  "facilityName": "Demo Fac 01",\n' +
+      '  "facilityCode": 10000,\n' +
+      '  "facilityName": "Demo Fac 02",\n' +
       '  "cargo": {\n' +
       '    "Version": "2.3.9",\n' +
       '    "Name": "MasterPatientIndex",\n' +
@@ -569,7 +570,8 @@ export const getTestMetrices = () => {
       '  },\n' +
       '  "cargoType": 2,\n' +
       '  "facilityManifestId": "595BDE32-534A-4D0A-B7B9-1611E02F027F"\n' +
-      '}]',
+      '}' +
+      ']',
   );
   return cmds;
 };
