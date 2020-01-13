@@ -73,7 +73,16 @@ export class ProfileDetail extends Component<Prop, {}> {
                 <Column field="patientCount" header="Patient Count" />
               </DataTable>
             </div>
-            <div className="p-col-8">METRICS</div>
+            <div className="p-col-8">
+              <DataTable
+                value={this.props.profile.metrics}
+                header="Facility Metrics"
+              >
+                <Column field="measure.display" header="Measure" />
+                <Column field="report" header="Metric" />
+                <Column field="measure.description" header="Description" />
+              </DataTable>
+            </div>
           </div>
         </div>
       );

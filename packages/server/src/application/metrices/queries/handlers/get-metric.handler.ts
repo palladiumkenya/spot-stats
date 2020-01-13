@@ -10,6 +10,6 @@ export class GetMetricHandler implements IQueryHandler<GetMetricQuery, any> {
     private readonly repository: IMetricRepository,
   ) {}
   async execute(query: GetMetricQuery): Promise<any> {
-    return await this.repository.getAll();
+    return await this.repository.findByFacilityId(query.facId);
   }
 }

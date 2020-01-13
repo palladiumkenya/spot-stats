@@ -21,10 +21,12 @@ export class SeederModule {
   constructor(
     private readonly docketSeeder: DocketSeeder,
     private readonly masterFacilitySeeder: MasterFacilitySeeder,
+    private readonly measureSeeder: MeasureSeeder,
   ) {}
 
   async seedData() {
     await this.docketSeeder.seed();
     await this.masterFacilitySeeder.seed();
+    await this.measureSeeder.seed();
   }
 }

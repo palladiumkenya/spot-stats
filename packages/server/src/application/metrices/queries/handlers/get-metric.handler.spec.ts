@@ -48,8 +48,8 @@ describe('Get Metrics', () => {
     await dbHelper.closeConnection();
   });
 
-  it('should get Metrics', async () => {
-    const query = new GetMetricQuery();
+  it('should get Fac Metrics', async () => {
+    const query = new GetMetricQuery(testFacilities[0]._id);
     const result = await queryBus.execute<GetMetricQuery, any>(query);
     expect(result.length).toBeGreaterThan(0);
     result.forEach(d => Logger.debug(`${d.report}`));

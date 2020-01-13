@@ -1,1 +1,3 @@
-export class GetMetricQuery {}
+export class GetMetricQuery {
+  constructor(public facId: string) {}
+}

@@ -24,7 +24,10 @@ export class FacilityRepository extends BaseRepository<Facility>
     const result = await this.model
       .findById(id)
       .populate('manifests')
-      .populate('metrics')
+      .populate({
+        path: 'metrics',
+        populate: { path: 'measure' },
+      })
       .exec();
     if (result) {
       return result.toObject();

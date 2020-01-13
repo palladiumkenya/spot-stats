@@ -7,6 +7,7 @@ import { MetricsInfrastructureModule } from '../../infrastructure/metrices/metri
 import { CourtsInfrastructureModule } from '../../infrastructure/courts';
 import { TransfersInfrastructureModule } from '../../infrastructure/transfers';
 import { RegistriesInfrastructureModule } from '../../infrastructure/registries';
+import { MetricsController } from './controllers/metrics.controller';
 
 const CommandHandlers = [LogMetricHandler];
 const EventHandlers = [MetricLoggedHandler];
@@ -20,6 +21,7 @@ const QueryHandlers = [GetMetricHandler];
     MetricsInfrastructureModule,
     RegistriesInfrastructureModule,
   ],
+  controllers: [MetricsController],
   providers: [...CommandHandlers, ...QueryHandlers, ...EventHandlers],
 })
 export class MetricesModule {}
