@@ -22,7 +22,7 @@
   },
   {
     "_id": "7eb16e4a-bb7b-11e9-9cb5-2a2ae2dbcce4",
-    "name": "LastMOH731RunDate",
+    "name": "LastMoH731RunDate",
     "area": "App",
     "display": "Last MOH 731 Run Date",
     "description": "Last MOH731 Run Date"

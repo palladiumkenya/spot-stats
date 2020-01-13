@@ -547,7 +547,7 @@ export const getTestMetrices = () => {
       '    "EmrName": "Demo EMR",\n' +
       '    "EmrVersion": "v1.0.0.0",\n' +
       '    "LastLoginDate": "1983-07-04T00:00:00",\n' +
-      '    "LastMoH731RunDate": "1983-07-04T00:00:00",\n' +
+      '    "LastMOH731RunDate": "1983-07-04T00:00:00",\n' +
       '    "DateExtracted": "2019-12-13T16:12:21.159234",\n' +
       '    "Id": "ff22cd7c-083e-4d6d-b800-ab2200d9a053"\n' +
       '  },\n' +
