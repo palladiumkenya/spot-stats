@@ -4,7 +4,6 @@
 
 export * from './registries.module';
 export * from './commands/delete-master-facility.command';
-export * from './commands/refresh-facilities.command';
 export * from './commands/save-master-facility.command';
 export * from './commands/handlers/delete-master-facility.handler';
 export * from './commands/handlers/save-master-facility.handler';

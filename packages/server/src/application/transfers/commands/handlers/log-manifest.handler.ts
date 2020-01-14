@@ -40,6 +40,7 @@ export class LogManifestHandler implements ICommandHandler<LogManifestCommand> {
     if (manifestExists) {
       return;
     }
+
     // check or enroll Facility
     const facility = await this.enrollFacility(command);
 
@@ -50,7 +51,6 @@ export class LogManifestHandler implements ICommandHandler<LogManifestCommand> {
     }
 
     // log manifest
-
     const manifest = await this.manifestRepository.create(newManifest);
     await this.manifestRepository.updateCurrent(newManifest.code);
     this.publisher.mergeObjectContext(newManifest).commit();

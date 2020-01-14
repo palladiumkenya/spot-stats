@@ -1,13 +1,10 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { AmqpConnection, RabbitSubscribe } from '@nestjs-plus/rabbitmq';
+import { AmqpConnection, Nack, RabbitSubscribe } from '@nestjs-plus/rabbitmq';
 import { ConfigService } from '../../config/config.service';
 import { CommandBus } from '@nestjs/cqrs';
 import { LogManifestCommand } from '../../application/transfers/commands/log-manifest.command';
 import { UpdateStatsCommand } from '../../application/transfers/commands/update-stats.command';
-import { manifestSchema } from '../transfers';
-import { plainToClass } from 'class-transformer';
-import { Manifest } from '../../domain';
-import { InitializeSummariesCommand } from '../../application/transfers/commands/initialize-summaries-command';
+import { LogMetricCommand } from '../../application/metrices/commands/log-metric.command';
 
 @Injectable()
 export class MessagingService {
@@ -73,5 +70,42 @@ export class MessagingService {
         stats.manifestId,
       ),
     );
+  }
+
+  @RabbitSubscribe({
+    exchange: 'stats.exchange',
+    routingKey: 'metric.route',
+    queue: 'metric.queue',
+  })
+  public async subscribeToMetric(data: any) {
+    const metric = JSON.parse(data);
+    Logger.log(`+++++++++++++++++++++++++++++++++++++`);
+    Logger.log(`Received Metric ${metric.facilityName}`);
+
+    if (metric && metric.cargo) {
+      metric.cargo = JSON.parse(metric.cargo);
+    }
+
+    await this.commandBus.execute(
+      new LogMetricCommand(
+        metric.id,
+        metric.facilityCode,
+        metric.facilityName,
+        metric.cargo,
+        metric.cargoType,
+        metric.facilityManifestId,
+      ),
+    );
+  }
+
+  @RabbitSubscribe({
+    exchange: 'globe.exchange',
+    routingKey: 'practice.route',
+    queue: 'practice.queue',
+  })
+  public async subscribeToGlobe(data: any) {
+    const message = JSON.parse(data);
+    Logger.log(`+++++++++++ ${message.label} +++++++++`);
+    Logger.log(`Received  ${message}`);
   }
 }

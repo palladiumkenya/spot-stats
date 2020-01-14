@@ -32,15 +32,19 @@ export class ConfigService {
       ),
       STATS_RABBITMQ_EXCHANGE: Joi.string().default('stats.exchange'),
       STATS_RABBITMQ_EXCHANGE_TYPE: Joi.string().default('direct'),
-      STATS_RABBITMQ_ROUTES: Joi.string().default('manifest.route|stats.route'),
+      STATS_RABBITMQ_ROUTES: Joi.string().default(
+        'manifest.route|stats.route|metric.route',
+      ),
+      STATS_RABBITMQ_QUEUES: Joi.string().default(
+        'manifest.queue|stats.queue|metric.queue',
+      ),
       GLOBE_RABBITMQ_URI: Joi.string().default(
         'amqp://guest:guest@localhost:5672/spot',
       ),
       GLOBE_RABBITMQ_EXCHANGE: Joi.string().default('globe.exchange'),
       GLOBE_RABBITMQ_EXCHANGE_TYPE: Joi.string().default('direct'),
-      GLOBE_RABBITMQ_ROUTE: Joi.string().default(
-        'practice.route|practice.queue',
-      ),
+      GLOBE_RABBITMQ_ROUTES: Joi.string().default('practice.route'),
+      GLOBE_RABBITMQ_QUEUES: Joi.string().default('practice.queue'),
       STATS_MONGODB_URI: Joi.string().default('mongodb://localhost/dwapiStats'),
       STATS_KEY: Joi.string().default('koskedk.com+5-key.pem'),
       STATS_CERT: Joi.string().default('koskedk.com+5.pem'),
@@ -75,6 +79,9 @@ export class ConfigService {
   get QueueStatsRoutes(): string[] {
     return this.envConfig.STATS_RABBITMQ_ROUTES.split('|');
   }
+  get QueueStatsQueues(): string[] {
+    return this.envConfig.STATS_RABBITMQ_QUEUES.split('|');
+  }
 
   get QueueGlobeUri(): string {
     return String(this.envConfig.GLOBE_RABBITMQ_URI);
@@ -88,8 +95,12 @@ export class ConfigService {
     return String(this.envConfig.GLOBE_RABBITMQ_EXCHANGE_TYPE);
   }
 
-  get QueueGlobeRoute(): string {
-    return String(this.envConfig.GLOBE_RABBITMQ_ROUTE);
+  get QueueGlobeRoutes(): string[] {
+    return String(this.envConfig.GLOBE_RABBITMQ_ROUTES).split('|');
+  }
+
+  get QueueGlobeQueues(): string[] {
+    return String(this.envConfig.GLOBE_RABBITMQ_QUEUES).split('|');
   }
 
   get Database(): string {

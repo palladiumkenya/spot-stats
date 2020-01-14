@@ -1,8 +1,6 @@
 import { Module } from '@nestjs/common';
 import { CqrsModule } from '@nestjs/cqrs';
-import { ClientsModule, Transport } from '@nestjs/microservices';
 import { TransfersInfrastructureModule } from '../../infrastructure/transfers';
-import { LogManifestCommand } from './commands/log-manifest.command';
 import { UpdateStatsHandler } from './commands/handlers/update-stats.handler';
 import { InitializeSummariesHandler } from './commands/handlers/initialize-summaries.handler';
 import { LogManifestHandler } from './commands/handlers/log-manifest.handler';
