@@ -11,7 +11,7 @@ describe('Manifest Repository  Tests', () => {
   let repository: IManifestRepository;
   const dbHelper = new TestDbHelper();
   const { facilities, manifests } = getTestFacilities();
-  const testManifests = manifests;
+  let testManifests;
   beforeAll(async () => {
     module = await Test.createTestingModule({
       imports: [
@@ -19,7 +19,14 @@ describe('Manifest Repository  Tests', () => {
         MongooseModule.forRoot(dbHelper.url, dbHelper.options),
       ],
     }).compile();
-
+    manifests.forEach(m => {
+      m.code = 100;
+      m.isCurrent = false;
+      m.logDate = new Date(2009, 1, 1);
+    });
+    manifests[3].isCurrent = true;
+    manifests[3].logDate = new Date();
+    testManifests = manifests;
     await dbHelper.initConnection();
     await dbHelper.seedDb('facilities', facilities);
     await dbHelper.seedDb('manifests', testManifests);
@@ -44,5 +51,18 @@ describe('Manifest Repository  Tests', () => {
     const data = await repository.getCurrent();
     expect(data.length).toBeGreaterThan(0);
     data.forEach(d => Logger.debug(`${d.name}`));
+  });
+
+  it('should load Current by Fac', async () => {
+    const data = await repository.getCurrent(manifests[3].facility);
+    expect(data).not.toBeUndefined();
+  });
+
+  it('should update Current', async () => {
+    const data = await repository.updateCurrent(100);
+
+    const saved = await repository.getAll({ isCurrent: true });
+
+    expect(saved.length).toEqual(2);
   });
 });

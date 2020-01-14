@@ -1,13 +1,15 @@
 import { Manifest } from "./manifest";
 import { Summary } from "./summary";
 import { MasterFacility } from "./master-facility";
+import { Metric } from "./metric";
 
 export interface ProfileSummary {
   _id?: string;
   code?: string;
   name?: string;
   mId?: string;
-  summaries?: any[];
+  summaries?: Summary[];
   manifests?: Manifest[];
-  masterFacility?: any;
+  masterFacility?: MasterFacility;
+  metrics?: Metric[];
 }

@@ -197,23 +197,25 @@ export class App extends Component<Props, State> {
     this.menu = [
       {
         label: "Uploads",
-        icon: "dashboard",
+        icon: "cloud_upload",
         command: () => {
-          window.location.hash = "/";
+          window.location.hash = "/stats";
         }
       },
       {
         label: "Dockets",
         icon: "build",
         command: () => {
-          window.location.hash = "/dockets";
+          window.location.hash = "/stats/dockets";
         }
       }
     ];
   };
+
   componentDidCatch(error: Error, errorInfo: React.ErrorInfo): void {
-    console.error(error,errorInfo)
+    console.error(error, errorInfo);
   }
+
   render() {
     return (
       <div className="layout-wrapper" onClick={this.onDocumentClick}>
@@ -235,9 +237,12 @@ export class App extends Component<Props, State> {
             <div className="layout-content">
               <HashRouter>
                 <Switch>
-                  <Route exact path="/" component={ProfileHome} />
-                  <Route path="/dockets/" component={DocketHome} />
-                  <Route path="/showcase/:id" component={ProfileShowcase} />
+                  <Route exact path="/stats" component={ProfileHome} />
+                  <Route path="/stats/dockets/" component={DocketHome} />
+                  <Route
+                    path="/stats/showcase/:id"
+                    component={ProfileShowcase}
+                  />
                   <Route path="*" component={ProfileHome} />
                 </Switch>
               </HashRouter>

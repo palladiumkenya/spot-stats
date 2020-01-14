@@ -1,39 +1,25 @@
 import { Logger } from '@nestjs/common';
 import * as mongoose from 'mongoose';
+import { ConfigService } from '../src/config/config.service';
 
 export class TestDbHelper {
-  const;
-  useLocal = true;
-  url = `mongodb+srv://livetest:maun@cluster0-v6fcj.mongodb.net/dwapiGlobeTest?retryWrites=true&w=majority`;
-  localUrl = `mongodb://192.168.100.3/dwapiStats`;
-  localQueue = 'amqp://localhost:5672/spot';
-  cloudQueue = this.localQueue;
-
+  url: string;
+  config: ConfigService;
   options = {
     useNewUrlParser: true,
     useFindAndModify: false,
     useCreateIndex: true,
   };
 
-  constructor(url?: string, opts?: any) {
-    if (url) {
-      this.url = url;
-    }
-    if (opts) {
-      this.options = opts;
-    }
+  constructor() {
     jest.setTimeout(30000);
-    if (this.useLocal) {
-      this.url = this.localUrl;
-    }
+    this.config = new ConfigService(`${process.env.NODE_ENV}.env`);
+    this.url = this.config.Database;
   }
 
   async initConnection(dbname?: string) {
     Logger.debug(`connecting...`);
-    if (dbname) {
-      this.url.replace('dwapiGlobeTest', dbname);
-    }
-    await mongoose.connect(this.url, { useNewUrlParser: true });
+    await mongoose.connect(this.url, this.options);
     Logger.debug(`connected to [${mongoose.connection.host}]`);
   }
 

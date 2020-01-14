@@ -1,0 +1,95 @@
+[
+  {
+    "_id": "7eb13e4a-bb7b-11e9-9cb5-2a2ae2dbcce4",
+    "name": "EmrName",
+    "area": "App",
+    "display": "Emr Name",
+    "description": "Current EMR at Facility"
+  },
+  {
+    "_id": "7eb14e4a-bb7b-11e9-9cb5-2a2ae2dbcce4",
+    "name": "EmrVersion",
+    "area": "App",
+    "display": "Emr Version",
+    "description": "Current EMR Version at Facility"
+  },
+  {
+    "_id": "7eb15e4a-bb7b-11e9-9cb5-2a2ae2dbcce4",
+    "name": "LastLoginDate",
+    "area": "App",
+    "display": "Last Login Date",
+    "description": "Last login date in to the EMR"
+  },
+  {
+    "_id": "7eb16e4a-bb7b-11e9-9cb5-2a2ae2dbcce4",
+    "name": "LastMoH731RunDate",
+    "area": "App",
+    "display": "Last MOH 731 Run Date",
+    "description": "Last date MOH 731 Report was generated"
+  },
+  {
+    "_id": "7eb17e4a-bb7b-11e9-9cb5-2a2ae2dbcce4",
+    "name": "DwapiVersion",
+    "area": "MasterPatientIndex",
+    "display": "MPI Dwapi Version",
+    "description": "Dwapi Version used to Load MPI"
+  },
+  {
+    "_id": "7eb18e4a-bb7b-11e9-9cb5-2a2ae2dbcce4",
+    "name": "ExtractLoaded",
+    "area": "MasterPatientIndex",
+    "display": "Last MPI Load",
+    "description": "Date of the last MPI Extract load"
+  },
+  {
+    "_id": "7eb19e4a-bb7b-11e9-9cb5-2a2ae2dbcce4",
+    "name": "ExtractSent",
+    "area": "MasterPatientIndex",
+    "display": "Last MPI Sent",
+    "description": "Date of the last MPI Extract sent"
+  },
+
+  {
+    "_id": "7eb20e4a-bb7b-11e9-9cb5-2a2ae2dbcce4",
+    "name": "DwapiVersion",
+    "area": "HivTestingService",
+    "display": "HTS Dwapi Version",
+    "description": "Dwapi Version used to Load HTS"
+  },
+  {
+    "_id": "7eb21e4a-bb7b-11e9-9cb5-2a2ae2dbcce4",
+    "name": "ExtractLoaded",
+    "area": "HivTestingService",
+    "display": "Last HTS Load",
+    "description": "Date of the last HTS Extract Loaded"
+  },
+  {
+    "_id": "7eb22e4a-bb7b-11e9-9cb5-2a2ae2dbcce4",
+    "name": "ExtractSent",
+    "area": "HivTestingService",
+    "display": "Last HTS Sent",
+    "description": "Date of the last HTS Extract Sent"
+  },
+
+  {
+    "_id": "7eb23e4a-bb7b-11e9-9cb5-2a2ae2dbcce4",
+    "name": "DwapiVersion",
+    "area": "CareTreatment",
+    "display": "CT Dwapi Version",
+    "description": "Dwapi Version used to Load CT"
+  },
+  {
+    "_id": "7eb24e4a-bb7b-11e9-9cb5-2a2ae2dbcce4",
+    "name": "ExtractLoaded",
+    "area": "CareTreatment",
+    "display": "Last CT Load",
+    "description": "Date of the last CT Extract Load"
+  },
+  {
+    "_id": "7eb25e4a-bb7b-11e9-9cb5-2a2ae2dbcce4",
+    "name": "ExtractSent",
+    "area": "CareTreatment",
+    "display": "Last CT Sent",
+    "description": "Date of the last CT Extract Sent"
+  }
+]

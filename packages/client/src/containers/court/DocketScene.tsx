@@ -13,7 +13,7 @@ interface State {
   activeDocket: Docket;
 }
 
-const url = "http://localhost:4720/api/v1/courts/dockets/";
+const url = `https://${window.location.hostname}:4720/api/v1/courts/dockets/`;
 
 export class DocketScene extends Component<{}, State> {
   private messages: any;
@@ -136,6 +136,7 @@ export class DocketScene extends Component<{}, State> {
   }
 
   render() {
+    console.log(url);
     return (
       <div>
         <Growl ref={el => (this.messages = el)} />

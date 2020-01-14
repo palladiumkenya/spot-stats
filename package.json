@@ -6,11 +6,17 @@
   ],
   "scripts": {
     "client": "yarn workspace @spot-stats/client start",
+    "client:prod": "yarn workspace @spot-stats/client start:prod",
     "client:app": "yarn workspace @spot-stats/client start:app",
+    "client:build": "yarn workspace @spot-stats/client build",
     "server": "yarn workspace @spot-stats/server start",
+    "server:prod": "yarn workspace @spot-stats/server start:prod",
+    "server:build": "yarn workspace @spot-stats/server build",
     "test": "yarn workspace @spot-stats/server test",
     "start": "concurrently --kill-others-on-fail \"yarn server\"  \"yarn client\"",
-    "start:dev": "concurrently --kill-others-on-fail \"yarn server\"  \"yarn client:app\""
+    "build": "yarn server:build && yarn client:build ",
+    "start:prod": "concurrently --kill-others-on-fail \"yarn server:prod\"",
+    "startall:dev": "concurrently --kill-others-on-fail \"yarn server\"  \"yarn client:app\""
   },
   "dependencies": {
     "concurrently": "^4.1.2"

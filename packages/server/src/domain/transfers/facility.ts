@@ -7,11 +7,13 @@ import { FacilityEnrolledEvent } from '../../application/transfers/events/facili
 import { ManifestLoggedEvent } from '../../application/transfers/events/manifest-logged.event';
 import { FacilityUpdatedEvent } from '../../application/transfers/events/facility-updated.event';
 import { FacilityStatsUpdatedEvent } from '../../application/transfers/events/facility-stats-updated.event';
+import { Metric } from '../metrices/metric';
 
 export class Facility extends AggregateRoot {
   manifests?: any[] = [];
   summaries?: Summary[] = [];
   masterFacility?: MasterFacility;
+  metrics?: any[] = [];
 
   constructor(public _id: string, public code: number, public name: string) {
     super();
@@ -20,6 +22,11 @@ export class Facility extends AggregateRoot {
 
   addManifest(manifestId: string) {
     this.manifests.push(manifestId);
+    this.apply(new FacilityUpdatedEvent(this._id));
+  }
+
+  addMetric(metricId: string) {
+    this.metrics.push(metricId);
     this.apply(new FacilityUpdatedEvent(this._id));
   }
 
@@ -54,6 +61,17 @@ export class Facility extends AggregateRoot {
     this.apply(new FacilityStatsUpdatedEvent(this._id));
   }
 
+  getPatientSummary(docket: string): any {
+    const psum = this.summaries.find(
+      s => s.docket.name === docket && s.extract.isPatient,
+    );
+
+    if (psum) {
+      return psum.recieved;
+    }
+    return null;
+  }
+
   resetSummary(_id: string, expected: any, updated: Date) {
     this.summaries.forEach(s => {
       if (s.extract._id === _id) {
@@ -62,5 +80,13 @@ export class Facility extends AggregateRoot {
         s.updated = updated;
       }
     });
+  }
+
+  getStats(docket: string, extract: string) {
+    const s = this.summaries.find(f => f.extract.name === extract);
+    if (s) {
+      return s;
+    }
+    return undefined;
   }
 }

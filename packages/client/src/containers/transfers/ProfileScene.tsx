@@ -12,7 +12,8 @@ interface State {
   profiles: Profile[];
 }
 
-const url = "http://localhost:4720/api/v1/transfers/manifests/";
+// @ts-ignore
+const url = `https://${window.location.hostname}:4720/api/v1/transfers/manifests/`;
 
 export class ProfileScene extends Component<any, State> {
   private messages: any;
@@ -44,7 +45,7 @@ export class ProfileScene extends Component<any, State> {
 
   handleManage = (rowData: any) => {
     this.setState({
-      redirectTo: `/showcase/${rowData.facility}`,
+      redirectTo: `/stats/showcase/${rowData.facility}`,
       showSummary: true
     });
   };

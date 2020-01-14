@@ -14,10 +14,13 @@ export class ProfileDetail extends Component<Prop, {}> {
       return <div />;
     } else {
       const dwhSummaries = this.props.profile.summaries!.filter(
-        x => x.docket.name === "DWH"
+        x => x.docket.name === "NDWH"
       );
       const htsSummaries = this.props.profile.summaries!.filter(
         x => x.docket.name === "HTS"
+      );
+      const mpiSummaries = this.props.profile.summaries!.filter(
+        x => x.docket.name === "MPI"
       );
       return (
         <div>
@@ -32,7 +35,7 @@ export class ProfileDetail extends Component<Prop, {}> {
             </div>
             <div className="p-col-8">
               <TabView>
-                <TabPanel header="DWH">
+                <TabPanel header="NDWH">
                   <DataTable value={dwhSummaries}>
                     <Column field="extract.display" header="Extract" />
                     <Column field="recieved" header="Recieved" />
@@ -40,8 +43,18 @@ export class ProfileDetail extends Component<Prop, {}> {
                     <Column field="updated" header="Update" />
                   </DataTable>
                 </TabPanel>
+
                 <TabPanel header="HTS">
                   <DataTable value={htsSummaries}>
+                    <Column field="extract.display" header="Extract" />
+                    <Column field="recieved" header="Recieved" />
+                    <Column field="expected" header="Expected" />
+                    <Column field="updated" header="Update" />
+                  </DataTable>
+                </TabPanel>
+
+                <TabPanel header="MPI">
+                  <DataTable value={mpiSummaries}>
                     <Column field="extract.display" header="Extract" />
                     <Column field="recieved" header="Recieved" />
                     <Column field="expected" header="Expected" />
@@ -58,6 +71,16 @@ export class ProfileDetail extends Component<Prop, {}> {
                 <Column field="logDate" header="Date" />
                 <Column field="docket" header="Docket" />
                 <Column field="patientCount" header="Patient Count" />
+              </DataTable>
+            </div>
+            <div className="p-col-8">
+              <DataTable
+                value={this.props.profile.metrics}
+                header="Facility Metrics"
+              >
+                <Column field="measure.display" header="Measure" />
+                <Column field="report" header="Metric" />
+                <Column field="measure.description" header="Description" />
               </DataTable>
             </div>
           </div>

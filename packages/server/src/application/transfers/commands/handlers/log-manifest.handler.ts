@@ -1,5 +1,10 @@
-import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
-import { Inject } from '@nestjs/common';
+import {
+  CommandHandler,
+  EventBus,
+  EventPublisher,
+  ICommandHandler,
+} from '@nestjs/cqrs';
+import { Inject, Logger } from '@nestjs/common';
 import {
   Facility,
   IDocketRepository,
@@ -12,6 +17,7 @@ import { LogManifestCommand } from '../log-manifest.command';
 import { plainToClass } from 'class-transformer';
 import { IManifestRepository } from '../../../../domain/transfers/manifest-repository.interface';
 import { MasterFacilityRepository } from '../../../../infrastructure/registries';
+import { ManifestLoggedEvent } from '../../events/manifest-logged.event';
 
 @CommandHandler(LogManifestCommand)
 export class LogManifestHandler implements ICommandHandler<LogManifestCommand> {
@@ -25,15 +31,16 @@ export class LogManifestHandler implements ICommandHandler<LogManifestCommand> {
     @Inject('IManifestRepository')
     private readonly manifestRepository: IManifestRepository,
     private readonly publisher: EventPublisher,
+    private readonly eventBus: EventBus,
   ) {}
 
   async execute(command: LogManifestCommand): Promise<any> {
     // check if manifest Exists
     const manifestExists = await this.manifestRepository.get(command.id);
-
     if (manifestExists) {
       return;
     }
+
     // check or enroll Facility
     const facility = await this.enrollFacility(command);
 
@@ -44,12 +51,16 @@ export class LogManifestHandler implements ICommandHandler<LogManifestCommand> {
     }
 
     // log manifest
-
     const manifest = await this.manifestRepository.create(newManifest);
+    await this.manifestRepository.updateCurrent(newManifest.code);
     this.publisher.mergeObjectContext(newManifest).commit();
 
     const enrolledFacility = await this.facilityRepository.update(facility);
     this.publisher.mergeObjectContext(facility).commit();
+
+    Logger.log(`Manifest processed ${facility.name}`);
+
+    this.eventBus.publish(new ManifestLoggedEvent(facility._id, manifest._id));
 
     return newManifest;
   }

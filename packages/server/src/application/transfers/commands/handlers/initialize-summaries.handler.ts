@@ -1,7 +1,7 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
 import { LogManifestCommand } from '../log-manifest.command';
 import { InitializeSummariesCommand } from '../initialize-summaries-command';
-import { Inject } from '@nestjs/common';
+import { Inject, Logger } from '@nestjs/common';
 import {
   Docket,
   Facility,
@@ -34,6 +34,7 @@ export class InitializeSummariesHandler
 
       if (manifest) {
         let docket = await this.docketRepository.findByName(manifest.docket);
+
         if (docket && docket.extracts && docket.extracts.length > 0) {
           docket = plainToClass(Docket, docket);
           const extracts = docket.extracts.sort((a, b) => a.rank - b.rank);
@@ -45,9 +46,9 @@ export class InitializeSummariesHandler
               );
               if (e.isPatient) {
                 summary.expected = manifest.patientCount;
-                summary.recieved = 0;
-                summary.updated = new Date();
               }
+              summary.recieved = 0;
+              summary.updated = new Date();
               facility.addSummary(summary);
             } else {
               if (e.isPatient) {
@@ -60,6 +61,7 @@ export class InitializeSummariesHandler
           const updatedFacility = await this.facilityRepository.update(
             facility,
           );
+          Logger.log(`Summaries ${facility.name} initialized`);
           this.publisher.mergeObjectContext(facility).commit();
         }
       }
