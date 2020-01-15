@@ -5,6 +5,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { getTestFacilities } from '../../../test/test.data';
 import { TransfersInfrastructureModule } from './transfers-infrastructure.module';
 import { IFacilityRepository } from '../../domain/transfers/facility-repository.interface';
+import { MetricsInfrastructureModule } from '../metrices/metrics-infrastructure.module';
 
 describe('Facility Repository  Tests', () => {
   let module: TestingModule;
@@ -16,6 +17,7 @@ describe('Facility Repository  Tests', () => {
     module = await Test.createTestingModule({
       imports: [
         TransfersInfrastructureModule,
+        MetricsInfrastructureModule,
         MongooseModule.forRoot(dbHelper.url, dbHelper.options),
       ],
     }).compile();
