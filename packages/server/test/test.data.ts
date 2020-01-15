@@ -294,7 +294,7 @@ export const getTestManifestMessages = () => {
       '",\n' +
       '    "facilityCode": 12618,\n' +
       '    "facilityName": "Mwala Hospital",\n' +
-      '    "area": "HTS",\n' +
+      '    "docket": "HTS",\n' +
       '    "logDate": "2019-08-01",\n' +
       '    "buildDate": "2019-08-01",\n' +
       '    "patientCount": 40,\n' +
@@ -307,7 +307,7 @@ export const getTestManifestMessages = () => {
       '",\n' +
       '    "facilityCode": 12618,\n' +
       '    "facilityName": "Mwala Hospital",\n' +
-      '    "area": "NDWH",\n' +
+      '    "docket": "NDWH",\n' +
       '    "logDate": "2019-08-02",\n' +
       '    "buildDate": "2019-08-02",\n' +
       '    "patientCount": 40,\n' +
@@ -320,7 +320,7 @@ export const getTestManifestMessages = () => {
       '",\n' +
       '    "facilityCode": 14950,\n' +
       '    "facilityName": "Kitengela Health Centre",\n' +
-      '    "area": "NDWH",\n' +
+      '    "docket": "NDWH",\n' +
       '    "logDate": "2019-08-02",\n' +
       '    "buildDate": "2019-08-02",\n' +
       '    "patientCount": 50,\n' +
@@ -333,7 +333,7 @@ export const getTestManifestMessages = () => {
       '",\n' +
       '    "facilityCode": 14950,\n' +
       '    "facilityName": "Kitengela Health Centre",\n' +
-      '    "area": "HTS",\n' +
+      '    "docket": "HTS",\n' +
       '    "logDate": "2019-08-01",\n' +
       '    "buildDate": "2019-08-01",\n' +
       '    "patientCount": 50,\n' +
@@ -358,7 +358,7 @@ export const getTestFacSummaries = () => {
       '  "name": "Mwala Hospital",\n' +
       '  "summaries": [\n' +
       '    {\n' +
-      '      "area": {\n' +
+      '      "docket": {\n' +
       '        "id": "6dc93278-bf1e-11e9-9cb5-2a2ae2dbcce4",\n' +
       '        "name": "HTS",\n' +
       '        "display": "HTS"\n' +
@@ -376,7 +376,7 @@ export const getTestFacSummaries = () => {
       '      "_id": "b4a870e0-c8e3-11e9-a241-7da05111b995"\n' +
       '    },\n' +
       '    {\n' +
-      '      "area": {\n' +
+      '      "docket": {\n' +
       '        "id": "6dc93278-bf1e-11e9-9cb5-2a2ae2dbcce4",\n' +
       '        "name": "HTS",\n' +
       '        "display": "HTS"\n' +
@@ -393,7 +393,7 @@ export const getTestFacSummaries = () => {
       '      "_id": "b4a870e1-c8e3-11e9-a241-7da05111b995"\n' +
       '    },\n' +
       '    {\n' +
-      '      "area": {\n' +
+      '      "docket": {\n' +
       '        "id": "6dc93278-bf1e-11e9-9cb5-2a2ae2dbcce4",\n' +
       '        "name": "HTS",\n' +
       '        "display": "HTS"\n' +
@@ -410,7 +410,7 @@ export const getTestFacSummaries = () => {
       '      "_id": "b4a870e2-c8e3-11e9-a241-7da05111b995"\n' +
       '    },\n' +
       '    {\n' +
-      '      "area": {\n' +
+      '      "docket": {\n' +
       '        "id": "6dc93278-bf1e-11e9-9cb5-2a2ae2dbcce4",\n' +
       '        "name": "HTS",\n' +
       '        "display": "HTS"\n' +
@@ -427,7 +427,7 @@ export const getTestFacSummaries = () => {
       '      "_id": "b4a870e3-c8e3-11e9-a241-7da05111b995"\n' +
       '    },\n' +
       '    {\n' +
-      '      "area": {\n' +
+      '      "docket": {\n' +
       '        "id": "6dc93278-bf1e-11e9-9cb5-2a2ae2dbcce4",\n' +
       '        "name": "HTS",\n' +
       '        "display": "HTS"\n' +
@@ -444,7 +444,7 @@ export const getTestFacSummaries = () => {
       '      "_id": "b4a870e4-c8e3-11e9-a241-7da05111b995"\n' +
       '    },\n' +
       '    {\n' +
-      '      "area": {\n' +
+      '      "docket": {\n' +
       '        "id": "6dc93278-bf1e-11e9-9cb5-2a2ae2dbcce4",\n' +
       '        "name": "HTS",\n' +
       '        "display": "HTS"\n' +
@@ -461,7 +461,7 @@ export const getTestFacSummaries = () => {
       '      "_id": "b4a870e5-c8e3-11e9-a241-7da05111b995"\n' +
       '    },\n' +
       '    {\n' +
-      '      "area": {\n' +
+      '      "docket": {\n' +
       '        "id": "6dc93278-bf1e-11e9-9cb5-2a2ae2dbcce4",\n' +
       '        "name": "HTS",\n' +
       '        "display": "HTS"\n' +
@@ -505,7 +505,7 @@ export const getTestStatsMessage = () => {
   return JSON.parse(
     '[{\n' +
       '          "facilityCode" : 12618,\n' +
-      '          "area" : {\n' +
+      '          "docket" : {\n' +
       '              "name" : "HTS"},\n' +
       '          "stats" : [\n' +
       '            { "name": "HtsClientExtract", "recieved": 25 },\n' +
@@ -520,7 +520,7 @@ export const getTestStatsMessage = () => {
       '      },\n' +
       '      {\n' +
       '          "facilityCode" : 14950,\n' +
-      '          "area" : {\n' +
+      '          "docket" : {\n' +
       '              "name" : "HTS"},\n' +
       '          "stats" : [\n' +
       '            { "name": "HtsClientExtract", "recieved": 253 },\n' +

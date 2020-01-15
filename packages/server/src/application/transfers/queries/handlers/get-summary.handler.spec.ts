@@ -11,6 +11,7 @@ import { TransfersModule } from '../../transfers.module';
 import { CourtsInfrastructureModule } from '../../../../infrastructure/courts';
 import { GetSummaryHandler } from './get-summary.handler';
 import { GetSummaryQuery } from '../get-summary.query';
+import { MetricsInfrastructureModule } from '../../../../infrastructure/metrices/metrics-infrastructure.module';
 
 describe('Get Facility Summary', () => {
   let module: TestingModule;
@@ -27,6 +28,7 @@ describe('Get Facility Summary', () => {
         MongooseModule.forRoot(dbHelper.url, dbHelper.options),
         TransfersModule,
         CourtsInfrastructureModule,
+        MetricsInfrastructureModule,
       ],
     }).compile();
 

@@ -7,6 +7,11 @@ export class AppController {
     return 'dwapi Stats';
   }
 
+  @Get('version')
+  getAppVersion(): string {
+    return '1.0.0';
+  }
+
   @Get('stats')
   getLib(@Res() res): string {
     Logger.log(__dirname + '/wwwroot/stats.js');
