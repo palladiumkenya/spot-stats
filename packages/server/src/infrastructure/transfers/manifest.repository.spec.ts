@@ -58,6 +58,12 @@ describe('Manifest Repository  Tests', () => {
     expect(data).not.toBeUndefined();
   });
 
+  it('should load All Current Paged', async () => {
+    const data = await repository.getAllCurrent(1, 1);
+    expect(data.length).toBeGreaterThan(0);
+    data.forEach(d => Logger.debug(`${d.name}`));
+  });
+
   it('should update Current', async () => {
     const data = await repository.updateCurrent(100);
 

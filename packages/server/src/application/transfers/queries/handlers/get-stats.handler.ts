@@ -12,6 +12,11 @@ export class GetStatsHandler implements IQueryHandler<GetStatsQuery, any> {
     private readonly repository: IManifestRepository,
   ) {}
   async execute(query: GetStatsQuery): Promise<any> {
-    return await this.repository.getCurrent();
+    return await this.repository.getAllCurrent(
+      query.size,
+      query.page,
+      query.sort,
+      query.filter,
+    );
   }
 }
