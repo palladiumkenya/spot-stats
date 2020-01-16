@@ -12,6 +12,7 @@ import { FacilitiesController } from './controllers/facilities.controller';
 import { ManifestsController } from './controllers/manifests.controller';
 import { FacilityEnrolledHandler } from './events/handlers/facility-enrolled.handler';
 import { ManifestLoggedHandler } from './events/handlers/manifest-logged.handler';
+import { GetStatsCountHandler } from './queries/handlers/get-stats-count.handler';
 
 const CommandHandlers = [
   LogManifestHandler,
@@ -19,7 +20,11 @@ const CommandHandlers = [
   InitializeSummariesHandler,
 ];
 const EventHandlers = [FacilityEnrolledHandler, ManifestLoggedHandler];
-const QueryHandlers = [GetStatsHandler, GetSummaryHandler];
+const QueryHandlers = [
+  GetStatsHandler,
+  GetSummaryHandler,
+  GetStatsCountHandler,
+];
 
 @Module({
   imports: [

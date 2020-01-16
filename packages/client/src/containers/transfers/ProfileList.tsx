@@ -3,10 +3,19 @@ import { Profile } from "./models/profile";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Button } from "primereact/button";
+import Moment from "react-moment";
+import TimeAgo from "react-timeago";
 
 interface Props {
   profiles: Profile[];
   onManage: any;
+  onPage: any;
+  onSort: any;
+  onFilter: any;
+  loading: boolean;
+  totalRecords: number;
+  rows: number;
+  first: number;
 }
 
 export class ProfileList extends Component<Props, {}> {
@@ -26,6 +35,24 @@ export class ProfileList extends Component<Props, {}> {
     );
   };
 
+  dateTemplate = (rowData: any, column: any) => {
+    const dt = rowData["logDate"];
+    return (
+      <span>
+        <Moment format="DD MMM YYYY ">{dt}</Moment>
+      </span>
+    );
+  };
+
+  elapsedTemplate = (rowData: any, column: any) => {
+    const dt = rowData["logDate"];
+    return (
+      <span>
+        <TimeAgo date={dt}></TimeAgo>
+      </span>
+    );
+  };
+
   render() {
     const header = (
       <div className="p-clearfix" style={{ lineHeight: "1.87em" }}>
@@ -34,17 +61,38 @@ export class ProfileList extends Component<Props, {}> {
     );
 
     return (
-      <DataTable value={this.props.profiles} header={header}>
-        <Column field="code" header="Code" />
-        <Column field="name" header="Facility" />
+      <DataTable
+        value={this.props.profiles}
+        header={header}
+        loading={this.props.loading}
+        paginator={true}
+        rows={this.props.rows}
+        rowsPerPageOptions={[50, 100, 200, 500]}
+        totalRecords={this.props.totalRecords}
+        lazy={true}
+        onPage={this.props.onPage}
+        first={this.props.first}
+        onSort={this.props.onSort}
+        onFilter={this.props.onFilter}
+      >
+        <Column field="code" header="Code" sortable={true} filter={true} />
+        <Column field="name" header="Facility" sortable={true} filter={true} />
         <Column
           field="facilityInfo.masterFacility.county.name"
           header="County"
+          sortable={true}
+          filter={true}
         />
-        <Column field="docket" header="Docket" />
+        <Column field="docket" header="Docket" sortable={true} filter={true} />
         <Column field="patientCount" header="Expected" />
         <Column field="recievedCount" header="Recieved" />
-        <Column field="logDate" header="Updated" />
+        <Column
+          field="logDate"
+          header="Updated"
+          body={this.dateTemplate}
+          sortable={true}
+        />
+        <Column field="logDate" header="" body={this.elapsedTemplate} />
         <Column
           body={this.manageTemplate}
           style={{ textAlign: "center", width: "5em" }}

@@ -33,6 +33,20 @@ export class ManifestRepository extends BaseRepository<Manifest>
     return resuls;
   }
 
+  getAllCurrent(
+    size: number,
+    page: number,
+    sort?: any,
+    filter?: any,
+  ): Promise<any> {
+    return this.model
+      .find({ isCurrent: true })
+      .sort({ logDate: -1 })
+      .skip(size * (page - 1))
+      .limit(size)
+      .exec();
+  }
+
   async updateCurrent(code: number): Promise<any> {
     await this.model.updateMany(
       { code, isCurrent: true },
