@@ -59,7 +59,7 @@ describe('Manifest Repository  Tests', () => {
   });
 
   it('should load All Current Paged', async () => {
-    const data = await repository.getAllCurrent(1, 1);
+    const data = await repository.getAllCurrentPaged(1, 1);
     expect(data.length).toBeGreaterThan(0);
     data.forEach(d => Logger.debug(`${d.name}`));
   });

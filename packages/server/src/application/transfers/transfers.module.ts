@@ -6,13 +6,14 @@ import { InitializeSummariesHandler } from './commands/handlers/initialize-summa
 import { LogManifestHandler } from './commands/handlers/log-manifest.handler';
 import { RegistriesInfrastructureModule } from '../../infrastructure/registries';
 import { CourtsInfrastructureModule } from '../../infrastructure/courts';
-import { GetStatsHandler } from './queries/handlers/get-stats.handler';
+import { GetStatsPagedHandler } from './queries/handlers/get-stats-paged.handler';
 import { GetSummaryHandler } from './queries/handlers/get-summary.handler';
 import { FacilitiesController } from './controllers/facilities.controller';
 import { ManifestsController } from './controllers/manifests.controller';
 import { FacilityEnrolledHandler } from './events/handlers/facility-enrolled.handler';
 import { ManifestLoggedHandler } from './events/handlers/manifest-logged.handler';
 import { GetStatsCountHandler } from './queries/handlers/get-stats-count.handler';
+import { GetStatsHandler } from './queries/handlers/get-stats.handler';
 
 const CommandHandlers = [
   LogManifestHandler,
@@ -22,6 +23,7 @@ const CommandHandlers = [
 const EventHandlers = [FacilityEnrolledHandler, ManifestLoggedHandler];
 const QueryHandlers = [
   GetStatsHandler,
+  GetStatsPagedHandler,
   GetSummaryHandler,
   GetStatsCountHandler,
 ];
