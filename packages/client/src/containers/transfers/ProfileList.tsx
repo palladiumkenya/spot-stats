@@ -69,11 +69,6 @@ export class ProfileList extends Component<Props, {}> {
         rows={this.props.rows}
         rowsPerPageOptions={[50, 100, 200, 500]}
         totalRecords={this.props.totalRecords}
-        lazy={true}
-        onPage={this.props.onPage}
-        first={this.props.first}
-        onSort={this.props.onSort}
-        onFilter={this.props.onFilter}
       >
         <Column field="code" header="Code" sortable={true} filter={true} />
         <Column field="name" header="Facility" sortable={true} filter={true} />
@@ -84,8 +79,8 @@ export class ProfileList extends Component<Props, {}> {
           filter={true}
         />
         <Column field="docket" header="Docket" sortable={true} filter={true} />
-        <Column field="patientCount" header="Expected" />
-        <Column field="recievedCount" header="Recieved" />
+        <Column field="patientCount" header="Expected" sortable={true} />
+        <Column field="recievedCount" header="Recieved" sortable={true} />
         <Column
           field="logDate"
           header="Updated"

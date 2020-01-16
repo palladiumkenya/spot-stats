@@ -1,9 +1,7 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
-import { GetDocketsQuery } from '../../../courts/queries';
-import { GetStatsQuery } from '../get-stats.query';
 import { Inject } from '@nestjs/common';
-import { IFacilityRepository } from '../../../../domain';
 import { IManifestRepository } from '../../../../domain/transfers/manifest-repository.interface';
+import { GetStatsQuery } from '../get-stats.query';
 
 @QueryHandler(GetStatsQuery)
 export class GetStatsHandler implements IQueryHandler<GetStatsQuery, any> {
@@ -12,11 +10,6 @@ export class GetStatsHandler implements IQueryHandler<GetStatsQuery, any> {
     private readonly repository: IManifestRepository,
   ) {}
   async execute(query: GetStatsQuery): Promise<any> {
-    return await this.repository.getAllCurrent(
-      query.size,
-      query.page,
-      query.sort,
-      query.filter,
-    );
+    return await this.repository.getCurrent();
   }
 }
