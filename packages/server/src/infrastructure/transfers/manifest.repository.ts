@@ -29,11 +29,14 @@ export class ManifestRepository extends BaseRepository<Manifest>
       }
       return undefined;
     }
-    const resuls = await this.model.find({ isCurrent: true }).exec();
+    const resuls = await this.model
+      .find({ isCurrent: true })
+      .sort({ logDate: -1 })
+      .exec();
     return resuls;
   }
 
-  getAllCurrent(
+  getAllCurrentPaged(
     size: number,
     page: number,
     sort?: any,

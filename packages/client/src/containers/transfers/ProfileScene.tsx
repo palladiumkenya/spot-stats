@@ -70,7 +70,8 @@ export class ProfileScene extends Component<any, State> {
     }));
 
     try {
-      let geturl = `${url}/${this.state.rows}/${this.state.page}`;
+      let geturl = `${url}/all`;
+      // let geturl = `${url}/${this.state.rows}/${this.state.page}`;
       if (this.state.sort) {
         geturl = `${geturl}?sort=${this.state.sort}`;
 

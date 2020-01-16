@@ -4,7 +4,7 @@ import { Manifest } from './manifest';
 export interface IManifestRepository extends IRepository<Manifest> {
   manifestExists(mId: string): Promise<boolean>;
   getCurrent(facId?: string): Promise<any>;
-  getAllCurrent(
+  getAllCurrentPaged(
     size: number,
     page: number,
     sort?: any,

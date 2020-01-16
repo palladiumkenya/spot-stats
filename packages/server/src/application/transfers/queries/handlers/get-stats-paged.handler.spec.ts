@@ -9,10 +9,10 @@ import {
 } from '../../../../../test/test.data';
 import { TransfersModule } from '../../transfers.module';
 import { CourtsInfrastructureModule } from '../../../../infrastructure/courts';
-import { GetStatsHandler } from './get-stats.handler';
-import { GetStatsQuery } from '../get-stats.query';
+import { GetStatsPagedQuery } from '../get-stats-paged.query';
+import { GetStatsPagedHandler } from './get-stats-paged.handler';
 
-describe('Get Manifests Stats', () => {
+describe('Get Manifests Stats Paged', () => {
   let module: TestingModule;
   const { dockets, masterfacilities } = getTestStatsData();
   const { facilities, manifests } = getTestFacilities();
@@ -37,10 +37,10 @@ describe('Get Manifests Stats', () => {
     await dbHelper.seedDb('facilities', [liveData]);
     await dbHelper.seedDb('manifests', manifests);
 
-    const handler = module.get<GetStatsHandler>(GetStatsHandler);
+    const handler = module.get<GetStatsPagedHandler>(GetStatsPagedHandler);
 
     queryBus = module.get<QueryBus>(QueryBus);
-    queryBus.bind(handler, GetStatsQuery.name);
+    queryBus.bind(handler, GetStatsPagedQuery.name);
   });
 
   afterAll(async () => {
@@ -48,9 +48,9 @@ describe('Get Manifests Stats', () => {
     await dbHelper.closeConnection();
   });
 
-  it('should get Manifest Stats', async () => {
-    const query = new GetStatsQuery();
-    const result = await queryBus.execute<GetStatsQuery, any>(query);
+  it('should get Manifest Stats Paged', async () => {
+    const query = new GetStatsPagedQuery(1, 1);
+    const result = await queryBus.execute<GetStatsPagedQuery, any>(query);
     expect(result.length).toBeGreaterThan(0);
     result.forEach(c => Logger.debug(`${c}`));
   });
