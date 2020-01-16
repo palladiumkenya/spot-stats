@@ -1,7 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { MongooseModule } from '@nestjs/mongoose';
 import { QueryBus } from '@nestjs/cqrs';
-import { Logger } from '@nestjs/common';
 import { TestDbHelper } from '../../../../../test/test-db.helper';
 import {
   getTestFacilities,
@@ -9,14 +8,13 @@ import {
 } from '../../../../../test/test.data';
 import { TransfersModule } from '../../transfers.module';
 import { CourtsInfrastructureModule } from '../../../../infrastructure/courts';
-import { GetSummaryHandler } from './get-summary.handler';
-import { GetSummaryQuery } from '../get-summary.query';
-import { MetricsInfrastructureModule } from '../../../../infrastructure/metrices/metrics-infrastructure.module';
+import { GetStatsCountQuery } from '../get-stats-count.query';
+import { GetStatsCountHandler } from './get-stats-count.handler';
 
-describe('Get Facility Summary', () => {
+describe('Get Manifests Stats Count', () => {
   let module: TestingModule;
   const { dockets, masterfacilities } = getTestStatsData();
-  const { facilities } = getTestFacilities();
+  const { facilities, manifests } = getTestFacilities();
   const dbHelper = new TestDbHelper();
   const liveData = facilities[0];
   liveData.summaries = [];
@@ -28,7 +26,6 @@ describe('Get Facility Summary', () => {
         MongooseModule.forRoot(dbHelper.url, dbHelper.options),
         TransfersModule,
         CourtsInfrastructureModule,
-        MetricsInfrastructureModule,
       ],
     }).compile();
 
@@ -37,11 +34,12 @@ describe('Get Facility Summary', () => {
     await dbHelper.seedDb('masterfacilities', masterfacilities);
     liveData.code = masterfacilities[0].code;
     await dbHelper.seedDb('facilities', [liveData]);
+    await dbHelper.seedDb('manifests', manifests);
 
-    const handler = module.get<GetSummaryHandler>(GetSummaryHandler);
+    const handler = module.get<GetStatsCountHandler>(GetStatsCountHandler);
 
     queryBus = module.get<QueryBus>(QueryBus);
-    queryBus.bind(handler, GetSummaryQuery.name);
+    queryBus.bind(handler, GetStatsCountQuery.name);
   });
 
   afterAll(async () => {
@@ -49,10 +47,9 @@ describe('Get Facility Summary', () => {
     await dbHelper.closeConnection();
   });
 
-  it('should get Facility Summary', async () => {
-    const query = new GetSummaryQuery(liveData._id);
-    const result = await queryBus.execute<GetSummaryQuery, any>(query);
-    expect(result).not.toBeNull();
-    Logger.debug(result);
+  it('should get Manifest Stats Count', async () => {
+    const query = new GetStatsCountQuery();
+    const result = await queryBus.execute<GetStatsCountQuery, any>(query);
+    expect(result).toBeGreaterThan(0);
   });
 });

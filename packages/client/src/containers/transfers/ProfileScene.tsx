@@ -10,10 +10,18 @@ interface State {
   showSummary: boolean;
   redirectTo: string;
   profiles: Profile[];
+  loading: boolean;
+  rows: number;
+  totalRecords: number;
+  page: number;
+  first: number;
+  sort: any;
+  filter: any;
 }
 
 // @ts-ignore
-const url = `https://${window.location.hostname}:4720/api/v1/transfers/manifests/`;
+const url = `https://${window.location.hostname}:4720/api/v1/transfers/manifests`;
+const statCountUrl = `https://${window.location.hostname}:4720/api/v1/transfers/manifests/count`;
 
 export class ProfileScene extends Component<any, State> {
   private messages: any;
@@ -23,18 +31,70 @@ export class ProfileScene extends Component<any, State> {
     this.state = {
       profiles: [],
       redirectTo: "",
-      showSummary: false
+      showSummary: false,
+      loading: false,
+      totalRecords: 0,
+      rows: 50,
+      page: 1,
+      first: 0,
+      sort: [],
+      filter: []
     };
   }
+  loadCount = async () => {
+    this.setState(prevState => ({
+      ...prevState,
+      loading: true
+    }));
+
+    try {
+      let res = await axios.get(statCountUrl);
+      let data = res.data;
+      this.setState(prevState => ({
+        ...prevState,
+        totalRecords: data
+      }));
+    } catch (e) {
+      this.messages.show({
+        severity: "error",
+        summary: "Error loading",
+        detail: `${e}`
+      });
+    }
+  };
 
   loadData = async () => {
+    this.setState(prevState => ({
+      ...prevState,
+      loading: true
+    }));
+
     try {
-      let res = await axios.get(url);
+      let geturl = `${url}/${this.state.rows}/${this.state.page}`;
+      if (this.state.sort) {
+        geturl = `${geturl}?sort=${this.state.sort}`;
+
+        if (this.state.filter) {
+          geturl = `${geturl}&filter=${this.state.filter}`;
+        }
+      } else {
+        if (this.state.filter) {
+          geturl = `${geturl}?filter=${this.state.filter}`;
+        }
+      }
+
+      let res = await axios.get(geturl);
       let data = res.data;
-      this.setState({
+      this.setState(prevState => ({
+        ...prevState,
+        loading: false,
         profiles: data
-      });
+      }));
     } catch (e) {
+      this.setState(prevState => ({
+        ...prevState,
+        loading: false
+      }));
       this.messages.show({
         severity: "error",
         summary: "Error loading",
@@ -50,7 +110,43 @@ export class ProfileScene extends Component<any, State> {
     });
   };
 
+  handlePage = async (event: any) => {
+    console.log(event);
+    this.setState(
+      prevState => ({
+        ...prevState,
+        rows: event.rows,
+        page: event.page + 1,
+        first: event.first
+      }),
+      () => this.loadData()
+    );
+  };
+
+  handleSort = async (event: any) => {
+    console.log(event);
+    this.setState(
+      prevState => ({
+        ...prevState,
+        sort: JSON.stringify(event)
+      }),
+      () => this.loadData()
+    );
+  };
+
+  handleFilter = async (event: any) => {
+    console.log(event);
+    this.setState(
+      prevState => ({
+        ...prevState,
+        filter: JSON.stringify(event)
+      }),
+      () => this.loadData()
+    );
+  };
+
   async componentDidMount() {
+    await this.loadCount();
     await this.loadData();
   }
 
@@ -66,6 +162,13 @@ export class ProfileScene extends Component<any, State> {
               <ProfileList
                 profiles={this.state.profiles}
                 onManage={this.handleManage}
+                onPage={this.handlePage}
+                loading={this.state.loading}
+                totalRecords={this.state.totalRecords}
+                rows={this.state.rows}
+                first={this.state.first}
+                onSort={this.handleSort}
+                onFilter={this.handleFilter}
               />
             ) : (
               <div />
