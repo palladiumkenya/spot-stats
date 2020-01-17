@@ -252,12 +252,12 @@ export const getTestStatsData = () => {
       '      "code": 16,\n' +
       '      "name": "MACHAKOS"\n' +
       '    },\n' +
-      '    "mechanism": {\n' +
+      '    "mechanisms": {\n' +
       '      "_id": "9eb13e4a-bb7b-11e9-9cb5-2a2ae2dbcce4",\n' +
       '      "code": "18504",\n' +
       '      "name": "UMB Timiza",\n' +
       '      "implementationName": "UMB Timiza",\n' +
-      '      "agency": "9eb13e4a-bb7b-11e9-9cb5-2a2ae2dbcce4"\n' +
+      '      "agencies": "9eb13e4a-bb7b-11e9-9cb5-2a2ae2dbcce4"\n' +
       '    }\n' +
       '  },\n' +
       '  {\n' +
@@ -271,12 +271,12 @@ export const getTestStatsData = () => {
       '      "code": 34,\n' +
       '      "name": "KAJIADO"\n' +
       '    },\n' +
-      '    "mechanism": {\n' +
+      '    "mechanisms": {\n' +
       '      "_id": "9eb140ca-bb7b-11e9-9cb5-2a2ae2dbcce4",\n' +
       '      "code": "13588",\n' +
       '      "name": "Afya Ziwani",\n' +
       '      "implementationName": "Afya Ziwani",\n' +
-      '      "agency": "9eb140ca-bb7b-11e9-9cb5-2a2ae2dbcce4"\n' +
+      '      "agencies": "9eb140ca-bb7b-11e9-9cb5-2a2ae2dbcce4"\n' +
       '    }\n' +
       '  }\n' +
       ']\n',
@@ -487,12 +487,12 @@ export const getTestFacSummaries = () => {
       '      "code": 16,\n' +
       '      "name": "MACHAKOS"\n' +
       '    },\n' +
-      '    "mechanism": {\n' +
+      '    "mechanisms": {\n' +
       '      "_id": "9eb13e4a-bb7b-11e9-9cb5-2a2ae2dbcce4",\n' +
       '      "code": "18504",\n' +
       '      "name": "UMB Timiza",\n' +
       '      "implementationName": "UMB Timiza",\n' +
-      '      "agency": "9eb13e4a-bb7b-11e9-9cb5-2a2ae2dbcce4"\n' +
+      '      "agencies": "9eb13e4a-bb7b-11e9-9cb5-2a2ae2dbcce4"\n' +
       '    },\n' +
       '    "__v": 0\n' +
       '  },\n' +

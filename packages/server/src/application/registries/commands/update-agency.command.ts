@@ -1,3 +1,3 @@
 export class UpdateAgencyCommand {
-  constructor(public readonly agency: any) {}
+  constructor(public readonly agencies: any[]) {}
 }

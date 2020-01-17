@@ -18,4 +18,15 @@ export class MasterFacility extends AggregateRoot {
     this.county = county;
     this.mechanism = mechanism;
   }
+
+  changeFacDetails(fac: any) {
+    this.code = fac.code;
+    this.name = fac.name;
+    this.county = fac.county;
+    this.mechanism = fac.mechanism;
+  }
+
+  changeMechanism(mechanism: any) {
+    this.mechanism = mechanism;
+  }
 }

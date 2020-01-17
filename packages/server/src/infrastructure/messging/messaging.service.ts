@@ -5,6 +5,14 @@ import { CommandBus } from '@nestjs/cqrs';
 import { LogManifestCommand } from '../../application/transfers/commands/log-manifest.command';
 import { UpdateStatsCommand } from '../../application/transfers/commands/update-stats.command';
 import { LogMetricCommand } from '../../application/metrices/commands/log-metric.command';
+import {
+  AGENCY_SYNCED,
+  FACILITY_SYNCED,
+  MECHANISM_SYNCED,
+} from '../../domain/common/constants';
+import { UpdateAgencyCommand } from '../../application/registries/commands/update-agency.command';
+import { UpdateFacilityCommand } from '../../application/registries/commands/update-facility.command';
+import { UpdateMechanismCommand } from '../../application/registries/commands/update-mechanism.command';
 
 @Injectable()
 export class MessagingService {
@@ -105,7 +113,19 @@ export class MessagingService {
   })
   public async subscribeToGlobe(data: any) {
     const message = JSON.parse(data);
+    const messageBody = JSON.parse(message.body);
     Logger.log(`+++++++++++ ${message.label} +++++++++`);
-    Logger.log(`Received  ${message}`);
+    if (message.label === AGENCY_SYNCED) {
+      Logger.log(`syncing... Agency ${messageBody.name}`);
+      await this.commandBus.execute(new UpdateAgencyCommand(messageBody));
+    }
+    if (message.label === MECHANISM_SYNCED) {
+      Logger.log(`syncing... Mechanism ${messageBody.name}`);
+      await this.commandBus.execute(new UpdateMechanismCommand(messageBody));
+    }
+    if (message.label === FACILITY_SYNCED) {
+      Logger.log(`syncing... Facility ${messageBody.name}`);
+      await this.commandBus.execute(new UpdateFacilityCommand(messageBody));
+    }
   }
 }

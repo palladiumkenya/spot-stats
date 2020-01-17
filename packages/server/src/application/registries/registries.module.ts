@@ -11,6 +11,9 @@ import { DeleteMasterFacilityHandler } from './commands/handlers/delete-master-f
 import { MasterFacilityCreatedHandler } from './events/handlers/master-facility-created.handler';
 import { MasterFacilityDeletedHandler } from './events/handlers/master-facility-deleted.handler';
 import { MasterFacilityUpdatedHandler } from './events/handlers/master-facility-updated.handler';
+import { UpdateAgencyHandler } from './commands/handlers/update-agency.handler';
+import { UpdateMechanismHandler } from './commands/handlers/update-mechanism.handler';
+import { UpdateFacilityHandler } from './commands/handlers/update-facility.handler';
 
 @Module({
   imports: [
@@ -27,6 +30,9 @@ import { MasterFacilityUpdatedHandler } from './events/handlers/master-facility-
     MasterFacilityCreatedHandler,
     MasterFacilityDeletedHandler,
     MasterFacilityUpdatedHandler,
+    UpdateAgencyHandler,
+    UpdateMechanismHandler,
+    UpdateFacilityHandler,
   ],
 })
 export class RegistriesModule {}

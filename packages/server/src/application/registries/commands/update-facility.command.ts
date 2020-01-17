@@ -1,3 +1,3 @@
 export class UpdateFacilityCommand {
-  constructor(public readonly facility: any) {}
+  constructor(public readonly facilities: any[]) {}
 }
