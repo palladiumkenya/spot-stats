@@ -7,6 +7,7 @@ import { UpdateStatsCommand } from '../../application/transfers/commands/update-
 import { LogMetricCommand } from '../../application/metrices/commands/log-metric.command';
 import {
   AGENCY_SYNCED,
+  ALL_FACILITY_SYNCED,
   FACILITY_SYNCED,
   MECHANISM_SYNCED,
 } from '../../domain/common/constants';
@@ -123,7 +124,10 @@ export class MessagingService {
       Logger.log(`syncing... Mechanism ${messageBody.name}`);
       await this.commandBus.execute(new UpdateMechanismCommand(messageBody));
     }
-    if (message.label === FACILITY_SYNCED) {
+    if (
+      message.label === FACILITY_SYNCED ||
+      message.label === ALL_FACILITY_SYNCED
+    ) {
       Logger.log(`syncing... Facility ${messageBody.name}`);
       await this.commandBus.execute(new UpdateFacilityCommand(messageBody));
     }

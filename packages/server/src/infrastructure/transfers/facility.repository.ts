@@ -34,4 +34,8 @@ export class FacilityRepository extends BaseRepository<Facility>
     }
     return null;
   }
+
+  updateMasterFacility(code: number): Promise<Facility> {
+    return undefined;
+  }
 }

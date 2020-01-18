@@ -13,6 +13,11 @@ export class UpdateFacilityHandler
   ) {}
 
   async execute(command: UpdateFacilityCommand): Promise<number> {
-    return await this.repository.updateFacility(command.facilities);
+    const updated = await this.repository.updateFacility(command.facilities);
+    updated.forEach(mf => {
+      mf.syncFacility();
+      this.publisher.mergeObjectContext(mf).commit();
+    });
+    return updated.length;
   }
 }

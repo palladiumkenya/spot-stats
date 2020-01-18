@@ -14,10 +14,12 @@ import { MasterFacilityUpdatedHandler } from './events/handlers/master-facility-
 import { UpdateAgencyHandler } from './commands/handlers/update-agency.handler';
 import { UpdateMechanismHandler } from './commands/handlers/update-mechanism.handler';
 import { UpdateFacilityHandler } from './commands/handlers/update-facility.handler';
+import { MasterFacilitySyncedHandler } from './events/handlers/master-facility-synced.handler';
 
 @Module({
   imports: [
     CqrsModule,
+    TransfersInfrastructureModule,
     RegistriesInfrastructureModule,
     CourtsInfrastructureModule,
   ],
@@ -30,6 +32,7 @@ import { UpdateFacilityHandler } from './commands/handlers/update-facility.handl
     MasterFacilityCreatedHandler,
     MasterFacilityDeletedHandler,
     MasterFacilityUpdatedHandler,
+    MasterFacilitySyncedHandler,
     UpdateAgencyHandler,
     UpdateMechanismHandler,
     UpdateFacilityHandler,

@@ -4,7 +4,6 @@ import { Model } from 'mongoose';
 import { IMasterFacilityRepository } from '../../domain/registries/master-facility-repository.interface';
 import { MasterFacility } from '../../domain/registries/master-facility';
 import { plainToClass } from 'class-transformer';
-import { Facility } from '../../domain';
 
 export class MasterFacilityRepository extends BaseRepository<MasterFacility>
   implements IMasterFacilityRepository {
@@ -38,9 +37,8 @@ export class MasterFacilityRepository extends BaseRepository<MasterFacility>
     return ups;
   }
 
-  // TODO add create missing facs
-  async updateFacility(facilities: any[]): Promise<number> {
-    let ups = 0;
+  async updateFacility(facilities: any[]): Promise<MasterFacility[]> {
+    const ups: MasterFacility[] = [];
     for (const f of facilities) {
       const facs = await this.model.find({ _id: f._id }).lean();
       if (facs && facs.length > 0) {
@@ -48,8 +46,12 @@ export class MasterFacilityRepository extends BaseRepository<MasterFacility>
           const fac = plainToClass(MasterFacility, ff);
           fac.changeFacDetails(f);
           const update = await this.update(fac);
-          ups++;
+          ups.push(fac);
         }
+      } else {
+        const newFac = await this.create(f);
+        newFac.syncFacility();
+        ups.push(newFac);
       }
     }
     return ups;
