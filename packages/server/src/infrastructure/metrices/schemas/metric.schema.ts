@@ -11,5 +11,6 @@ export const metricSchema = new mongoose.Schema({
   report: Schema.Types.Mixed,
   reportDate: Date,
   createDate: Date,
+  isCurrent: Boolean,
   facilityManifestId: String,
 });

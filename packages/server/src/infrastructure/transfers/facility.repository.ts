@@ -26,6 +26,7 @@ export class FacilityRepository extends BaseRepository<Facility>
       .populate('manifests')
       .populate({
         path: 'metrics',
+        match: { isCurrent: true },
         populate: { path: 'measure' },
       })
       .exec();

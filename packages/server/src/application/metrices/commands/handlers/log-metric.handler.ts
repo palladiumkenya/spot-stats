@@ -55,7 +55,10 @@ export class LogMetricHandler implements ICommandHandler<LogMetricCommand> {
 
       // log metric
       const metric = await this.metricRepository.create(newMetric);
-      // await this.metricRepository.updateCurrent(newMetric.code);
+      await this.metricRepository.updateCurrent(
+        newMetric.facility,
+        newMetric.measure,
+      );
       this.publisher.mergeObjectContext(newMetric).commit();
 
       const enrolledFacility = await this.facilityRepository.update(facility);

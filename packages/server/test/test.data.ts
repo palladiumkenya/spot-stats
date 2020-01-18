@@ -103,9 +103,16 @@ export const getTestMeasures = (facid, count = 2) => {
 
   const testMetrics: Metric[] = [];
   for (let i = 0; i < count; i++) {
-    testMetrics.push(
-      new Metric(uuid.v1(), testMeasures[i]._id, facid, `Fname${i}`, uuid.v1()),
+    const metric = new Metric(
+      uuid.v1(),
+      testMeasures[i]._id,
+      facid,
+      `Fname${i}`,
+      uuid.v1(),
     );
+    metric.isCurrent = false;
+    metric.reportDate = new Date();
+    testMetrics.push(metric);
   }
   return { testMeasures, testMetrics };
 };

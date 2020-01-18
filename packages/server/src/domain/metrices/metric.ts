@@ -5,6 +5,7 @@ export class Metric extends AggregateRoot {
   public _id: string;
   public reportDate: Date;
   public createDate: Date;
+  public isCurrent: boolean;
 
   constructor(
     public mId: string,
@@ -14,6 +15,7 @@ export class Metric extends AggregateRoot {
     public facilityManifestId: string,
   ) {
     super();
+    this.isCurrent = false;
     this.createDate = new Date();
     this._id = uuid.v1();
   }
