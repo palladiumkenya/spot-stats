@@ -104,6 +104,7 @@ export class LogMetricHandler implements ICommandHandler<LogMetricCommand> {
       measure,
       command.facilityManifestId,
     );
+    metric.reportDate = this.getReportDate(command.cargo);
     return metric;
   }
 
@@ -118,6 +119,7 @@ export class LogMetricHandler implements ICommandHandler<LogMetricCommand> {
         command.cargo.EmrName,
         command.facilityManifestId,
       );
+      metric1.reportDate = this.getReportDate(command.cargo);
       metrics.push(metric1);
 
       // EmrVersion
@@ -128,6 +130,7 @@ export class LogMetricHandler implements ICommandHandler<LogMetricCommand> {
         command.cargo.EmrVersion,
         command.facilityManifestId,
       );
+      metric2.reportDate = this.getReportDate(command.cargo);
       metrics.push(metric2);
 
       // LastLoginDate
@@ -138,6 +141,7 @@ export class LogMetricHandler implements ICommandHandler<LogMetricCommand> {
         command.cargo.LastLoginDate,
         command.facilityManifestId,
       );
+      metric3.reportDate = this.getReportDate(command.cargo);
       metrics.push(metric3);
 
       // LastMOH731RunDate
@@ -148,6 +152,7 @@ export class LogMetricHandler implements ICommandHandler<LogMetricCommand> {
         command.cargo.LastMOH731RunDate,
         command.facilityManifestId,
       );
+      metric4.reportDate = this.getReportDate(command.cargo);
       metrics.push(metric4);
     }
 
@@ -163,6 +168,7 @@ export class LogMetricHandler implements ICommandHandler<LogMetricCommand> {
         command.cargo.LogDate,
         command.facilityManifestId,
       );
+      metric.reportDate = this.getReportDate(command.cargo);
       metrics.push(metric);
     }
 
@@ -185,5 +191,12 @@ export class LogMetricHandler implements ICommandHandler<LogMetricCommand> {
       return m._id;
     }
     return '';
+  }
+
+  getReportDate(cargo: any) {
+    if (cargo.Action === 'Sent' || cargo.Action === 'Loaded') {
+      return cargo.LogDate;
+    }
+    return cargo.DateExtracted;
   }
 }

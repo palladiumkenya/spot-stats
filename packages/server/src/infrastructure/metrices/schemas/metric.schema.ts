@@ -9,5 +9,7 @@ export const metricSchema = new mongoose.Schema({
   measure: { type: String, ref: Measure.name },
   facility: { type: String, ref: Facility.name },
   report: Schema.Types.Mixed,
+  reportDate: Date,
+  createDate: Date,
   facilityManifestId: String,
 });
