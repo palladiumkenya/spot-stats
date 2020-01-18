@@ -26,7 +26,7 @@ export class MetricRepository extends BaseRepository<Metric>
     const result = await this.model
       .find({ facility: id, isCurrent: true })
       .populate('measure')
-      .exec();
+      .lean();
     return result;
   }
 

@@ -14,6 +14,7 @@ import { FacilityEnrolledHandler } from './events/handlers/facility-enrolled.han
 import { ManifestLoggedHandler } from './events/handlers/manifest-logged.handler';
 import { GetStatsCountHandler } from './queries/handlers/get-stats-count.handler';
 import { GetStatsHandler } from './queries/handlers/get-stats.handler';
+import { MetricsInfrastructureModule } from '../../infrastructure/metrices/metrics-infrastructure.module';
 
 const CommandHandlers = [
   LogManifestHandler,
@@ -31,6 +32,7 @@ const QueryHandlers = [
 @Module({
   imports: [
     CqrsModule,
+    MetricsInfrastructureModule,
     TransfersInfrastructureModule,
     RegistriesInfrastructureModule,
     CourtsInfrastructureModule,
