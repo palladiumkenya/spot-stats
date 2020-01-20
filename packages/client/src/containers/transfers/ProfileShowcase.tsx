@@ -42,7 +42,7 @@ class ProfileShowcase extends Component<Props, State> {
     if (!id) {
       this.messages.show({
         severity: "error",
-        summary: "No facility specified !"
+        summary: "No facilities specified !"
       });
       return;
     }

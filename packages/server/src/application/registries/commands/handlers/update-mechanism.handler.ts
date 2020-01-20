@@ -1,18 +1,18 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
 import { Inject, Logger } from '@nestjs/common';
 import { IMasterFacilityRepository } from '../../../../domain/registries/master-facility-repository.interface';
-import { UpdateAgencyCommand } from '../update-agency.command';
+import { UpdateMechanismCommand } from '../update-mechanism.command';
 
-@CommandHandler(UpdateAgencyCommand)
-export class UpdateAgencyHandler
-  implements ICommandHandler<UpdateAgencyCommand> {
+@CommandHandler(UpdateMechanismCommand)
+export class UpdateMechanismHandler
+  implements ICommandHandler<UpdateMechanismCommand> {
   constructor(
     @Inject('IMasterFacilityRepository')
     private readonly repository: IMasterFacilityRepository,
     private readonly publisher: EventPublisher,
   ) {}
 
-  async execute(command: UpdateAgencyCommand): Promise<number> {
-    return await this.repository.updateAgency(command.agencies);
+  async execute(command: UpdateMechanismCommand): Promise<number> {
+    return await this.repository.updateMechanism(command.mechanisms);
   }
 }

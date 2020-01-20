@@ -1,5 +1,6 @@
 import { AggregateRoot } from '@nestjs/cqrs';
 import * as uuid from 'uuid';
+import { MasterFacilitySyncedEvent } from '../../application/registries/events/master-facility-synced.event';
 
 export class MasterFacility extends AggregateRoot {
   constructor(
@@ -17,5 +18,20 @@ export class MasterFacility extends AggregateRoot {
     this.name = name;
     this.county = county;
     this.mechanism = mechanism;
+  }
+
+  changeFacDetails(fac: any) {
+    this.code = fac.code;
+    this.name = fac.name;
+    this.county = fac.county;
+    this.mechanism = fac.mechanism;
+  }
+
+  changeMechanism(mechanism: any) {
+    this.mechanism = mechanism;
+  }
+
+  syncFacility() {
+    this.apply(new MasterFacilitySyncedEvent(this));
   }
 }

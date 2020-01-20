@@ -3,6 +3,7 @@ import * as uuid from 'uuid';
 
 export class Measure extends AggregateRoot {
   public _id: string;
+  public rank: number;
 
   constructor(
     public name: string,

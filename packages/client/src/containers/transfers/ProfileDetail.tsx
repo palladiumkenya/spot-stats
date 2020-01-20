@@ -27,6 +27,20 @@ export class ProfileDetail extends Component<Prop, {}> {
     );
   };
 
+  date3Template = (rowData: any, column: any) => {
+    const dt = rowData["report"];
+    const ll = JSON.parse(JSON.stringify(rowData["measure"]));
+
+    if (ll.display.startsWith("Last") && dt) {
+      return (
+        <span>
+          <Moment format="DD MMM YYYY">{dt}</Moment>
+        </span>
+      );
+    }
+    return <span>{dt} </span>;
+  };
+
   render() {
     if (!this.props.profile) {
       return <div />;
@@ -113,7 +127,11 @@ export class ProfileDetail extends Component<Prop, {}> {
                 header="Facility Metrics"
               >
                 <Column field="measure.display" header="Measure" />
-                <Column field="report" header="Metric" />
+                <Column
+                  field="report"
+                  header="Metric"
+                  body={this.date3Template}
+                />
                 <Column field="measure.description" header="Description" />
               </DataTable>
             </div>

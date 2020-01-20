@@ -23,6 +23,7 @@ export class ManifestRepository extends BaseRepository<Manifest>
     if (facId) {
       const facResuls = await this.model
         .find({ isCurrent: true, facility: facId })
+        .populate(Facility.name.toLowerCase())
         .exec();
       if (facResuls && facResuls.length > 0) {
         return facResuls[0].toObject();
@@ -31,6 +32,7 @@ export class ManifestRepository extends BaseRepository<Manifest>
     }
     const resuls = await this.model
       .find({ isCurrent: true })
+      .populate(Facility.name.toLowerCase())
       .sort({ logDate: -1 })
       .exec();
     return resuls;

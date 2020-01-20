@@ -73,7 +73,7 @@ export class ProfileList extends Component<Props, {}> {
         <Column field="code" header="Code" sortable={true} filter={true} />
         <Column field="name" header="Facility" sortable={true} filter={true} />
         <Column
-          field="facilityInfo.masterFacility.county.name"
+          field="facility.masterFacility.county.name"
           header="County"
           sortable={true}
           filter={true}

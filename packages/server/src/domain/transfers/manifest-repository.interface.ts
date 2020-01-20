@@ -1,5 +1,6 @@
 import { IRepository } from '../../application/common/repository.interface';
 import { Manifest } from './manifest';
+import { MasterFacility } from '..';
 
 export interface IManifestRepository extends IRepository<Manifest> {
   manifestExists(mId: string): Promise<boolean>;
