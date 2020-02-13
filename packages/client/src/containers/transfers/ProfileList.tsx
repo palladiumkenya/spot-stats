@@ -71,12 +71,19 @@ export class ProfileList extends Component<Props, {}> {
         totalRecords={this.props.totalRecords}
       >
         <Column field="code" header="Code" sortable={true} filter={true} />
-        <Column field="name" header="Facility" sortable={true} filter={true} />
+        <Column
+          field="name"
+          header="Facility"
+          sortable={true}
+          filter={true}
+          filterMatchMode={"contains"}
+        />
         <Column
           field="facility.masterFacility.county.name"
           header="County"
           sortable={true}
           filter={true}
+          filterMatchMode={"contains"}
         />
         <Column field="docket" header="Docket" sortable={true} filter={true} />
         <Column field="patientCount" header="Expected" sortable={true} />
