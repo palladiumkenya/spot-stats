@@ -196,7 +196,7 @@ export class App extends Component<Props, State> {
   createMenu = () => {
     this.menu = [
       {
-        label: "Uploads",
+        label: "Facility Uploads",
         icon: "cloud_upload",
         command: () => {
           window.location.hash = "/stats";
