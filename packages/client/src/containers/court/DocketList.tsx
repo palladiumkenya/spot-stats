@@ -39,7 +39,7 @@ export class DocketList extends Component<Props, State> {
       <div>
         <Button
           disabled={true}
-          icon="pi pi-external-link"
+          icon="pi pi-eye"
           onClick={event => this.manageAction(event, rowData)}
         />
       </div>
