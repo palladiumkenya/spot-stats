@@ -31,6 +31,10 @@ export class ProfileDetail extends Component<Prop, {}> {
     const dt = rowData["report"];
     const ll = JSON.parse(JSON.stringify(rowData["measure"]));
 
+    if (dt && dt === "Demo EMR") return <span></span>;
+    if (dt && dt === "v1.0.0.0") return <span></span>;
+    if (dt && dt.startsWith("1983")) return <span></span>;
+
     if (ll.display.startsWith("Last") && dt) {
       return (
         <span>
