@@ -20,8 +20,8 @@ interface State {
 }
 
 // @ts-ignore
-const url = `https://${window.location.hostname}:4720/api/v1/transfers/manifests`;
-const statCountUrl = `https://${window.location.hostname}:4720/api/v1/transfers/manifests/count`;
+const url = `https://${window.location.hostname}:4702/api/v1/transfers/manifests`;
+const statCountUrl = `https://${window.location.hostname}:4702/api/v1/transfers/manifests/count`;
 
 export class ProfileScene extends Component<any, State> {
   private messages: any;
