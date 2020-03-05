@@ -5,6 +5,7 @@ import { MasterFacility } from '..';
 export interface IManifestRepository extends IRepository<Manifest> {
   manifestExists(mId: string): Promise<boolean>;
   getCurrent(facId?: string): Promise<any>;
+  getCurrentDocket(facId: string, docketId: string): Promise<any>;
   getAllCurrentPaged(
     size: number,
     page: number,
