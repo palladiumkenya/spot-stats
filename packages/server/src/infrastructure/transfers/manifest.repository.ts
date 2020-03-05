@@ -38,6 +38,19 @@ export class ManifestRepository extends BaseRepository<Manifest>
     return resuls;
   }
 
+  async getCurrentDocket(facId: string, docketId: string): Promise<any> {
+    if (facId) {
+      const facResuls = await this.model
+        .find({ isCurrent: true, facility: facId, docket: docketId })
+        .populate(Facility.name.toLowerCase())
+        .exec();
+      if (facResuls && facResuls.length > 0) {
+        return facResuls[0].toObject();
+      }
+      return undefined;
+    }
+  }
+
   getAllCurrentPaged(
     size: number,
     page: number,
