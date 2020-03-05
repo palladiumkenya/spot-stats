@@ -4,7 +4,7 @@ import { Controller, Get, Logger, Res } from '@nestjs/common';
 export class AppController {
   @Get()
   getAppName(): string {
-    return 'dwapi Stats v05MAR201436';
+    return 'dwapi Stats v05MAR201438';
   }
 
   @Get('version')
