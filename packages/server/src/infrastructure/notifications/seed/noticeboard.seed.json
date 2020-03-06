@@ -2,11 +2,11 @@
   {
     "_id": "9eb13e4a-bb7b-11e9-9cb5-2a2ae2dbcce4",
     "rank": 1,
-    "message": "Message 1"
+    "message": "It may take upto 1 HOUR for data to be processed and displayed after being SENT"
   },
   {
     "_id": "9eb13e4a-bb7b-11e9-9cb5-2a2ae2dbcce5",
     "rank": 2,
-    "message": "Message 2"
+    "message": " Patients without ENCOUNTERS are NEVER sent by DWAPI"
   }
 ]

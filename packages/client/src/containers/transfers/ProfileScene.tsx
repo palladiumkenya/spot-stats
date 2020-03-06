@@ -28,7 +28,7 @@ let noticesUrl = `https://${window.location.hostname}:4702/api/v1/notifications/
 
 export class ProfileScene extends Component<any, State> {
   private messages: any;
-  private noticeMessages: any = [];
+  private noticeMessages: any;
 
   constructor(props: Readonly<any>) {
     super(props);
@@ -55,10 +55,20 @@ export class ProfileScene extends Component<any, State> {
 
     try {
       let res = await axios.get(noticesUrl);
-      let data = res.data;
+      let notices = res.data.map(
+        (noticeBoard: NoticeBoard) => noticeBoard.message
+      );
+
+      this.noticeMessages.show({
+        sticky: true,
+        severity: "info",
+        summary: "Please NOTE that:",
+        detail: notices.join(",")
+      });
+
       this.setState(prevState => ({
         ...prevState,
-        notices: data
+        notices: notices
       }));
     } catch (e) {
       this.messages.show({
@@ -178,15 +188,6 @@ export class ProfileScene extends Component<any, State> {
     await this.loadNotices();
     await this.loadCount();
     await this.loadData();
-
-    this.noticeMessages = this.state.notices.map(
-      (person: { message: any }) => ({
-        sticky: true,
-        severity: "warn",
-        summary: "",
-        detail: person.message
-      })
-    );
   }
 
   render() {

@@ -13,7 +13,7 @@ export class GetNoticesHandler
   ) {}
 
   async execute(query: GetNoticesQuery): Promise<NoticeBoardDto[]> {
-    const results = await this.noticeBoardRepository.getAll();
+    const results = await this.noticeBoardRepository.getMain();
     return results;
   }
 }
