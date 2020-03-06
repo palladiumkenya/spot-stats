@@ -3,7 +3,7 @@ import { Extract } from '../src/domain/courts/extract';
 import { MasterFacility } from '../src/domain/registries/master-facility';
 import * as uuid from 'uuid';
 import { Facility } from '../src/domain/transfers/facility';
-import { Manifest, Summary } from '../src/domain';
+import { Manifest, NoticeBoard, Summary } from '../src/domain';
 import { Metric } from '../src/domain/metrices/metric';
 import { Measure } from '../src/domain/metrices/measure';
 import { plainToClass } from 'class-transformer';
@@ -682,4 +682,12 @@ export const getMeasures = () => {
       ']\n',
   );
   return { measures };
+};
+
+export const getTestNotices = (count = 2) => {
+  const data: NoticeBoard[] = [];
+  for (let i = 0; i < count; i++) {
+    data.push(new NoticeBoard(uuid.v1(), `Notice Message ${i}`, i + 1));
+  }
+  return data;
 };

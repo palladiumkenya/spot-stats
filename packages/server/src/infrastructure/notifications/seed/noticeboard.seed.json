@@ -1,0 +1,12 @@
+[
+  {
+    "_id": "9eb13e4a-bb7b-11e9-9cb5-2a2ae2dbcce4",
+    "rank": 1,
+    "message": "Message 1"
+  },
+  {
+    "_id": "9eb13e4a-bb7b-11e9-9cb5-2a2ae2dbcce5",
+    "rank": 2,
+    "message": "Message 2"
+  }
+]

@@ -15,3 +15,5 @@ export * from './transfers/facility-repository.interface';
 export * from './transfers/facility';
 export * from './transfers/manifest';
 export * from './transfers/summary';
+export * from './notifications/notice-board';
+export * from './notifications/dtos/notice-board.dto';
