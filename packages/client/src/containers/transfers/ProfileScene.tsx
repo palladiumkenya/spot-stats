@@ -6,6 +6,7 @@ import { ProfileList } from "./ProfileList";
 import { Redirect, Route } from "react-router";
 import { BrowserRouter } from "react-router-dom";
 import { Messages } from "primereact/messages";
+import { NoticeBoard } from "./models/notice-board";
 
 interface State {
   showSummary: boolean;
@@ -22,13 +23,13 @@ interface State {
 }
 
 // @ts-ignore
-const url = `https://${window.location.hostname}:4702/api/v1/transfers/manifests`;
-const statCountUrl = `https://${window.location.hostname}:4702/api/v1/transfers/manifests/count`;
-let noticesUrl = `https://${window.location.hostname}:4702/api/v1/notifications/notices/`;
+const url = `https://${window.location.hostname}:4720/api/v1/transfers/manifests`;
+const statCountUrl = `https://${window.location.hostname}:4720/api/v1/transfers/manifests/count`;
+let noticesUrl = `https://${window.location.hostname}:4720/api/v1/notifications/notices/`;
 
 export class ProfileScene extends Component<any, State> {
   private messages: any;
-  private noticeMessages: any = [];
+  private noticeMessages: any;
 
   constructor(props: Readonly<any>) {
     super(props);
@@ -55,10 +56,20 @@ export class ProfileScene extends Component<any, State> {
 
     try {
       let res = await axios.get(noticesUrl);
-      let data = res.data;
+      let notices = res.data.map(
+        (noticeBoard: NoticeBoard) => noticeBoard.message
+      );
+
+      this.noticeMessages.show({
+        sticky: true,
+        severity: "info",
+        summary: "Please NOTE that:",
+        detail: notices.join(",")
+      });
+
       this.setState(prevState => ({
         ...prevState,
-        notices: data
+        notices: notices
       }));
     } catch (e) {
       this.messages.show({
@@ -178,15 +189,6 @@ export class ProfileScene extends Component<any, State> {
     await this.loadNotices();
     await this.loadCount();
     await this.loadData();
-
-    this.noticeMessages = this.state.notices.map(
-      (person: { message: any }) => ({
-        sticky: true,
-        severity: "warn",
-        summary: "",
-        detail: person.message
-      })
-    );
   }
 
   render() {

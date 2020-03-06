@@ -9,4 +9,9 @@ export class NoticeBoardRepository extends BaseRepository<NoticeBoard>
   constructor(@InjectModel(NoticeBoard.name) model: Model<NoticeBoard>) {
     super(model);
   }
+
+  async getMain(): Promise<NoticeBoard[]> {
+    const result = await this.model.find().lean();
+    return result;
+  }
 }
