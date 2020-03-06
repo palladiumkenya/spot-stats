@@ -6,6 +6,7 @@ import { ProfileList } from "./ProfileList";
 import { Redirect, Route } from "react-router";
 import { BrowserRouter } from "react-router-dom";
 import { Messages } from "primereact/messages";
+import { NoticeBoard } from "./models/notice-board";
 
 interface State {
   showSummary: boolean;
@@ -22,9 +23,9 @@ interface State {
 }
 
 // @ts-ignore
-const url = `https://${window.location.hostname}:4702/api/v1/transfers/manifests`;
-const statCountUrl = `https://${window.location.hostname}:4702/api/v1/transfers/manifests/count`;
-let noticesUrl = `https://${window.location.hostname}:4702/api/v1/notifications/notices/`;
+const url = `https://${window.location.hostname}:4720/api/v1/transfers/manifests`;
+const statCountUrl = `https://${window.location.hostname}:4720/api/v1/transfers/manifests/count`;
+let noticesUrl = `https://${window.location.hostname}:4720/api/v1/notifications/notices/`;
 
 export class ProfileScene extends Component<any, State> {
   private messages: any;
