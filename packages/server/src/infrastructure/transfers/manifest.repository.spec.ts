@@ -58,6 +58,14 @@ describe('Manifest Repository  Tests', () => {
     expect(data).not.toBeUndefined();
   });
 
+  it('should load Current by Fac Dco', async () => {
+    const data = await repository.getCurrentDocket(
+      manifests[3].facility,
+      'HTS',
+    );
+    expect(data).not.toBeUndefined();
+  });
+
   it('should load All Current Paged', async () => {
     const data = await repository.getAllCurrentPaged(1, 1);
     expect(data.length).toBeGreaterThan(0);

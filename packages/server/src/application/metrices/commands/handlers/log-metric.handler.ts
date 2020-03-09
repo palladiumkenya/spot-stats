@@ -152,7 +152,7 @@ export class LogMetricHandler implements ICommandHandler<LogMetricCommand> {
         command.id,
         '7eb16e4a-bb7b-11e9-9cb5-2a2ae2dbcce4',
         command.facilityCode,
-        command.cargo.LastMOH731RunDate,
+        command.cargo.LastMoH731RunDate,
         command.facilityManifestId,
       );
       metric4.reportDate = command.cargo.DateExtracted;

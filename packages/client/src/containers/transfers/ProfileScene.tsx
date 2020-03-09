@@ -5,6 +5,8 @@ import { Growl } from "primereact/growl";
 import { ProfileList } from "./ProfileList";
 import { Redirect, Route } from "react-router";
 import { BrowserRouter } from "react-router-dom";
+import { Messages } from "primereact/messages";
+import { NoticeBoard } from "./models/notice-board";
 
 interface State {
   showSummary: boolean;
@@ -17,14 +19,17 @@ interface State {
   first: number;
   sort: any;
   filter: any;
+  notices: any;
 }
 
 // @ts-ignore
 const url = `https://${window.location.hostname}:4720/api/v1/transfers/manifests`;
 const statCountUrl = `https://${window.location.hostname}:4720/api/v1/transfers/manifests/count`;
+let noticesUrl = `https://${window.location.hostname}:4720/api/v1/notifications/notices/`;
 
 export class ProfileScene extends Component<any, State> {
   private messages: any;
+  private noticeMessages: any;
 
   constructor(props: Readonly<any>) {
     super(props);
@@ -38,9 +43,43 @@ export class ProfileScene extends Component<any, State> {
       page: 1,
       first: 0,
       sort: [],
-      filter: []
+      filter: [],
+      notices: []
     };
   }
+
+  loadNotices = async () => {
+    this.setState(prevState => ({
+      ...prevState,
+      loading: true
+    }));
+
+    try {
+      let res = await axios.get(noticesUrl);
+      let notices = res.data.map(
+        (noticeBoard: NoticeBoard) => noticeBoard.message
+      );
+
+      this.noticeMessages.show({
+        sticky: true,
+        severity: "info",
+        summary: "Please NOTE that:",
+        detail: notices.join(",")
+      });
+
+      this.setState(prevState => ({
+        ...prevState,
+        notices: notices
+      }));
+    } catch (e) {
+      this.messages.show({
+        severity: "error",
+        summary: "Error loading",
+        detail: `${e}`
+      });
+    }
+  };
+
   loadCount = async () => {
     this.setState(prevState => ({
       ...prevState,
@@ -147,6 +186,7 @@ export class ProfileScene extends Component<any, State> {
   };
 
   async componentDidMount() {
+    await this.loadNotices();
     await this.loadCount();
     await this.loadData();
   }
@@ -157,6 +197,7 @@ export class ProfileScene extends Component<any, State> {
     } else {
       return (
         <div>
+          <Messages ref={el => (this.noticeMessages = el)} />
           <Growl ref={el => (this.messages = el)} />
           <div>
             {this.state.profiles ? (

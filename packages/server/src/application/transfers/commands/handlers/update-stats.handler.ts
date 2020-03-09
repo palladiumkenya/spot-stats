@@ -35,7 +35,10 @@ export class UpdateStatsHandler implements ICommandHandler<UpdateStatsCommand> {
       this.publisher.mergeObjectContext(facility).commit();
       Logger.log(`Updated Stats ${facility.name}`);
 
-      const manifest = await this.manifestRepository.getCurrent(facility._id);
+      const manifest = await this.manifestRepository.getCurrentDocket(
+        facility._id,
+        command.docket.name,
+      );
       if (manifest) {
         const recieved = facility.getPatientSummary(command.docket.name);
         if (recieved) {
