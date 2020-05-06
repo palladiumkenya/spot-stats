@@ -58,6 +58,9 @@ export class ProfileDetail extends Component<Prop, {}> {
       const mpiSummaries = this.props.profile.summaries!.filter(
         x => x.docket.name === "MPI"
       );
+      const mgsSummaries = this.props.profile.summaries!.filter(
+        x => x.docket.name === "MGS"
+      );
       return (
         <div>
           <div className="p-grid">
@@ -99,6 +102,18 @@ export class ProfileDetail extends Component<Prop, {}> {
 
                 <TabPanel header="MPI">
                   <DataTable value={mpiSummaries}>
+                    <Column field="extract.display" header="Extract" />
+                    <Column field="recieved" header="Recieved" />
+                    <Column field="expected" header="Expected" />
+                    <Column
+                      field="updated"
+                      header="Update"
+                      body={this.date2Template}
+                    />
+                  </DataTable>
+                </TabPanel>
+                <TabPanel header="MGS">
+                  <DataTable value={mgsSummaries}>
                     <Column field="extract.display" header="Extract" />
                     <Column field="recieved" header="Recieved" />
                     <Column field="expected" header="Expected" />
