@@ -1,3 +1,3 @@
 export class UpdateMechanismCommand {
-  constructor(public readonly mechanism: any) {}
+  constructor(public readonly mechanisms: any[]) {}
 }

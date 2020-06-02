@@ -6,4 +6,5 @@ export const measureSchema = new mongoose.Schema({
   area: String,
   display: String,
   description: String,
+  rank: Number,
 });

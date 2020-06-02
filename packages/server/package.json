@@ -1,6 +1,7 @@
 {
   "name": "@spot-stats/server",
   "version": "1.0.0",
+  "description": "spot stats microfrontend",
   "main": "index.js",
   "license": "MIT",
   "scripts": {

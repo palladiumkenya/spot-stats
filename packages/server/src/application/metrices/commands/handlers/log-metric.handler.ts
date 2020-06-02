@@ -37,36 +37,46 @@ export class LogMetricHandler implements ICommandHandler<LogMetricCommand> {
   ) {}
 
   async execute(command: LogMetricCommand): Promise<any> {
-    // check if metric Exists
-    const metricExists = await this.metricRepository.findByMetricId(command.id);
-    if (metricExists) {
-      return;
-    }
-
-    // check or enroll Facility
-    const facility = await this.enrollFacility(command);
-
-    const newMetrics = await this.createMetrics(command);
-    for (const newMetric of newMetrics) {
-      if (facility) {
-        newMetric.facility = facility._id;
-        facility.addMetric(newMetric._id);
+    try {
+      // check if metric Exists
+      const metricExists = await this.metricRepository.findByMetricId(
+        command.id,
+      );
+      if (metricExists) {
+        return;
       }
 
-      // log metric
-      const metric = await this.metricRepository.create(newMetric);
-      // await this.metricRepository.updateCurrent(newMetric.code);
-      this.publisher.mergeObjectContext(newMetric).commit();
+      // check or enroll Facility
+      const facility = await this.enrollFacility(command);
 
-      const enrolledFacility = await this.facilityRepository.update(facility);
-      this.publisher.mergeObjectContext(facility).commit();
+      const newMetrics = await this.createMetrics(command);
+      for (const newMetric of newMetrics) {
+        if (facility) {
+          newMetric.facility = facility._id;
+          facility.addMetric(newMetric._id);
+        }
 
-      Logger.log(`Metric processed ${facility.name}`);
+        // log metric
+        const metric = await this.metricRepository.create(newMetric);
+        await this.metricRepository.updateCurrent(
+          newMetric.facility,
+          newMetric.measure,
+        );
+        this.publisher.mergeObjectContext(newMetric).commit();
 
-      this.eventBus.publish(new MetricLoggedEvent(facility._id, metric._id));
+        const enrolledFacility = await this.facilityRepository.update(facility);
+        this.publisher.mergeObjectContext(facility).commit();
+
+        Logger.log(`Metric processed ${facility.name}`);
+
+        this.eventBus.publish(new MetricLoggedEvent(facility._id, metric._id));
+      }
+
+      return newMetrics;
+    } catch (e) {
+      Logger.error(e);
     }
-
-    return newMetrics;
+    return undefined;
   }
 
   async enrollFacility(command: LogMetricCommand): Promise<Facility> {
@@ -104,6 +114,7 @@ export class LogMetricHandler implements ICommandHandler<LogMetricCommand> {
       measure,
       command.facilityManifestId,
     );
+    metric.reportDate = this.getReportDate(command.cargo);
     return metric;
   }
 
@@ -118,6 +129,7 @@ export class LogMetricHandler implements ICommandHandler<LogMetricCommand> {
         command.cargo.EmrName,
         command.facilityManifestId,
       );
+      metric1.reportDate = command.cargo.DateExtracted;
       metrics.push(metric1);
 
       // EmrVersion
@@ -128,6 +140,7 @@ export class LogMetricHandler implements ICommandHandler<LogMetricCommand> {
         command.cargo.EmrVersion,
         command.facilityManifestId,
       );
+      metric2.reportDate = command.cargo.DateExtracted;
       metrics.push(metric2);
 
       // LastLoginDate
@@ -138,6 +151,7 @@ export class LogMetricHandler implements ICommandHandler<LogMetricCommand> {
         command.cargo.LastLoginDate,
         command.facilityManifestId,
       );
+      metric3.reportDate = command.cargo.DateExtracted;
       metrics.push(metric3);
 
       // LastMOH731RunDate
@@ -145,9 +159,10 @@ export class LogMetricHandler implements ICommandHandler<LogMetricCommand> {
         command.id,
         '7eb16e4a-bb7b-11e9-9cb5-2a2ae2dbcce4',
         command.facilityCode,
-        command.cargo.LastMOH731RunDate,
+        command.cargo.LastMoH731RunDate,
         command.facilityManifestId,
       );
+      metric4.reportDate = command.cargo.DateExtracted;
       metrics.push(metric4);
     }
 
@@ -163,6 +178,7 @@ export class LogMetricHandler implements ICommandHandler<LogMetricCommand> {
         command.cargo.LogDate,
         command.facilityManifestId,
       );
+      metric.reportDate = command.cargo.LogDate;
       metrics.push(metric);
     }
 
@@ -185,5 +201,12 @@ export class LogMetricHandler implements ICommandHandler<LogMetricCommand> {
       return m._id;
     }
     return '';
+  }
+
+  getReportDate(cargo: any) {
+    if (cargo.Action === 'Sent' || cargo.Action === 'Loaded') {
+      return cargo.LogDate;
+    }
+    return cargo.DateExtracted;
   }
 }

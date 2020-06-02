@@ -3,7 +3,7 @@ import { Extract } from '../src/domain/courts/extract';
 import { MasterFacility } from '../src/domain/registries/master-facility';
 import * as uuid from 'uuid';
 import { Facility } from '../src/domain/transfers/facility';
-import { Manifest, Summary } from '../src/domain';
+import { Manifest, NoticeBoard, Summary } from '../src/domain';
 import { Metric } from '../src/domain/metrices/metric';
 import { Measure } from '../src/domain/metrices/measure';
 import { plainToClass } from 'class-transformer';
@@ -103,9 +103,16 @@ export const getTestMeasures = (facid, count = 2) => {
 
   const testMetrics: Metric[] = [];
   for (let i = 0; i < count; i++) {
-    testMetrics.push(
-      new Metric(uuid.v1(), testMeasures[i]._id, facid, `Fname${i}`, uuid.v1()),
+    const metric = new Metric(
+      uuid.v1(),
+      testMeasures[i]._id,
+      facid,
+      `Fname${i}`,
+      uuid.v1(),
     );
+    metric.isCurrent = false;
+    metric.reportDate = new Date();
+    testMetrics.push(metric);
   }
   return { testMeasures, testMetrics };
 };
@@ -252,12 +259,12 @@ export const getTestStatsData = () => {
       '      "code": 16,\n' +
       '      "name": "MACHAKOS"\n' +
       '    },\n' +
-      '    "mechanism": {\n' +
+      '    "mechanisms": {\n' +
       '      "_id": "9eb13e4a-bb7b-11e9-9cb5-2a2ae2dbcce4",\n' +
       '      "code": "18504",\n' +
       '      "name": "UMB Timiza",\n' +
       '      "implementationName": "UMB Timiza",\n' +
-      '      "agency": "9eb13e4a-bb7b-11e9-9cb5-2a2ae2dbcce4"\n' +
+      '      "agencies": "9eb13e4a-bb7b-11e9-9cb5-2a2ae2dbcce4"\n' +
       '    }\n' +
       '  },\n' +
       '  {\n' +
@@ -271,12 +278,12 @@ export const getTestStatsData = () => {
       '      "code": 34,\n' +
       '      "name": "KAJIADO"\n' +
       '    },\n' +
-      '    "mechanism": {\n' +
+      '    "mechanisms": {\n' +
       '      "_id": "9eb140ca-bb7b-11e9-9cb5-2a2ae2dbcce4",\n' +
       '      "code": "13588",\n' +
       '      "name": "Afya Ziwani",\n' +
       '      "implementationName": "Afya Ziwani",\n' +
-      '      "agency": "9eb140ca-bb7b-11e9-9cb5-2a2ae2dbcce4"\n' +
+      '      "agencies": "9eb140ca-bb7b-11e9-9cb5-2a2ae2dbcce4"\n' +
       '    }\n' +
       '  }\n' +
       ']\n',
@@ -487,12 +494,12 @@ export const getTestFacSummaries = () => {
       '      "code": 16,\n' +
       '      "name": "MACHAKOS"\n' +
       '    },\n' +
-      '    "mechanism": {\n' +
+      '    "mechanisms": {\n' +
       '      "_id": "9eb13e4a-bb7b-11e9-9cb5-2a2ae2dbcce4",\n' +
       '      "code": "18504",\n' +
       '      "name": "UMB Timiza",\n' +
       '      "implementationName": "UMB Timiza",\n' +
-      '      "agency": "9eb13e4a-bb7b-11e9-9cb5-2a2ae2dbcce4"\n' +
+      '      "agencies": "9eb13e4a-bb7b-11e9-9cb5-2a2ae2dbcce4"\n' +
       '    },\n' +
       '    "__v": 0\n' +
       '  },\n' +
@@ -675,4 +682,12 @@ export const getMeasures = () => {
       ']\n',
   );
   return { measures };
+};
+
+export const getTestNotices = (count = 2) => {
+  const data: NoticeBoard[] = [];
+  for (let i = 0; i < count; i++) {
+    data.push(new NoticeBoard(uuid.v1(), `Notice Message ${i}`, i + 1));
+  }
+  return data;
 };

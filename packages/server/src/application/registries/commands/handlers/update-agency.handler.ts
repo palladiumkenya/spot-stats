@@ -12,7 +12,7 @@ export class UpdateAgencyHandler
     private readonly publisher: EventPublisher,
   ) {}
 
-  async execute(command: UpdateAgencyCommand) {
-    Logger.log(`updating agency ${command}`);
+  async execute(command: UpdateAgencyCommand): Promise<number> {
+    return await this.repository.updateAgency(command.agencies);
   }
 }

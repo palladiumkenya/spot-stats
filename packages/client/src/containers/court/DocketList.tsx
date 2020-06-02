@@ -39,7 +39,8 @@ export class DocketList extends Component<Props, State> {
       <div>
         <Button
           disabled={true}
-          icon="pi pi-external-link"
+          hidden={true}
+          icon="pi pi-eye"
           onClick={event => this.manageAction(event, rowData)}
         />
       </div>
@@ -52,6 +53,7 @@ export class DocketList extends Component<Props, State> {
         Dockets
         <Button
           disabled={true}
+          hidden={true}
           onClick={this.addAction}
           icon="pi pi-plus"
           style={{ float: "right" }}

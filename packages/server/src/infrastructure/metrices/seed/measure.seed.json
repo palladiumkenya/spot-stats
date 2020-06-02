@@ -4,49 +4,56 @@
     "name": "EmrName",
     "area": "App",
     "display": "Emr Name",
-    "description": "Current EMR at Facility"
+    "description": "Current EMR at Facility",
+    "rank": 1
   },
   {
     "_id": "7eb14e4a-bb7b-11e9-9cb5-2a2ae2dbcce4",
     "name": "EmrVersion",
     "area": "App",
     "display": "Emr Version",
-    "description": "Current EMR Version at Facility"
+    "description": "Current EMR Version at Facility",
+    "rank": 2
   },
   {
     "_id": "7eb15e4a-bb7b-11e9-9cb5-2a2ae2dbcce4",
     "name": "LastLoginDate",
     "area": "App",
     "display": "Last Login Date",
-    "description": "Last login date in to the EMR"
+    "description": "Last login date into the EMR",
+    "rank": 3
   },
   {
     "_id": "7eb16e4a-bb7b-11e9-9cb5-2a2ae2dbcce4",
     "name": "LastMoH731RunDate",
     "area": "App",
     "display": "Last MOH 731 Run Date",
-    "description": "Last date MOH 731 Report was generated"
+    "description": "Last date MOH 731 Report was generated",
+    "rank": 4
   },
   {
     "_id": "7eb17e4a-bb7b-11e9-9cb5-2a2ae2dbcce4",
     "name": "DwapiVersion",
     "area": "MasterPatientIndex",
     "display": "MPI Dwapi Version",
-    "description": "Dwapi Version used to Load MPI"
+    "description": "Dwapi Version used to Load MPI",
+    "rank": 10
   },
   {
     "_id": "7eb18e4a-bb7b-11e9-9cb5-2a2ae2dbcce4",
     "name": "ExtractLoaded",
     "area": "MasterPatientIndex",
     "display": "Last MPI Load",
-    "description": "Date of the last MPI Extract load"
+    "description": "Date of the last MPI Extract load",
+    "rank": 20
   },
   {
     "_id": "7eb19e4a-bb7b-11e9-9cb5-2a2ae2dbcce4",
     "name": "ExtractSent",
     "area": "MasterPatientIndex",
     "display": "Last MPI Sent",
-    "description": "Date of the last MPI Extract sent"
+    "description": "Date of the last MPI Extract sent",
+    "rank": 30
   },
 
   {
@@ -54,21 +61,24 @@
     "name": "DwapiVersion",
     "area": "HivTestingService",
     "display": "HTS Dwapi Version",
-    "description": "Dwapi Version used to Load HTS"
+    "description": "Dwapi Version used to Load HTS",
+    "rank": 40
   },
   {
     "_id": "7eb21e4a-bb7b-11e9-9cb5-2a2ae2dbcce4",
     "name": "ExtractLoaded",
     "area": "HivTestingService",
     "display": "Last HTS Load",
-    "description": "Date of the last HTS Extract Loaded"
+    "description": "Date of the last HTS Extract Loaded",
+    "rank": 50
   },
   {
     "_id": "7eb22e4a-bb7b-11e9-9cb5-2a2ae2dbcce4",
     "name": "ExtractSent",
     "area": "HivTestingService",
     "display": "Last HTS Sent",
-    "description": "Date of the last HTS Extract Sent"
+    "description": "Date of the last HTS Extract Sent",
+    "rank": 60
   },
 
   {
@@ -76,20 +86,47 @@
     "name": "DwapiVersion",
     "area": "CareTreatment",
     "display": "CT Dwapi Version",
-    "description": "Dwapi Version used to Load CT"
+    "description": "Dwapi Version used to Load CT",
+    "rank": 70
   },
   {
     "_id": "7eb24e4a-bb7b-11e9-9cb5-2a2ae2dbcce4",
     "name": "ExtractLoaded",
     "area": "CareTreatment",
     "display": "Last CT Load",
-    "description": "Date of the last CT Extract Load"
+    "description": "Date of the last CT Extract Load",
+    "rank": 80
   },
   {
     "_id": "7eb25e4a-bb7b-11e9-9cb5-2a2ae2dbcce4",
     "name": "ExtractSent",
     "area": "CareTreatment",
     "display": "Last CT Sent",
-    "description": "Date of the last CT Extract Sent"
+    "description": "Date of the last CT Extract Sent",
+    "rank": 90
+  },
+  {
+    "_id": "7eb26e4a-bb7b-11e9-9cb5-2a2ae2dbcce4",
+    "name": "DwapiVersion",
+    "area": "MigrationService",
+    "display": "MGS Dwapi Version",
+    "description": "Dwapi Version used to Load MGS",
+    "rank": 170
+  },
+  {
+    "_id": "7eb27e4a-bb7b-11e9-9cb5-2a2ae2dbcce4",
+    "name": "ExtractLoaded",
+    "area": "MigrationService",
+    "display": "Last MGS Load",
+    "description": "Date of the last MGS Extract Load",
+    "rank": 180
+  },
+  {
+    "_id": "7eb28e4a-bb7b-11e9-9cb5-2a2ae2dbcce4",
+    "name": "ExtractSent",
+    "area": "MigrationService",
+    "display": "Last MGS Sent",
+    "description": "Date of the last MGS Extract Sent",
+    "rank": 190
   }
 ]

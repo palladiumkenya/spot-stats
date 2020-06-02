@@ -51,4 +51,15 @@ describe('Metric Repository Tests', () => {
     expect(data.length).toBeGreaterThan(0);
     data.forEach(d => Logger.debug(`${d.report}`));
   });
+
+  it('should update Current', async () => {
+    const data = await repository.updateCurrent(
+      testMetrics[0].facility,
+      testMetrics[0].measure,
+    );
+
+    const saved = await repository.getAll({ isCurrent: true });
+
+    expect(saved.length).toBeGreaterThan(0);
+  });
 });

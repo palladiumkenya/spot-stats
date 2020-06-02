@@ -4,6 +4,7 @@ import { SeederModule } from './infrastructure/seeder';
 import { ConfigService } from './config/config.service';
 import * as dotenv from 'dotenv';
 import * as fs from 'fs';
+import { Logger } from '@nestjs/common';
 
 async function bootstrap() {
   const config = new ConfigService(`${process.env.NODE_ENV}.env`);

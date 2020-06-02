@@ -27,6 +27,24 @@ export class ProfileDetail extends Component<Prop, {}> {
     );
   };
 
+  date3Template = (rowData: any, column: any) => {
+    const dt = rowData["report"];
+    const ll = JSON.parse(JSON.stringify(rowData["measure"]));
+
+    if (dt && dt === "Demo EMR") return <span></span>;
+    if (dt && dt === "v1.0.0.0") return <span></span>;
+    if (dt && dt.startsWith("1983")) return <span></span>;
+
+    if (ll.display.startsWith("Last") && dt) {
+      return (
+        <span>
+          <Moment format="DD MMM YYYY">{dt}</Moment>
+        </span>
+      );
+    }
+    return <span>{dt} </span>;
+  };
+
   render() {
     if (!this.props.profile) {
       return <div />;
@@ -39,6 +57,9 @@ export class ProfileDetail extends Component<Prop, {}> {
       );
       const mpiSummaries = this.props.profile.summaries!.filter(
         x => x.docket.name === "MPI"
+      );
+      const mgsSummaries = this.props.profile.summaries!.filter(
+        x => x.docket.name === "MGS"
       );
       return (
         <div>
@@ -91,6 +112,18 @@ export class ProfileDetail extends Component<Prop, {}> {
                     />
                   </DataTable>
                 </TabPanel>
+                <TabPanel header="MGS">
+                  <DataTable value={mgsSummaries}>
+                    <Column field="extract.display" header="Extract" />
+                    <Column field="recieved" header="Recieved" />
+                    <Column field="expected" header="Expected" />
+                    <Column
+                      field="updated"
+                      header="Update"
+                      body={this.date2Template}
+                    />
+                  </DataTable>
+                </TabPanel>
               </TabView>
             </div>
             <div className="p-col-4">
@@ -113,7 +146,11 @@ export class ProfileDetail extends Component<Prop, {}> {
                 header="Facility Metrics"
               >
                 <Column field="measure.display" header="Measure" />
-                <Column field="report" header="Metric" />
+                <Column
+                  field="report"
+                  header="Metric"
+                  body={this.date3Template}
+                />
                 <Column field="measure.description" header="Description" />
               </DataTable>
             </div>
