@@ -6,7 +6,7 @@ import {
   Route,
   Link,
   Switch,
-  HashRouter
+  HashRouter,
 } from "react-router-dom";
 import "./App.css";
 import { DocketHome } from "./court/DocketHome";
@@ -53,7 +53,7 @@ export class App extends Component<Props, State> {
       activeTopbarItem: null,
       darkMenu: false,
       rightPanelActive: false,
-      menuActive: false
+      menuActive: false,
     };
     this.createMenu();
   }
@@ -72,21 +72,21 @@ export class App extends Component<Props, State> {
     this.menuClick = true;
     this.setState({
       rotateMenuButton: !this.state.rotateMenuButton,
-      topbarMenuActive: false
+      topbarMenuActive: false,
     });
 
     if (this.state.layoutMode === "overlay") {
       this.setState({
-        overlayMenuActive: !this.state.overlayMenuActive
+        overlayMenuActive: !this.state.overlayMenuActive,
       });
     } else {
       if (this.isDesktop())
         this.setState({
-          staticMenuDesktopInactive: !this.state.staticMenuDesktopInactive
+          staticMenuDesktopInactive: !this.state.staticMenuDesktopInactive,
         });
       else
         this.setState({
-          staticMenuMobileActive: !this.state.staticMenuMobileActive
+          staticMenuMobileActive: !this.state.staticMenuMobileActive,
         });
     }
 
@@ -116,14 +116,14 @@ export class App extends Component<Props, State> {
     }
     if (!event.item.items && (this.isHorizontal() || this.isSlim())) {
       this.setState({
-        menuActive: false
+        menuActive: false,
       });
     }
   };
 
   onRootMenuItemClick = (event: any) => {
     this.setState({
-      menuActive: !this.state.menuActive
+      menuActive: !this.state.menuActive,
     });
 
     event.originalEvent.preventDefault();
@@ -132,7 +132,7 @@ export class App extends Component<Props, State> {
   onRightPanelButtonClick = (event: any) => {
     this.rightPanelClick = true;
     this.setState({
-      rightPanelActive: !this.state.rightPanelActive
+      rightPanelActive: !this.state.rightPanelActive,
     });
     event.preventDefault();
   };
@@ -145,14 +145,14 @@ export class App extends Component<Props, State> {
     if (!this.topbarItemClick) {
       this.setState({
         activeTopbarItem: null,
-        topbarMenuActive: false
+        topbarMenuActive: false,
       });
     }
 
     if (!this.menuClick) {
       if (this.isHorizontal() || this.isSlim()) {
         this.setState({
-          menuActive: false
+          menuActive: false,
         });
       }
 
@@ -161,7 +161,7 @@ export class App extends Component<Props, State> {
 
     if (!this.rightPanelClick) {
       this.setState({
-        rightPanelActive: false
+        rightPanelActive: false,
       });
     }
 
@@ -174,7 +174,7 @@ export class App extends Component<Props, State> {
     this.setState({
       rotateMenuButton: false,
       overlayMenuActive: false,
-      staticMenuMobileActive: false
+      staticMenuMobileActive: false,
     });
   };
 
@@ -200,15 +200,15 @@ export class App extends Component<Props, State> {
         icon: "cloud_upload",
         command: () => {
           window.location.hash = "/stats";
-        }
+        },
       },
       {
         label: "Dockets",
         icon: "build",
         command: () => {
           window.location.hash = "/stats/dockets";
-        }
-      }
+        },
+      },
     ];
   };
 
@@ -220,7 +220,7 @@ export class App extends Component<Props, State> {
     return (
       <div className="layout-wrapper" onClick={this.onDocumentClick}>
         <div
-          ref={el => (this.layoutContainer = el)}
+          ref={(el) => (this.layoutContainer = el)}
           className="layout-container menu-layout-horizontal"
         >
           <div className="layout-menu" onClick={this.onMenuClick}>

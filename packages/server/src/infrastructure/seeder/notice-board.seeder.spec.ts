@@ -32,6 +32,6 @@ describe('NoticeBoards Seeder Tests', () => {
   it('should load Notice Board Seed', async () => {
     const seeds = await seeder.load();
     expect(seeds.length).toBeGreaterThan(-1);
-    seeds.forEach(s => Logger.debug(`${s.message} ${s.rank} (${s._id})`));
+    seeds.forEach((s) => Logger.debug(`${s.message} ${s.rank} (${s._id})`));
   });
 });
