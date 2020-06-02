@@ -20,7 +20,7 @@ export class DocketList extends Component<Props, State> {
   constructor(props: Readonly<Props>) {
     super(props);
     this.state = {
-      selectedDocket: {}
+      selectedDocket: {},
     };
   }
 
@@ -41,7 +41,7 @@ export class DocketList extends Component<Props, State> {
           disabled={true}
           hidden={true}
           icon="pi pi-eye"
-          onClick={event => this.manageAction(event, rowData)}
+          onClick={(event) => this.manageAction(event, rowData)}
         />
       </div>
     );
@@ -69,7 +69,9 @@ export class DocketList extends Component<Props, State> {
             header={header}
             selectionMode="single"
             selection={this.state.selectedDocket}
-            onSelectionChange={e => this.setState({ selectedDocket: e.value })}
+            onSelectionChange={(e) =>
+              this.setState({ selectedDocket: e.value })
+            }
           >
             <Column field="display" header="Display" />
             <Column

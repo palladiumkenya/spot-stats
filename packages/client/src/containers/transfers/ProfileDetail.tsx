@@ -50,16 +50,16 @@ export class ProfileDetail extends Component<Prop, {}> {
       return <div />;
     } else {
       const dwhSummaries = this.props.profile.summaries!.filter(
-        x => x.docket.name === "NDWH"
+        (x) => x.docket.name === "NDWH"
       );
       const htsSummaries = this.props.profile.summaries!.filter(
-        x => x.docket.name === "HTS"
+        (x) => x.docket.name === "HTS"
       );
       const mpiSummaries = this.props.profile.summaries!.filter(
-        x => x.docket.name === "MPI"
+        (x) => x.docket.name === "MPI"
       );
       const mgsSummaries = this.props.profile.summaries!.filter(
-        x => x.docket.name === "MGS"
+        (x) => x.docket.name === "MGS"
       );
       return (
         <div>
