@@ -131,5 +131,19 @@
         "rank": 1
       }
     ]
+  },
+  {
+    "_id": "6dc94fe5-bf1e-11e9-9cb5-2a2ae2dbcce4",
+    "name": "MGS",
+    "display": "MGS",
+    "extracts": [
+      {
+        "_id": "7dc933e0-bf1e-11e9-9cb5-2a2ae2dbcce4",
+        "name": "Persons",
+        "display": "Patients",
+        "isPatient": true,
+        "rank": 1
+      }
+    ]
   }
 ]

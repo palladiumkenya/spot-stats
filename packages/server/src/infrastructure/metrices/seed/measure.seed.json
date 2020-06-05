@@ -104,5 +104,29 @@
     "display": "Last CT Sent",
     "description": "Date of the last CT Extract Sent",
     "rank": 90
+  },
+  {
+    "_id": "7eb26e4a-bb7b-11e9-9cb5-2a2ae2dbcce4",
+    "name": "DwapiVersion",
+    "area": "MigrationService",
+    "display": "MGS Dwapi Version",
+    "description": "Dwapi Version used to Load MGS",
+    "rank": 170
+  },
+  {
+    "_id": "7eb27e4a-bb7b-11e9-9cb5-2a2ae2dbcce4",
+    "name": "ExtractLoaded",
+    "area": "MigrationService",
+    "display": "Last MGS Load",
+    "description": "Date of the last MGS Extract Load",
+    "rank": 180
+  },
+  {
+    "_id": "7eb28e4a-bb7b-11e9-9cb5-2a2ae2dbcce4",
+    "name": "ExtractSent",
+    "area": "MigrationService",
+    "display": "Last MGS Sent",
+    "description": "Date of the last MGS Extract Sent",
+    "rank": 190
   }
 ]

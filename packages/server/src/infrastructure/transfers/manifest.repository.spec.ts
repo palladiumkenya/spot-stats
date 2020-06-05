@@ -19,7 +19,7 @@ describe('Manifest Repository  Tests', () => {
         MongooseModule.forRoot(dbHelper.url, dbHelper.options),
       ],
     }).compile();
-    manifests.forEach(m => {
+    manifests.forEach((m) => {
       m.code = 100;
       m.isCurrent = false;
       m.logDate = new Date(2009, 1, 1);
@@ -50,7 +50,7 @@ describe('Manifest Repository  Tests', () => {
   it('should load Current', async () => {
     const data = await repository.getCurrent();
     expect(data.length).toBeGreaterThan(0);
-    data.forEach(d => Logger.debug(`${d.name}`));
+    data.forEach((d) => Logger.debug(`${d.name}`));
   });
 
   it('should load Current by Fac', async () => {
@@ -69,7 +69,7 @@ describe('Manifest Repository  Tests', () => {
   it('should load All Current Paged', async () => {
     const data = await repository.getAllCurrentPaged(1, 1);
     expect(data.length).toBeGreaterThan(0);
-    data.forEach(d => Logger.debug(`${d.name}`));
+    data.forEach((d) => Logger.debug(`${d.name}`));
   });
 
   it('should update Current', async () => {

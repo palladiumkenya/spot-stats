@@ -3,7 +3,7 @@ import {
   BrowserRouter as Router,
   Route,
   RouteComponentProps,
-  withRouter
+  withRouter,
 } from "react-router-dom";
 
 import { ProfileSummary } from "./models/profile-summary";
@@ -32,8 +32,8 @@ class ProfileShowcase extends Component<Props, State> {
     this.state = {
       profileSummary: {
         summaries: [],
-        manifests: []
-      }
+        manifests: [],
+      },
     };
   }
 
@@ -42,7 +42,7 @@ class ProfileShowcase extends Component<Props, State> {
     if (!id) {
       this.messages.show({
         severity: "error",
-        summary: "No facilities specified !"
+        summary: "No facilities specified !",
       });
       return;
     }
@@ -50,14 +50,14 @@ class ProfileShowcase extends Component<Props, State> {
       let res = await axios.get(`${url}${id}`);
       let data = res.data;
       this.setState({
-        profileSummary: data
+        profileSummary: data,
       });
       console.log("ssssss", data);
     } catch (e) {
       this.messages.show({
         severity: "error",
         summary: "Error loading",
-        detail: `${e}`
+        detail: `${e}`,
       });
     }
   };
@@ -72,7 +72,7 @@ class ProfileShowcase extends Component<Props, State> {
     }
     return (
       <div>
-        <Messages ref={el => (this.messages = el)} />
+        <Messages ref={(el) => (this.messages = el)} />
         <hr />
         {this.state.profileSummary ? (
           <div>
