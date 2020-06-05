@@ -27,8 +27,8 @@ export class DocketScene extends Component<{}, State> {
       activeDocket: {
         _id: "00000000-0000-0000-0000-000000000000",
         name: "",
-        display: ""
-      }
+        display: "",
+      },
     };
   }
 
@@ -36,33 +36,33 @@ export class DocketScene extends Component<{}, State> {
     try {
       let res = await axios.get(url);
       let data = res.data;
-      this.setState(prevState => ({
+      this.setState((prevState) => ({
         ...prevState,
-        dockets: data
+        dockets: data,
       }));
     } catch (e) {
       this.messages.show({
         severity: "error",
         summary: "Error loading",
-        detail: `${e}`
+        detail: `${e}`,
       });
     }
   };
 
   handleAdd = () => {
     this.resetState();
-    this.setState(prevState => ({
+    this.setState((prevState) => ({
       ...prevState,
-      showForm: true
+      showForm: true,
     }));
   };
 
   handleManage = (rowData: any) => {
-    this.setState(prevState => ({
+    this.setState((prevState) => ({
       ...prevState,
       activeDocket: rowData,
       showForm: true,
-      editMode: true
+      editMode: true,
     }));
   };
 
@@ -74,7 +74,7 @@ export class DocketScene extends Component<{}, State> {
       this.messages.show({
         severity: "success",
         summary: "Saved successfully",
-        detail: `${savedDocket.name}`
+        detail: `${savedDocket.name}`,
       });
       this.resetState();
       this.loadData();
@@ -82,7 +82,7 @@ export class DocketScene extends Component<{}, State> {
       this.messages.show({
         severity: "error",
         summary: "Error occurred",
-        detail: `${e}`
+        detail: `${e}`,
       });
     }
   };
@@ -94,7 +94,7 @@ export class DocketScene extends Component<{}, State> {
       this.messages.show({
         severity: "success",
         summary: "Deleted successfully",
-        detail: `${form.name}`
+        detail: `${form.name}`,
       });
       this.resetState();
       this.loadData();
@@ -102,7 +102,7 @@ export class DocketScene extends Component<{}, State> {
       this.messages.show({
         severity: "error",
         summary: "Error ocurred",
-        detail: `${e}`
+        detail: `${e}`,
       });
     }
   };
@@ -113,9 +113,9 @@ export class DocketScene extends Component<{}, State> {
   };
 
   handleHide = () => {
-    this.setState(prevState => ({
+    this.setState((prevState) => ({
       ...prevState,
-      showForm: false
+      showForm: false,
     }));
   };
 
@@ -126,8 +126,8 @@ export class DocketScene extends Component<{}, State> {
       activeDocket: {
         _id: "00000000-0000-0000-0000-000000000000",
         name: "",
-        display: ""
-      }
+        display: "",
+      },
     });
   };
 
@@ -139,7 +139,7 @@ export class DocketScene extends Component<{}, State> {
     console.log(url);
     return (
       <div>
-        <Growl ref={el => (this.messages = el)} />
+        <Growl ref={(el) => (this.messages = el)} />
         <div>
           {this.state.dockets ? (
             <DocketList
