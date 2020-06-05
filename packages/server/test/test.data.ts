@@ -37,7 +37,7 @@ export const getTestFacilities = (count = 2) => {
   for (let i = 0; i < count; i++) {
     const mfs = getManifests();
     const fac = new Facility(uuid.v1(), (i + 1) * 12, `fname${i}`);
-    getManifests().map(m => {
+    getManifests().map((m) => {
       m.docket = i === 1 ? 'HTS' : 'NDWH';
       m.code = fac.code;
       m.name = fac.name;
@@ -45,8 +45,8 @@ export const getTestFacilities = (count = 2) => {
       manifests.push(m);
     });
     fac.manifests = manifests
-      .filter(x => x.facility === fac._id)
-      .map(n => n._id);
+      .filter((x) => x.facility === fac._id)
+      .map((n) => n._id);
     fac.summaries = getSummaries();
     facilities.push(fac);
   }

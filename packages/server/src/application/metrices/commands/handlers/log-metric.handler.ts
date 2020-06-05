@@ -37,39 +37,46 @@ export class LogMetricHandler implements ICommandHandler<LogMetricCommand> {
   ) {}
 
   async execute(command: LogMetricCommand): Promise<any> {
-    // check if metric Exists
-    const metricExists = await this.metricRepository.findByMetricId(command.id);
-    if (metricExists) {
-      return;
-    }
-
-    // check or enroll Facility
-    const facility = await this.enrollFacility(command);
-
-    const newMetrics = await this.createMetrics(command);
-    for (const newMetric of newMetrics) {
-      if (facility) {
-        newMetric.facility = facility._id;
-        facility.addMetric(newMetric._id);
+    try {
+      // check if metric Exists
+      const metricExists = await this.metricRepository.findByMetricId(
+        command.id,
+      );
+      if (metricExists) {
+        return;
       }
 
-      // log metric
-      const metric = await this.metricRepository.create(newMetric);
-      await this.metricRepository.updateCurrent(
-        newMetric.facility,
-        newMetric.measure,
-      );
-      this.publisher.mergeObjectContext(newMetric).commit();
+      // check or enroll Facility
+      const facility = await this.enrollFacility(command);
 
-      const enrolledFacility = await this.facilityRepository.update(facility);
-      this.publisher.mergeObjectContext(facility).commit();
+      const newMetrics = await this.createMetrics(command);
+      for (const newMetric of newMetrics) {
+        if (facility) {
+          newMetric.facility = facility._id;
+          facility.addMetric(newMetric._id);
+        }
 
-      Logger.log(`Metric processed ${facility.name}`);
+        // log metric
+        const metric = await this.metricRepository.create(newMetric);
+        await this.metricRepository.updateCurrent(
+          newMetric.facility,
+          newMetric.measure,
+        );
+        this.publisher.mergeObjectContext(newMetric).commit();
 
-      this.eventBus.publish(new MetricLoggedEvent(facility._id, metric._id));
+        const enrolledFacility = await this.facilityRepository.update(facility);
+        this.publisher.mergeObjectContext(facility).commit();
+
+        Logger.log(`Metric processed ${facility.name}`);
+
+        this.eventBus.publish(new MetricLoggedEvent(facility._id, metric._id));
+      }
+
+      return newMetrics;
+    } catch (e) {
+      Logger.error(e);
     }
-
-    return newMetrics;
+    return undefined;
   }
 
   async enrollFacility(command: LogMetricCommand): Promise<Facility> {

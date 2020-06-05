@@ -29,7 +29,7 @@ export class ProfileList extends Component<Props, {}> {
       <div>
         <Button
           icon="pi pi-eye"
-          onClick={event => this.manageAction(event, rowData)}
+          onClick={(event) => this.manageAction(event, rowData)}
         />
       </div>
     );

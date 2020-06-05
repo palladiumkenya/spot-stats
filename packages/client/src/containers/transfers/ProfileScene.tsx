@@ -44,14 +44,14 @@ export class ProfileScene extends Component<any, State> {
       first: 0,
       sort: [],
       filter: [],
-      notices: []
+      notices: [],
     };
   }
 
   loadNotices = async () => {
-    this.setState(prevState => ({
+    this.setState((prevState) => ({
       ...prevState,
-      loading: true
+      loading: true,
     }));
 
     try {
@@ -64,48 +64,48 @@ export class ProfileScene extends Component<any, State> {
         sticky: true,
         severity: "info",
         summary: "Please NOTE that:",
-        detail: notices.join(",")
+        detail: notices.join(","),
       });
 
-      this.setState(prevState => ({
+      this.setState((prevState) => ({
         ...prevState,
-        notices: notices
+        notices: notices,
       }));
     } catch (e) {
       this.messages.show({
         severity: "error",
         summary: "Error loading",
-        detail: `${e}`
+        detail: `${e}`,
       });
     }
   };
 
   loadCount = async () => {
-    this.setState(prevState => ({
+    this.setState((prevState) => ({
       ...prevState,
-      loading: true
+      loading: true,
     }));
 
     try {
       let res = await axios.get(statCountUrl);
       let data = res.data;
-      this.setState(prevState => ({
+      this.setState((prevState) => ({
         ...prevState,
-        totalRecords: data
+        totalRecords: data,
       }));
     } catch (e) {
       this.messages.show({
         severity: "error",
         summary: "Error loading",
-        detail: `${e}`
+        detail: `${e}`,
       });
     }
   };
 
   loadData = async () => {
-    this.setState(prevState => ({
+    this.setState((prevState) => ({
       ...prevState,
-      loading: true
+      loading: true,
     }));
 
     try {
@@ -125,20 +125,20 @@ export class ProfileScene extends Component<any, State> {
 
       let res = await axios.get(geturl);
       let data = res.data;
-      this.setState(prevState => ({
+      this.setState((prevState) => ({
         ...prevState,
         loading: false,
-        profiles: data
+        profiles: data,
       }));
     } catch (e) {
-      this.setState(prevState => ({
+      this.setState((prevState) => ({
         ...prevState,
-        loading: false
+        loading: false,
       }));
       this.messages.show({
         severity: "error",
         summary: "Error loading",
-        detail: `${e}`
+        detail: `${e}`,
       });
     }
   };
@@ -146,18 +146,18 @@ export class ProfileScene extends Component<any, State> {
   handleManage = (rowData: any) => {
     this.setState({
       redirectTo: `/stats/showcase/${rowData.facility._id}`,
-      showSummary: true
+      showSummary: true,
     });
   };
 
   handlePage = async (event: any) => {
     console.log(event);
     this.setState(
-      prevState => ({
+      (prevState) => ({
         ...prevState,
         rows: event.rows,
         page: event.page + 1,
-        first: event.first
+        first: event.first,
       }),
       () => this.loadData()
     );
@@ -166,9 +166,9 @@ export class ProfileScene extends Component<any, State> {
   handleSort = async (event: any) => {
     console.log(event);
     this.setState(
-      prevState => ({
+      (prevState) => ({
         ...prevState,
-        sort: JSON.stringify(event)
+        sort: JSON.stringify(event),
       }),
       () => this.loadData()
     );
@@ -177,9 +177,9 @@ export class ProfileScene extends Component<any, State> {
   handleFilter = async (event: any) => {
     console.log(event);
     this.setState(
-      prevState => ({
+      (prevState) => ({
         ...prevState,
-        filter: JSON.stringify(event)
+        filter: JSON.stringify(event),
       }),
       () => this.loadData()
     );
@@ -197,8 +197,8 @@ export class ProfileScene extends Component<any, State> {
     } else {
       return (
         <div>
-          <Messages ref={el => (this.noticeMessages = el)} />
-          <Growl ref={el => (this.messages = el)} />
+          <Messages ref={(el) => (this.noticeMessages = el)} />
+          <Growl ref={(el) => (this.messages = el)} />
           <div>
             {this.state.profiles ? (
               <ProfileList
