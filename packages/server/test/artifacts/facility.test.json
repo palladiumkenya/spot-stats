@@ -1,0 +1,66 @@
+[
+  {
+    "_id": "8cf1c450-a8f5-11ea-99f5-2d295612f6a9",
+    "code": 14950,
+    "name": "Kitengela Health Centre"
+  },
+  {
+    "_id": "8cf1c451-a8f5-11ea-99f5-2d295612f6a9",
+    "manifests": ["7e07e810-a8f6-11ea-99f5-2d295612f6a9"],
+    "metrics": [],
+    "code": 12618,
+    "name": "Mwala Hospital",
+    "summaries": [
+      {
+        "docket": {
+          "id": "6dc93278-bf1e-11e9-9cb5-2a2ae2dbcce4",
+          "name": "HTS",
+          "display": "HTS"
+        },
+        "extract": {
+          "_id": "6dc93890-bf1e-11e9-9cb5-2a2ae2dbcce4",
+          "name": "HtsClientExtract",
+          "display": "Hts Clients",
+          "isPatient": true,
+          "rank": 1
+        },
+        "expected": 10,
+        "recieved": 10,
+        "_id": "7e0aa730-a8f6-11ea-99f5-2d295612f6a9"
+      },
+      {
+        "docket": {
+          "id": "6dc93278-bf1e-11e9-9cb5-2a2ae2dbcce4",
+          "name": "HTS",
+          "display": "HTS"
+        },
+        "extract": {
+          "_id": "6dc939bc-bf1e-11e9-9cb5-2a2ae2dbcce4",
+          "name": "HtsClientTestsExtract",
+          "display": "Hts Client Tests",
+          "isPatient": false,
+          "rank": 2
+        },
+        "recieved": 10,
+        "_id": "7e0aa731-a8f6-11ea-99f5-2d295612f6a9"
+      },
+      {
+        "docket": {
+          "id": "6dc93278-bf1e-11e9-9cb5-2a2ae2dbcce4",
+          "name": "HTS",
+          "display": "HTS"
+        },
+        "extract": {
+          "_id": "6dc949bc-bf1e-11e9-9cb5-2a2ae2dbcce4",
+          "name": "HtsClientLinkageExtract",
+          "display": "Hts Client Linkage",
+          "isPatient": false,
+          "rank": 2
+        },
+        "recieved": 10,
+        "_id": "7e0aa732-a8f6-11ea-99f5-2d295612f6a9"
+      }
+    ],
+    "__v": 0
+  }
+]

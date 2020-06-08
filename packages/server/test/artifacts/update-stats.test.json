@@ -1,0 +1,103 @@
+[
+  {
+    "id": "2730D600-A80B-11EA-BA47-2FF6C5C48609",
+    "facilityCode": 14950,
+    "docket": { "name": "NDWH" },
+    "stats": [
+      { "name": "PatientExtract", "recieved": 40 },
+      { "name": "PatientAdverseEventExtract", "recieved": 0 },
+      { "name": "PatientArtExtract", "recieved": 0 },
+      { "name": "PatientBaselineExtract", "recieved": 0 },
+      { "name": "PatientLabExtract", "recieved": 0 },
+      { "name": "PatientPharmacyExtract", "recieved": 0 },
+      { "name": "PatientStatusExtract", "recieved": 0 },
+      { "name": "PatientVisitExtract", "recieved": 0 }
+    ],
+    "updated": "2020-06-06 18:34:01.000",
+    "manifestId": null
+  },
+  {
+    "id": "2730D600-A80B-11EA-BA47-2FF6C5C48609",
+    "facilityCode": 12618,
+    "docket": { "name": "NDWH" },
+    "stats": [
+      { "name": "PatientExtract", "recieved": 40 },
+      { "name": "PatientAdverseEventExtract", "recieved": 0 },
+      { "name": "PatientArtExtract", "recieved": 0 },
+      { "name": "PatientBaselineExtract", "recieved": 0 },
+      { "name": "PatientLabExtract", "recieved": 0 },
+      { "name": "PatientPharmacyExtract", "recieved": 0 },
+      { "name": "PatientStatusExtract", "recieved": 0 },
+      { "name": "PatientVisitExtract", "recieved": 0 }
+    ],
+    "updated": "2020-06-06 18:34:01.000",
+    "manifestId": null
+  },
+
+  {
+    "id": "2730D600-A80B-11EA-BA47-2FF6C5C48609",
+    "facilityCode": 14950,
+    "docket": { "name": "MPI" },
+    "stats": [{ "name": "MasterPatientIndex", "recieved": 40 }],
+    "updated": "2020-06-06 18:34:01.000",
+    "manifestId": null
+  },
+  {
+    "id": "2730D600-A80B-11EA-BA47-2FF6C5C48609",
+    "facilityCode": 12618,
+    "docket": { "name": "MPI" },
+    "stats": [{ "name": "MasterPatientIndex", "recieved": 40 }],
+    "updated": "2020-06-06 18:34:01.000",
+    "manifestId": null
+  },
+
+  {
+    "id": "2730D600-A80B-11EA-BA47-2FF6C5C48609",
+    "facilityCode": 14950,
+    "docket": { "name": "MGS" },
+    "stats": [{ "name": "Persons", "recieved": 40 }],
+    "updated": "2020-06-06 18:34:01.000",
+    "manifestId": null
+  },
+  {
+    "id": "2730D600-A80B-11EA-BA47-2FF6C5C48609",
+    "facilityCode": 12618,
+    "docket": { "name": "MGS" },
+    "stats": [{ "name": "Persons", "recieved": 40 }],
+    "updated": "2020-06-06 18:34:01.000",
+    "manifestId": null
+  },
+
+  {
+    "id": "2730D600-A80B-11EA-BA47-2FF6C5C48609",
+    "facilityCode": 14950,
+    "docket": { "name": "HTS" },
+    "stats": [
+      { "name": "HtsClientExtract", "recieved": 139 },
+      { "name": "HtsClientLinkageExtract", "recieved": 9 },
+      { "name": "HtsClientTestsExtract", "recieved": 147 },
+      { "name": "HtsClientTracingExtract", "recieved": 33 },
+      { "name": "HtsPartnerNotificationServicesExtract", "recieved": 0 },
+      { "name": "HtsPartnerTracingExtract", "recieved": 0 },
+      { "name": "HtsTestKitsExtract", "recieved": 147 }
+    ],
+    "updated": "2020-06-06 18:34:01.000",
+    "manifestId": null
+  },
+  {
+    "id": "2730D600-A80B-11EA-BA47-2FF6C5C48609",
+    "facilityCode": 12618,
+    "docket": { "name": "HTS" },
+    "stats": [
+      { "name": "HtsClientExtract", "recieved": 139 },
+      { "name": "HtsClientLinkageExtract", "recieved": 9 },
+      { "name": "HtsClientTestsExtract", "recieved": 147 },
+      { "name": "HtsClientTracingExtract", "recieved": 33 },
+      { "name": "HtsPartnerNotificationServicesExtract", "recieved": 0 },
+      { "name": "HtsPartnerTracingExtract", "recieved": 0 },
+      { "name": "HtsTestKitsExtract", "recieved": 147 }
+    ],
+    "updated": "2020-06-06 18:34:01.000",
+    "manifestId": null
+  }
+]
