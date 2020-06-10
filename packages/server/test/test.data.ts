@@ -12,6 +12,7 @@ import { plainToClass } from 'class-transformer';
 import { LogMetricCommand } from '../src/application/metrices/commands/log-metric.command';
 import { Logger } from '@nestjs/common';
 import { LogManifestCommand } from '../src/application/transfers/commands/log-manifest.command';
+import { UpdateStatsCommand } from '../src/application/transfers/commands/update-stats.command';
 
 const pattern = '**/*.test.json';
 
@@ -79,6 +80,17 @@ export const getLogManifestCommands = async () => {
     });
 
     return plainToClass(LogManifestCommand, data);
+  }
+  return [];
+};
+
+export const getUpdateStatsCommands = async () => {
+  const seedFiles = await getFiles();
+  const fileToParse = seedFiles.find((f) => f.includes('update-stats'));
+  if (fileToParse) {
+    const contents = fs.readFileSync(fileToParse).toString();
+    const data: UpdateStatsCommand[] = JSON.parse(contents);
+    return plainToClass(UpdateStatsCommand, data);
   }
   return [];
 };

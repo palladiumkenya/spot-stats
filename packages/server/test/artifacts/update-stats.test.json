@@ -22,13 +22,13 @@
     "docket": { "name": "NDWH" },
     "stats": [
       { "name": "PatientExtract", "recieved": 40 },
-      { "name": "PatientAdverseEventExtract", "recieved": 0 },
-      { "name": "PatientArtExtract", "recieved": 0 },
-      { "name": "PatientBaselineExtract", "recieved": 0 },
-      { "name": "PatientLabExtract", "recieved": 0 },
-      { "name": "PatientPharmacyExtract", "recieved": 0 },
-      { "name": "PatientStatusExtract", "recieved": 0 },
-      { "name": "PatientVisitExtract", "recieved": 0 }
+      { "name": "PatientAdverseEventExtract", "recieved": 10 },
+      { "name": "PatientArtExtract", "recieved": 12 },
+      { "name": "PatientBaselineExtract", "recieved": 13 },
+      { "name": "PatientLabExtract", "recieved": 19 },
+      { "name": "PatientPharmacyExtract", "recieved": 45 },
+      { "name": "PatientStatusExtract", "recieved": 44 },
+      { "name": "PatientVisitExtract", "recieved": 234 }
     ],
     "updated": "2020-06-06 18:34:01.000",
     "manifestId": null
@@ -46,7 +46,7 @@
     "id": "2730D600-A80B-11EA-BA47-2FF6C5C48609",
     "facilityCode": 12618,
     "docket": { "name": "MPI" },
-    "stats": [{ "name": "MasterPatientIndex", "recieved": 40 }],
+    "stats": [{ "name": "MasterPatientIndex", "recieved": 30 }],
     "updated": "2020-06-06 18:34:01.000",
     "manifestId": null
   },
@@ -63,7 +63,7 @@
     "id": "2730D600-A80B-11EA-BA47-2FF6C5C48609",
     "facilityCode": 12618,
     "docket": { "name": "MGS" },
-    "stats": [{ "name": "Persons", "recieved": 40 }],
+    "stats": [{ "name": "Persons", "recieved": 38 }],
     "updated": "2020-06-06 18:34:01.000",
     "manifestId": null
   },
@@ -89,13 +89,13 @@
     "facilityCode": 12618,
     "docket": { "name": "HTS" },
     "stats": [
-      { "name": "HtsClientExtract", "recieved": 139 },
-      { "name": "HtsClientLinkageExtract", "recieved": 9 },
-      { "name": "HtsClientTestsExtract", "recieved": 147 },
-      { "name": "HtsClientTracingExtract", "recieved": 33 },
-      { "name": "HtsPartnerNotificationServicesExtract", "recieved": 0 },
-      { "name": "HtsPartnerTracingExtract", "recieved": 0 },
-      { "name": "HtsTestKitsExtract", "recieved": 147 }
+      { "name": "HtsClientExtract", "recieved": 339 },
+      { "name": "HtsClientLinkageExtract", "recieved": 99 },
+      { "name": "HtsClientTestsExtract", "recieved": 17 },
+      { "name": "HtsClientTracingExtract", "recieved": 3 },
+      { "name": "HtsPartnerNotificationServicesExtract", "recieved": 40 },
+      { "name": "HtsPartnerTracingExtract", "recieved": 19 },
+      { "name": "HtsTestKitsExtract", "recieved": 157 }
     ],
     "updated": "2020-06-06 18:34:01.000",
     "manifestId": null
