@@ -124,7 +124,7 @@
     "display": "MPI",
     "extracts": [
       {
-        "_id": "6dc933e0-bf1e-11e9-9cb5-2a2ae2dbcce4",
+        "_id": "6dc960e0-bf1e-11e9-9cb5-2a2ae2dbcce4",
         "name": "MasterPatientIndex",
         "display": "Master Patient Index",
         "isPatient": true,
@@ -133,12 +133,12 @@
     ]
   },
   {
-    "_id": "6dc94fe5-bf1e-11e9-9cb5-2a2ae2dbcce4",
+    "_id": "6dc93746-bf1e-11e9-9cb5-2a2ae2dbcce4",
     "name": "MGS",
     "display": "MGS",
     "extracts": [
       {
-        "_id": "7dc933e0-bf1e-11e9-9cb5-2a2ae2dbcce4",
+        "_id": "7dc970e0-bf1e-11e9-9cb5-2a2ae2dbcce4",
         "name": "Persons",
         "display": "Patients",
         "isPatient": true,

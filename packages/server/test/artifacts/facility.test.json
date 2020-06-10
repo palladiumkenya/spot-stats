@@ -13,6 +13,142 @@
     "summaries": [
       {
         "docket": {
+          "id": "6dc92fe4-bf1e-11e9-9cb5-2a2ae2dbcce4",
+          "name": "NDWH",
+          "display": "NDWH"
+        },
+        "extract": {
+          "_id": "6dc933e0-bf1e-11e9-9cb5-2a2ae2dbcce4",
+          "name": "PatientExtract",
+          "display": "All Patients",
+          "isPatient": true,
+          "rank": 1
+        },
+        "expected": 275,
+        "recieved": 289,
+        "_id": "bb460430-3b4d-11ea-bb71-7599bd5998d5"
+      },
+      {
+        "docket": {
+          "id": "6dc92fe4-bf1e-11e9-9cb5-2a2ae2dbcce4",
+          "name": "NDWH",
+          "display": "NDWH"
+        },
+        "extract": {
+          "_id": "6dc934e0-bf1e-11e9-9cb5-2a2ae2dbcce4",
+          "name": "PatientArtExtract",
+          "display": "ART Patients",
+          "isPatient": false,
+          "rank": 2
+        },
+        "recieved": 278,
+        "_id": "bb460431-3b4d-11ea-bb71-7599bd5998d5",
+        "expected": null
+      },
+      {
+        "docket": {
+          "id": "6dc92fe4-bf1e-11e9-9cb5-2a2ae2dbcce4",
+          "name": "NDWH",
+          "display": "NDWH"
+        },
+        "extract": {
+          "_id": "6dc935e0-bf1e-11e9-9cb5-2a2ae2dbcce4",
+          "name": "PatientBaselineExtract",
+          "display": "Patient Baselines",
+          "isPatient": false,
+          "rank": 3
+        },
+        "recieved": 289,
+        "_id": "bb460432-3b4d-11ea-bb71-7599bd5998d5",
+        "expected": null
+      },
+      {
+        "docket": {
+          "id": "6dc92fe4-bf1e-11e9-9cb5-2a2ae2dbcce4",
+          "name": "NDWH",
+          "display": "NDWH"
+        },
+        "extract": {
+          "_id": "6dc936e0-bf1e-11e9-9cb5-2a2ae2dbcce4",
+          "name": "PatientStatusExtract",
+          "display": "Patient Status",
+          "isPatient": false,
+          "rank": 4
+        },
+        "recieved": 95,
+        "_id": "bb460433-3b4d-11ea-bb71-7599bd5998d5",
+        "expected": null
+      },
+      {
+        "docket": {
+          "id": "6dc92fe4-bf1e-11e9-9cb5-2a2ae2dbcce4",
+          "name": "NDWH",
+          "display": "NDWH"
+        },
+        "extract": {
+          "_id": "6dc937e0-bf1e-11e9-9cb5-2a2ae2dbcce4",
+          "name": "PatientLabExtract",
+          "display": "Patient Labs",
+          "isPatient": false,
+          "rank": 5
+        },
+        "recieved": 518,
+        "_id": "bb460434-3b4d-11ea-bb71-7599bd5998d5",
+        "expected": null
+      },
+      {
+        "docket": {
+          "id": "6dc92fe4-bf1e-11e9-9cb5-2a2ae2dbcce4",
+          "name": "NDWH",
+          "display": "NDWH"
+        },
+        "extract": {
+          "_id": "6dc938e0-bf1e-11e9-9cb5-2a2ae2dbcce4",
+          "name": "PatientPharmacyExtract",
+          "display": "Patient Pharmacy",
+          "isPatient": false,
+          "rank": 6
+        },
+        "recieved": 4177,
+        "_id": "bb460435-3b4d-11ea-bb71-7599bd5998d5",
+        "expected": null
+      },
+      {
+        "docket": {
+          "id": "6dc92fe4-bf1e-11e9-9cb5-2a2ae2dbcce4",
+          "name": "NDWH",
+          "display": "NDWH"
+        },
+        "extract": {
+          "_id": "6dc93746-bf1e-11e9-9cb5-2a2ae2dbcce4",
+          "name": "PatientVisitExtract",
+          "display": "Patient Visit",
+          "isPatient": false,
+          "rank": 7
+        },
+        "recieved": 2701,
+        "_id": "bb460436-3b4d-11ea-bb71-7599bd5998d5",
+        "expected": null
+      },
+      {
+        "docket": {
+          "id": "6dc92fe4-bf1e-11e9-9cb5-2a2ae2dbcce4",
+          "name": "NDWH",
+          "display": "NDWH"
+        },
+        "extract": {
+          "_id": "6dc939e0-bf1e-11e9-9cb5-2a2ae2dbcce4",
+          "name": "PatientAdverseEventExtract",
+          "display": "Patient Adverse Events",
+          "isPatient": false,
+          "rank": 8
+        },
+        "recieved": 0,
+        "_id": "bb460437-3b4d-11ea-bb71-7599bd5998d5",
+        "expected": null
+      },
+      {
+        "docket": {
           "id": "6dc93278-bf1e-11e9-9cb5-2a2ae2dbcce4",
           "name": "HTS",
           "display": "HTS"
@@ -24,9 +160,9 @@
           "isPatient": true,
           "rank": 1
         },
-        "expected": 10,
-        "recieved": 10,
-        "_id": "7e0aa730-a8f6-11ea-99f5-2d295612f6a9"
+        "expected": 8160,
+        "recieved": 8812,
+        "_id": "31415d60-731b-11ea-bcf7-2f57382d536c"
       },
       {
         "docket": {
@@ -41,8 +177,8 @@
           "isPatient": false,
           "rank": 2
         },
-        "recieved": 10,
-        "_id": "7e0aa731-a8f6-11ea-99f5-2d295612f6a9"
+        "recieved": 8964,
+        "_id": "31415d61-731b-11ea-bcf7-2f57382d536c"
       },
       {
         "docket": {
@@ -55,10 +191,108 @@
           "name": "HtsClientLinkageExtract",
           "display": "Hts Client Linkage",
           "isPatient": false,
-          "rank": 2
+          "rank": 3
         },
-        "recieved": 10,
-        "_id": "7e0aa732-a8f6-11ea-99f5-2d295612f6a9"
+        "recieved": 82,
+        "_id": "31415d62-731b-11ea-bcf7-2f57382d536c"
+      },
+      {
+        "docket": {
+          "id": "6dc93278-bf1e-11e9-9cb5-2a2ae2dbcce4",
+          "name": "HTS",
+          "display": "HTS"
+        },
+        "extract": {
+          "_id": "6dc959bc-bf1e-11e9-9cb5-2a2ae2dbcce4",
+          "name": "HtsTestKitsExtract",
+          "display": "Hts Test Kits",
+          "isPatient": false,
+          "rank": 4
+        },
+        "recieved": 8964,
+        "_id": "31415d63-731b-11ea-bcf7-2f57382d536c"
+      },
+      {
+        "docket": {
+          "id": "6dc93278-bf1e-11e9-9cb5-2a2ae2dbcce4",
+          "name": "HTS",
+          "display": "HTS"
+        },
+        "extract": {
+          "_id": "6dc969bc-bf1e-11e9-9cb5-2a2ae2dbcce4",
+          "name": "HtsClientTracingExtract",
+          "display": "Hts Client Tracing",
+          "isPatient": false,
+          "rank": 5
+        },
+        "recieved": 0,
+        "_id": "31415d64-731b-11ea-bcf7-2f57382d536c"
+      },
+      {
+        "docket": {
+          "id": "6dc93278-bf1e-11e9-9cb5-2a2ae2dbcce4",
+          "name": "HTS",
+          "display": "HTS"
+        },
+        "extract": {
+          "_id": "6dc979bc-bf1e-11e9-9cb5-2a2ae2dbcce4",
+          "name": "HtsPartnerTracingExtract",
+          "display": "Hts Partner Tracing",
+          "isPatient": false,
+          "rank": 6
+        },
+        "recieved": 0,
+        "_id": "31415d65-731b-11ea-bcf7-2f57382d536c"
+      },
+      {
+        "docket": {
+          "id": "6dc93278-bf1e-11e9-9cb5-2a2ae2dbcce4",
+          "name": "HTS",
+          "display": "HTS"
+        },
+        "extract": {
+          "_id": "6dc989bc-bf1e-11e9-9cb5-2a2ae2dbcce4",
+          "name": "HtsPartnerNotificationServicesExtract",
+          "display": "Hts Partner Notification Services",
+          "isPatient": false,
+          "rank": 7
+        },
+        "recieved": 4,
+        "_id": "31415d66-731b-11ea-bcf7-2f57382d536c"
+      },
+      {
+        "docket": {
+          "id": "6dc94fe4-bf1e-11e9-9cb5-2a2ae2dbcce4",
+          "name": "MPI",
+          "display": "MPI"
+        },
+        "extract": {
+          "_id": "6dc960e0-bf1e-11e9-9cb5-2a2ae2dbcce4",
+          "name": "MasterPatientIndex",
+          "display": "Master Patient Index",
+          "isPatient": true,
+          "rank": 1
+        },
+        "expected": 100,
+        "recieved": 100,
+        "_id": "31415d88-731b-11ea-bcf7-2f57382d536c"
+      },
+      {
+        "docket": {
+          "id": "6dc93746-bf1e-11e9-9cb5-2a2ae2dbcce4",
+          "name": "MGS",
+          "display": "MGS"
+        },
+        "extract": {
+          "_id": "7dc970e0-bf1e-11e9-9cb5-2a2ae2dbcce4",
+          "name": "Persons",
+          "display": "Patients",
+          "isPatient": true,
+          "rank": 1
+        },
+        "expected": 5,
+        "recieved": 5,
+        "_id": "31417d75-731b-11ea-bcf7-2f57382d536c"
       }
     ],
     "__v": 0

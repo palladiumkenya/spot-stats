@@ -20,6 +20,7 @@ import { InitializeSummariesCommand } from '../initialize-summaries-command';
 import { InitializeSummariesHandler } from './initialize-summaries.handler';
 import { LogManifestCommand } from '../log-manifest.command';
 import { LogManifestHandler } from './log-manifest.handler';
+import uuid = require('uuid');
 
 describe('Initialize Facility Summary Command Tests', () => {
   let module: TestingModule;
@@ -69,46 +70,51 @@ describe('Initialize Facility Summary Command Tests', () => {
   });
 
   it('should Initialize Facility Summary', async () => {
-    const logManifestCommand = logManifestCommands.find(
-      (x) => x.facilityCode === 14950,
-    );
-    const resultA = await commandBus.execute(logManifestCommand);
-
     const existingFacility = facilities.find((x) => x.code === 14950);
-    const command = new InitializeSummariesCommand(
-      existingFacility._id,
-      resultA._id,
-    );
-    const result = await commandBus.execute(command);
-    expect(result).not.toBeNull();
-
-    const facility = await facilityRepository.get(existingFacility._id);
-    expect(facility).not.toBeNull();
-    expect(facility.summaries.length).toBeGreaterThan(0);
-    expect(
-      facility.summaries.find((s) => s.extract.isPatient).expected,
-    ).toBeGreaterThan(0);
+    for (const logManifestCommand of logManifestCommands.filter(
+      (x) => x.facilityCode === 14950,
+    )) {
+      const resultA = await commandBus.execute(logManifestCommand);
+      const command = new InitializeSummariesCommand(
+        existingFacility._id,
+        resultA._id,
+      );
+      const result = await commandBus.execute(command);
+      expect(result).not.toBeNull();
+      const facility = await facilityRepository.get(existingFacility._id);
+      expect(facility).not.toBeNull();
+      expect(facility.summaries.length).toBeGreaterThan(0);
+      expect(
+        facility.summaries.find(
+          (s) =>
+            s.extract.isPatient && s.docket.name === logManifestCommand.docket,
+        ).expected,
+      ).toBeGreaterThan(0);
+    }
   });
 
   it('should Reset Facility Summary', async () => {
-    const logManifestCommand = logManifestCommands.find(
-      (x) => x.facilityCode === 12618 && x.docket === 'HTS',
-    );
-    const resultA = await commandBus.execute(logManifestCommand);
-
     const existingFacility = facilities.find((x) => x.code === 12618);
-    const command = new InitializeSummariesCommand(
-      existingFacility._id,
-      resultA._id,
-    );
-    const result = await commandBus.execute(command);
-    expect(result).not.toBeNull();
-
-    const facility = await facilityRepository.get(existingFacility._id);
-    expect(facility).not.toBeNull();
-    expect(facility.summaries.length).toBeGreaterThan(0);
-    expect(facility.summaries.find((s) => (s.extract.rank = 2)).recieved).toBe(
-      0,
-    );
+    for (const logManifestCommand of logManifestCommands.filter(
+      (x) => x.facilityCode === 12618,
+    )) {
+      // logManifestCommand.id = uuid.v1();
+      const resultA = await commandBus.execute(logManifestCommand);
+      const command = new InitializeSummariesCommand(
+        existingFacility._id,
+        resultA._id,
+      );
+      const result = await commandBus.execute(command);
+      expect(result).not.toBeNull();
+      const facility = await facilityRepository.get(existingFacility._id);
+      expect(facility).not.toBeNull();
+      expect(facility.summaries.length).toBeGreaterThan(0);
+      expect(
+        facility.summaries.find(
+          (s) =>
+            s.extract.isPatient && s.docket.name === logManifestCommand.docket,
+        ).recieved,
+      ).toBe(0);
+    }
   });
 });
