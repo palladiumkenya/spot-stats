@@ -18,30 +18,26 @@ export class TestDbHelper {
   }
 
   async initConnection(dbname?: string) {
-    Logger.debug(`connecting...`);
     await mongoose.connect(this.url, this.options);
     Logger.debug(`connected to [${mongoose.connection.host}]`);
   }
 
   async seedDb(collectionName, documents: any[]) {
-    Logger.debug(`seeding data [${collectionName}]`);
-
     for (const document of documents) {
       const { ops } = await mongoose.connection.db
         .collection(collectionName)
-        .insertOne(document);
+        .updateOne({ _id: document._id }, { $set: document }, { upsert: true });
     }
   }
 
   async clearDb() {
-    Logger.debug(`clearing...`);
     const collections = await mongoose.connection.db
       .listCollections()
       .toArray();
     return Promise.all(
       collections
         .map(({ name }) => name)
-        .map(collection => {
+        .map((collection) => {
           Logger.debug(`clearing ${collection}`);
 
           try {

@@ -1,27 +1,35 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { MongooseModule } from '@nestjs/mongoose';
-import { CommandBus, CqrsModule } from '@nestjs/cqrs';
+import { CommandBus } from '@nestjs/cqrs';
 import { Logger } from '@nestjs/common';
 import { TestDbHelper } from '../../../../../test/test-db.helper';
 import {
-  getTestFacSummaries,
-  getTestManifestMessages,
-  getTestStatsData,
-  getTestStatsMessage,
+  getDockets,
+  getFacilities,
+  getMasterFacs,
+  getUpdateStatsCommands,
 } from '../../../../../test/test.data';
-import { Facility, IFacilityRepository } from '../../../../domain';
+import {
+  Docket,
+  Facility,
+  IFacilityRepository,
+  MasterFacility,
+} from '../../../../domain';
 import { TransfersModule } from '../../transfers.module';
 import { CourtsInfrastructureModule } from '../../../../infrastructure/courts';
 import { UpdateStatsCommand } from '../update-stats.command';
 import { UpdateStatsHandler } from './update-stats.handler';
-import uuid = require('uuid');
 import { plainToClass } from 'class-transformer';
-import { ClientProxyFactory } from '@nestjs/microservices';
+import { LogManifestCommand } from '../log-manifest.command';
 
 describe('Update Stats Command Tests', () => {
   let module: TestingModule;
   let commandBus: CommandBus;
-  const facilityWithSummary: Facility[] = getTestFacSummaries();
+
+  let dockets: Docket[];
+  let masterFacilities: MasterFacility[];
+  let facilities: Facility[];
+  let updateStatsCommands: UpdateStatsCommand[];
 
   const dbHelper = new TestDbHelper();
   let facilityRepository: IFacilityRepository;
@@ -34,9 +42,15 @@ describe('Update Stats Command Tests', () => {
         CourtsInfrastructureModule,
       ],
     }).compile();
+    dockets = await getDockets();
+    masterFacilities = await getMasterFacs();
+    facilities = await getFacilities();
+    updateStatsCommands = await getUpdateStatsCommands();
     await dbHelper.initConnection();
-    await dbHelper.seedDb('facilities', facilityWithSummary);
-
+    await dbHelper.seedDb(
+      'facilities',
+      facilities.filter((x) => x.code === 12618),
+    );
     const handler = module.get<UpdateStatsHandler>(UpdateStatsHandler);
     facilityRepository = module.get<IFacilityRepository>('IFacilityRepository');
     commandBus = module.get<CommandBus>(CommandBus);
@@ -49,36 +63,21 @@ describe('Update Stats Command Tests', () => {
   });
 
   it('should Update Facility Stats', async () => {
-    const stats = [
-      { name: 'HtsClientExtract', recieved: 25 },
-      { name: 'HtsClientTestsExtract', recieved: 57 },
-      { name: 'HtsClientLinkageExtract', recieved: 25 },
-      { name: 'HtsTestKitsExtract', recieved: 124 },
-      { name: 'HtsClientTracingExtract', recieved: 13 },
-      { name: 'HtsPartnerTracingExtract', recieved: 1 },
-      { name: 'HtsPartnerNotificationServicesExtract', recieved: 89 },
-    ];
-    const command = new UpdateStatsCommand(
-      facilityWithSummary[0].code,
-      { name: 'HTS' },
-      stats,
-      new Date(),
+    const existingFacility = facilities.find((x) => x.code === 12618);
+    const updateStats = updateStatsCommands.filter(
+      (x) => x.facilityCode === 12618,
     );
-    const result = await commandBus.execute(command);
-    expect(result).not.toBeNull();
+    for (const command of updateStats) {
+      const result = await commandBus.execute(command);
+      expect(result).not.toBeNull();
 
-    const findresult = await facilityRepository.get(facilityWithSummary[0]._id);
-    const facility = plainToClass(Facility, findresult);
-    stats.forEach(stat => {
-      expect(
-        facility.getStats(command.docket.name, stat.name).recieved,
-      ).toEqual(stat.recieved);
-    });
-
-    facility.summaries.forEach(f => {
-      Logger.log(
-        `${f.docket.name} - ${f.extract.name} ${f.expected} ${f.recieved}`,
-      );
-    });
+      const findresult = await facilityRepository.get(existingFacility._id);
+      const facility = plainToClass(Facility, findresult);
+      command.stats.forEach((stat) => {
+        expect(
+          facility.getStats(command.docket.name, stat.name).recieved,
+        ).toEqual(stat.recieved);
+      });
+    }
   });
 });

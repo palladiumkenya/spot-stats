@@ -1,0 +1,85 @@
+[
+  {
+    "id": "CCEB0396-98F4-4DCD-AA7C-ABD2010070DB",
+    "facilityCode": 14950,
+    "facilityName": "Kitengela Health Centre",
+    "docket": "NDWH",
+    "logDate": "2020-06-06 18:33:40.000",
+    "buildDate": "2020-06-06 18:33:40.000",
+    "patientCount": 40,
+    "cargo": null
+  },
+  {
+    "id": "CCEB0391-98F4-4DCD-AA7C-ABD2010070DB",
+    "facilityCode": 12618,
+    "facilityName": "Mwala Hospital",
+    "docket": "NDWH",
+    "logDate": "2020-06-06 18:33:40.000",
+    "buildDate": "2020-06-06 18:33:40.000",
+    "patientCount": 12,
+    "cargo": null
+  },
+
+  {
+    "id": "CCEB0396-98F4-4DCD-AA7C-ABD2010070DB",
+    "facilityCode": 14950,
+    "facilityName": "Kitengela Health Centre",
+    "docket": "HTS",
+    "logDate": "2020-06-06 18:33:40.000",
+    "buildDate": "2020-06-06 18:33:40.000",
+    "patientCount": 40,
+    "cargo": null
+  },
+  {
+    "id": "CCEB0391-98F4-4DCD-AA7C-ABD2010070DB",
+    "facilityCode": 12618,
+    "facilityName": "Mwala Hospital",
+    "docket": "HTS",
+    "logDate": "2020-06-06 18:33:40.000",
+    "buildDate": "2020-06-06 18:33:40.000",
+    "patientCount": 12,
+    "cargo": null
+  },
+
+  {
+    "id": "CCEB0396-98F4-4DCD-AA7C-ABD2010070DB",
+    "facilityCode": 14950,
+    "facilityName": "Kitengela Health Centre",
+    "docket": "MPI",
+    "logDate": "2020-06-06 18:33:40.000",
+    "buildDate": "2020-06-06 18:33:40.000",
+    "patientCount": 40,
+    "cargo": null
+  },
+  {
+    "id": "CCEB0391-98F4-4DCD-AA7C-ABD2010070DB",
+    "facilityCode": 12618,
+    "facilityName": "Mwala Hospital",
+    "docket": "MPI",
+    "logDate": "2020-06-06 18:33:40.000",
+    "buildDate": "2020-06-06 18:33:40.000",
+    "patientCount": 12,
+    "cargo": null
+  },
+
+  {
+    "id": "CCEB0396-98F4-4DCD-AA7C-ABD2010070DB",
+    "facilityCode": 14950,
+    "facilityName": "Kitengela Health Centre",
+    "docket": "MGS",
+    "logDate": "2020-06-06 18:33:40.000",
+    "buildDate": "2020-06-06 18:33:40.000",
+    "patientCount": 40,
+    "cargo": null
+  },
+  {
+    "id": "CCEB0391-98F4-4DCD-AA7C-ABD2010070DB",
+    "facilityCode": 12618,
+    "facilityName": "Mwala Hospital",
+    "docket": "MGS",
+    "logDate": "2020-06-06 18:33:40.000",
+    "buildDate": "2020-06-06 18:33:40.000",
+    "patientCount": 12,
+    "cargo": null
+  }
+]
