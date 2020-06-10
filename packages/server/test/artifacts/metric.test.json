@@ -1,0 +1,173 @@
+[
+  {
+    "id": "F571DF04-FA3D-40A1-834B-ABD100AE00E7",
+    "facilityCode": 13009,
+    "facilityName": "Karura Health Centre (Kiambu Rd)",
+    "cargo": {
+      "Version": "2.4.8",
+      "Name": "HivTestingService",
+      "LogDate": "2020-06-05T10:37:12.9256293",
+      "LogValue": {
+        "Name": "HivTestingService",
+        "NoLoaded": 0,
+        "Version": "2.4.8",
+        "ActionDate": "2020-06-05T10:37:12.9186383+03:00"
+      },
+      "Status": 0,
+      "Display": "Hiv Testing Services",
+      "Action": "Loaded",
+      "Rank": 3,
+      "Id": "3764bdc0-0c28-4579-89d0-abd1007d93f6"
+    },
+    "cargoType": 2,
+    "facilityManifestId": "B8CB9ECF-408E-41EE-9848-ABD100AE00E7"
+  },
+  {
+    "id": "EC739C0F-8FC9-4E11-8870-ABD100AE00E7",
+    "facilityCode": 13009,
+    "facilityName": "Karura Health Centre (Kiambu Rd)",
+    "cargo": {
+      "Version": "2.4.8",
+      "Name": "CareTreatment",
+      "LogDate": "2020-06-05T13:27:41.5063619",
+      "LogValue": {
+        "Name": "CareTreatment",
+        "NoLoaded": 0,
+        "Version": "2.4.8",
+        "ActionDate": "2020-06-05T13:27:41.3494494+03:00"
+      },
+      "Status": 0,
+      "Display": "Care and Treatment",
+      "Action": "Loaded",
+      "Rank": 1,
+      "Id": "6b244830-f180-4dab-aebb-abd100ac6695"
+    },
+    "cargoType": 2,
+    "facilityManifestId": "B8CB9ECF-408E-41EE-9848-ABD100AE00E7",
+    "status": "SENT",
+    "statusDate": "2020-06-05 10:33:32.000",
+    "statusInfo": null
+  },
+  {
+    "id": "AAC89ABB-A6A3-43B4-92FE-ABD100AE00E7",
+    "facilityCode": 13009,
+    "facilityName": "Karura Health Centre (Kiambu Rd)",
+    "cargo": {
+      "Version": "2.4.7",
+      "Name": "HivTestingService",
+      "LogDate": "2020-06-01T22:03:10.9633495",
+      "LogValue": {
+        "Name": "HivTestingService",
+        "NoSent": 0,
+        "Version": "2.4.7",
+        "ActionDate": "2020-06-01T22:03:10.9609418+03:00"
+      },
+      "Status": 0,
+      "Display": "Hiv Testing Services",
+      "Action": "Sent",
+      "Rank": 4,
+      "Id": "e1d9db68-60e7-4ca7-8efe-abcd0139fc0b"
+    },
+    "cargoType": 2,
+    "facilityManifestId": "B8CB9ECF-408E-41EE-9848-ABD100AE00E7",
+    "status": "SENT",
+    "statusDate": "2020-06-05 10:33:32.000",
+    "statusInfo": null
+  },
+  {
+    "id": "163EFB4A-A89A-48D3-9354-ABD100AE00E7",
+    "facilityCode": 13009,
+    "facilityName": "Karura Health Centre (Kiambu Rd)",
+    "cargo": {
+      "EmrName": "IQCare",
+      "EmrVersion": "Kenya HMIS Ver 2.2.1 Patch 2",
+      "LastLoginDate": "2020-05-05T10:40:44.823",
+      "LastMoH731RunDate": null,
+      "DateExtracted": "2020-06-05T12:15:54.3462199",
+      "Id": "5282b336-2998-49b3-8a72-abd10098af32"
+    },
+    "cargoType": 1,
+    "facilityManifestId": "B8CB9ECF-408E-41EE-9848-ABD100AE00E7",
+    "status": "SENT",
+    "statusDate": "2020-06-05 10:33:32.000",
+    "statusInfo": null
+  },
+  {
+    "id": "C8E6A108-18BB-4BD2-9EF1-ABD100AE00E7",
+    "facilityCode": 13009,
+    "facilityName": "Karura Health Centre (Kiambu Rd)",
+    "cargo": {
+      "Version": "2.4.8",
+      "Name": "CareTreatment",
+      "LogDate": "2020-06-05T13:28:05.4126487",
+      "LogValue": {
+        "Name": "CareTreatment",
+        "NoSent": 0,
+        "Version": "2.4.8",
+        "ActionDate": "2020-06-05T13:28:05.381772+03:00"
+      },
+      "Status": 0,
+      "Display": "Care and Treatment",
+      "Action": "Sent",
+      "Rank": 2,
+      "Id": "744d75ba-3a20-477a-8725-abd100ac8298"
+    },
+    "cargoType": 2,
+    "facilityManifestId": "B8CB9ECF-408E-41EE-9848-ABD100AE00E7",
+    "status": "SENT",
+    "statusDate": "2020-06-05 10:33:32.000",
+    "statusInfo": null
+  },
+  {
+    "id": "E31CA1C8-5BB1-4DCC-A46E-ABD100AE00E7",
+    "facilityCode": 13009,
+    "facilityName": "Karura Health Centre (Kiambu Rd)",
+    "cargo": {
+      "Version": "2.4.8",
+      "Name": "MasterPatientIndex",
+      "LogDate": "2020-06-05T13:33:31.2543275",
+      "LogValue": {
+        "Name": "MasterPatientIndex",
+        "NoSent": 0,
+        "Version": "2.4.8",
+        "ActionDate": "2020-06-05T13:33:31.2519592+03:00"
+      },
+      "Status": 0,
+      "Display": "Master Patient Index",
+      "Action": "Sent",
+      "Rank": 6,
+      "Id": "f1baf01d-ea8e-4b2c-b6c3-abd100ae0071"
+    },
+    "cargoType": 2,
+    "facilityManifestId": "B8CB9ECF-408E-41EE-9848-ABD100AE00E7",
+    "status": "SENT",
+    "statusDate": "2020-06-05 10:33:32.000",
+    "statusInfo": null
+  },
+  {
+    "id": "289EAAE1-209B-4026-AC50-ABD100AE00E7",
+    "facilityCode": 13009,
+    "facilityName": "Karura Health Centre (Kiambu Rd)",
+    "cargo": {
+      "Version": "2.4.8",
+      "Name": "MasterPatientIndex",
+      "LogDate": "2020-06-05T13:33:26.1900597",
+      "LogValue": {
+        "Name": "MasterPatientIndex",
+        "NoLoaded": 0,
+        "Version": "2.4.8",
+        "ActionDate": "2020-06-05T13:33:26.1881223+03:00"
+      },
+      "Status": 0,
+      "Display": "Master Patient Index",
+      "Action": "Loaded",
+      "Rank": 5,
+      "Id": "28d0fe04-55f6-40de-9f30-abd100adfa82"
+    },
+    "cargoType": 2,
+    "facilityManifestId": "B8CB9ECF-408E-41EE-9848-ABD100AE00E7",
+    "status": "SENT",
+    "statusDate": "2020-06-05 10:33:32.000",
+    "statusInfo": null
+  }
+]

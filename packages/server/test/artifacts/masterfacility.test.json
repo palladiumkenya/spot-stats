@@ -1,0 +1,36 @@
+[
+  {
+    "_id": "9eb13e4a-bb7b-11e9-9cb5-2a2ae2dbcce4",
+    "code": 12618,
+    "name": "Mwala Hospital",
+    "county": {
+      "_id": "9eb15a92-bb7b-11e9-9cb5-2a2ae2dbcce4",
+      "code": 16,
+      "name": "MACHAKOS"
+    },
+    "mechanism": {
+      "_id": "9eb13e4a-bb7b-11e9-9cb5-2a2ae2dbcce4",
+      "code": "18504",
+      "name": "UMB Timiza",
+      "implementationName": "UMB Timiza",
+      "agency": { "_id": "9eb13e4a-bb7b-11e9-9cb5-2a2ae2dbcce4" }
+    }
+  },
+  {
+    "_id": "9eb140ca-bb7b-11e9-9cb5-2a2ae2dbcce4",
+    "code": 14950,
+    "name": "Kitengela Health Centre",
+    "county": {
+      "_id": "9eb175a4-bb7b-11e9-9cb5-2a2ae2dbcce4",
+      "code": 34,
+      "name": "KAJIADO"
+    },
+    "mechanism": {
+      "_id": "9eb140ca-bb7b-11e9-9cb5-2a2ae2dbcce4",
+      "code": "13588",
+      "name": "Afya Ziwani",
+      "implementationName": "Afya Ziwani",
+      "agency": { "_id": "9eb140ca-bb7b-11e9-9cb5-2a2ae2dbcce4" }
+    }
+  }
+]

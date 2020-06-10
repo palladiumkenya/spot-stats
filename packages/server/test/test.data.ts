@@ -6,8 +6,94 @@ import { Facility } from '../src/domain/transfers/facility';
 import { Manifest, NoticeBoard, Summary } from '../src/domain';
 import { Metric } from '../src/domain/metrices/metric';
 import { Measure } from '../src/domain/metrices/measure';
+import * as fg from 'fast-glob';
+import * as fs from 'fs';
 import { plainToClass } from 'class-transformer';
 import { LogMetricCommand } from '../src/application/metrices/commands/log-metric.command';
+import { Logger } from '@nestjs/common';
+import { LogManifestCommand } from '../src/application/transfers/commands/log-manifest.command';
+import { UpdateStatsCommand } from '../src/application/transfers/commands/update-stats.command';
+
+const pattern = '**/*.test.json';
+
+const getFiles = async () => {
+  let files: string[] = [];
+  files = await fg([pattern], { dot: true });
+  return files;
+};
+
+const addDays = (days: number, date: Date = new Date()): Date => {
+  date.setDate(date.getDate() + days);
+  return date;
+};
+
+export const getDockets = async () => {
+  const seedFiles = await getFiles();
+  const fileToParse = seedFiles.find((f) =>
+    f.includes(Docket.name.toLowerCase()),
+  );
+  if (fileToParse) {
+    const contents = fs.readFileSync(fileToParse).toString();
+    const data: Docket[] = JSON.parse(contents);
+    return plainToClass(Docket, data);
+  }
+  return [];
+};
+
+export const getFacilities = async () => {
+  const seedFiles = await getFiles();
+  const fileToParse = seedFiles.find((f) =>
+    f.includes(Facility.name.toLowerCase()),
+  );
+  if (fileToParse) {
+    const contents = fs.readFileSync(fileToParse).toString();
+    const data: Facility[] = JSON.parse(contents);
+    return plainToClass(Facility, data);
+  }
+  return [];
+};
+
+export const getMasterFacs = async () => {
+  const seedFiles = await getFiles();
+  const fileToParse = seedFiles.find((f) =>
+    f.includes(MasterFacility.name.toLowerCase()),
+  );
+  if (fileToParse) {
+    Logger.log(`reading test data [${fileToParse}]`);
+    const contents = fs.readFileSync(fileToParse).toString();
+    const data: MasterFacility[] = JSON.parse(contents);
+    return plainToClass(MasterFacility, data);
+  }
+  return [];
+};
+
+export const getLogManifestCommands = async () => {
+  const seedFiles = await getFiles();
+  const fileToParse = seedFiles.find((f) => f.includes('log-manifest'));
+  if (fileToParse) {
+    const contents = fs.readFileSync(fileToParse).toString();
+    const data: LogManifestCommand[] = JSON.parse(contents);
+
+    data.forEach((m) => {
+      m.id = uuid.v1();
+      m.patientCount = 40;
+    });
+
+    return plainToClass(LogManifestCommand, data);
+  }
+  return [];
+};
+
+export const getUpdateStatsCommands = async () => {
+  const seedFiles = await getFiles();
+  const fileToParse = seedFiles.find((f) => f.includes('update-stats'));
+  if (fileToParse) {
+    const contents = fs.readFileSync(fileToParse).toString();
+    const data: UpdateStatsCommand[] = JSON.parse(contents);
+    return plainToClass(UpdateStatsCommand, data);
+  }
+  return [];
+};
 
 export const getTestDockets = (count = 2, dcount = 2) => {
   const data: Docket[] = [];
