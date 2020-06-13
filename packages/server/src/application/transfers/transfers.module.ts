@@ -15,6 +15,7 @@ import { ManifestLoggedHandler } from './events/handlers/manifest-logged.handler
 import { GetStatsCountHandler } from './queries/handlers/get-stats-count.handler';
 import { GetStatsHandler } from './queries/handlers/get-stats.handler';
 import { MetricsInfrastructureModule } from '../../infrastructure/metrices/metrics-infrastructure.module';
+import { GetMisssingStatsHandler } from './queries/handlers/get-missing-stats.handler';
 
 const CommandHandlers = [
   LogManifestHandler,
@@ -27,6 +28,7 @@ const QueryHandlers = [
   GetStatsPagedHandler,
   GetSummaryHandler,
   GetStatsCountHandler,
+  GetMisssingStatsHandler,
 ];
 
 @Module({

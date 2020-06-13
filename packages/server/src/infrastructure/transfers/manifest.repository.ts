@@ -65,6 +65,14 @@ export class ManifestRepository extends BaseRepository<Manifest>
       .exec();
   }
 
+  async getCurrentMissing(): Promise<any> {
+    const resuls = await this.model
+      .find({ isCurrent: true, recievedCount: null })
+      .sort({ logDate: -1 })
+      .exec();
+    return resuls;
+  }
+
   async updateCurrent(code: number): Promise<any> {
     await this.model.updateMany(
       { code, isCurrent: true },
