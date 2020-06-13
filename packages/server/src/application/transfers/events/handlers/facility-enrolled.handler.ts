@@ -11,6 +11,6 @@ import {
 export class FacilityEnrolledHandler
   implements IEventHandler<FacilityEnrolledEvent> {
   handle(event: FacilityEnrolledEvent) {
-    Logger.debug(`=== FacilityEnrolled ===:${event._id}`);
+    Logger.debug(`=== FacilityEnrolled ===`);
   }
 }

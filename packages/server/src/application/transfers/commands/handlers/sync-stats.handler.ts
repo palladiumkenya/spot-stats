@@ -10,9 +10,10 @@ import {
 import { UpdateStatsCommand } from '../update-stats.command';
 import { plainToClass } from 'class-transformer';
 import { IManifestRepository } from '../../../../domain/transfers/manifest-repository.interface';
+import { SyncStatsCommand } from '../sync-stats.command';
 
-@CommandHandler(UpdateStatsCommand)
-export class UpdateStatsHandler implements ICommandHandler<UpdateStatsCommand> {
+@CommandHandler(SyncStatsCommand)
+export class SyncStatsHandler implements ICommandHandler<SyncStatsCommand> {
   constructor(
     @Inject('IDocketRepository')
     private readonly docketRepository: IDocketRepository,
@@ -23,7 +24,7 @@ export class UpdateStatsHandler implements ICommandHandler<UpdateStatsCommand> {
     private readonly publisher: EventPublisher,
   ) {}
 
-  async execute(command: UpdateStatsCommand): Promise<any> {
+  async execute(command: SyncStatsCommand): Promise<any> {
     let facility = await this.facilityRepository.findByCode(
       command.facilityCode,
     );
@@ -43,7 +44,6 @@ export class UpdateStatsHandler implements ICommandHandler<UpdateStatsCommand> {
         const recieved = facility.getPatientSummary(command.docket.name);
         if (recieved) {
           manifest.recievedCount = recieved;
-          manifest.recievedDate = command.updated;
           await this.manifestRepository.update(manifest);
         }
       }

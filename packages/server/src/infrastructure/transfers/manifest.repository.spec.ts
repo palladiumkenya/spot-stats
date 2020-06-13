@@ -72,6 +72,11 @@ describe('Manifest Repository  Tests', () => {
     data.forEach((d) => Logger.debug(`${d.name}`));
   });
 
+  it('should load Current Missing', async () => {
+    const data = await repository.getCurrentMissing();
+    expect(data).not.toBeUndefined();
+  });
+
   it('should update Current', async () => {
     const data = await repository.updateCurrent(100);
 
