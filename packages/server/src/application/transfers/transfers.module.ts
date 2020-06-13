@@ -16,6 +16,9 @@ import { GetStatsCountHandler } from './queries/handlers/get-stats-count.handler
 import { GetStatsHandler } from './queries/handlers/get-stats.handler';
 import { MetricsInfrastructureModule } from '../../infrastructure/metrices/metrics-infrastructure.module';
 import { GetMisssingStatsHandler } from './queries/handlers/get-missing-stats.handler';
+import { RequestStatsHandler } from './commands/handlers/request-stats.handler';
+import { MessagingModule } from '../../infrastructure/messging/messaging.module';
+import { ConfigModule } from '../../config/config.module';
 
 const CommandHandlers = [
   LogManifestHandler,
@@ -29,11 +32,14 @@ const QueryHandlers = [
   GetSummaryHandler,
   GetStatsCountHandler,
   GetMisssingStatsHandler,
+  RequestStatsHandler,
 ];
 
 @Module({
   imports: [
     CqrsModule,
+    MessagingModule,
+    ConfigModule,
     MetricsInfrastructureModule,
     TransfersInfrastructureModule,
     RegistriesInfrastructureModule,

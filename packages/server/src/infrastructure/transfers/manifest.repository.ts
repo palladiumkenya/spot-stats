@@ -23,6 +23,7 @@ export class ManifestRepository extends BaseRepository<Manifest>
     if (facId) {
       const facResuls = await this.model
         .find({ isCurrent: true, facility: facId })
+        .limit(20)
         .populate(Facility.name.toLowerCase())
         .exec();
       if (facResuls && facResuls.length > 0) {
@@ -33,6 +34,7 @@ export class ManifestRepository extends BaseRepository<Manifest>
     const resuls = await this.model
       .find({ isCurrent: true })
       .populate(Facility.name.toLowerCase())
+      .limit(20)
       .sort({ logDate: -1 })
       .exec();
     return resuls;
@@ -68,6 +70,15 @@ export class ManifestRepository extends BaseRepository<Manifest>
   async getCurrentMissing(): Promise<any> {
     const resuls = await this.model
       .find({ isCurrent: true, recievedCount: null })
+      .select({
+        _id: 1,
+        mId: 1,
+        code: 1,
+        name: 1,
+        logDate: 1,
+        docket: 1,
+        patientCount: 1,
+      })
       .sort({ logDate: -1 })
       .exec();
     return resuls;

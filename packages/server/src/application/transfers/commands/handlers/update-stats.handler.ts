@@ -43,7 +43,7 @@ export class UpdateStatsHandler implements ICommandHandler<UpdateStatsCommand> {
         const recieved = facility.getPatientSummary(command.docket.name);
         if (recieved) {
           manifest.recievedCount = recieved;
-          manifest.recievedDate = new Date();
+          manifest.recievedDate = command.updated;
           await this.manifestRepository.update(manifest);
         }
       }

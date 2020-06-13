@@ -1,11 +1,9 @@
-import {Body, Controller, Get, Param, Post, Query} from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { GetStatsPagedQuery } from '../queries/get-stats-paged.query';
 import { GetStatsCountQuery } from '../queries/get-stats-count.query';
 import { GetStatsQuery } from '../queries/get-stats.query';
-import {DocketDto} from "../../../domain";
-import {SaveDocketCommand} from "../../courts/commands";
-import {  RequestSyncDto } from 'src/domain/transfers/dtos/request-sync.dto';
+import { RequestSyncDto } from 'src/domain/transfers/dtos/request-sync.dto';
 import { RequestStatsCommand } from '../commands/request-stats.command';
 import { GetMisssingStatsQuery } from '../queries/get-misssing-stats.query';
 
@@ -53,16 +51,14 @@ export class ManifestsController {
 
   @Post('sync')
   async requestSync(@Body() requestSync: RequestSyncDto) {
-    if(requestSync.codes&&requestSync.codes.length)
-    {
+    if (requestSync.codes && requestSync.codes.length) {
       return this.commandBus.execute(
         new RequestStatsCommand(requestSync.codes),
-    );
-    }else{
+      );
+    } else {
       return this.commandBus.execute(
         new RequestStatsCommand(requestSync.codes),
-    );
+      );
     }
-  
   }
 }

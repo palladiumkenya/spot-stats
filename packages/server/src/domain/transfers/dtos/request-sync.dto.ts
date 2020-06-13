@@ -1,3 +1,3 @@
 export interface RequestSyncDto {
-  codes?: number[]
+  codes?: number[];
 }
