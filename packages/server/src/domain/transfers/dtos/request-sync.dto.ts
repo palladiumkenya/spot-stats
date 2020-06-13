@@ -1,5 +1,3 @@
-import { Manifest, MasterFacility, Summary } from '../..';
-
-export interface RequestSYnc {
-  code?: number[]
+export interface RequestSyncDto {
+  codes?: number[]
 }
