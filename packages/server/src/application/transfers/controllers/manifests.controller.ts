@@ -1,8 +1,10 @@
-import { Controller, Get, Param, Query } from '@nestjs/common';
+import {Body, Controller, Get, Param, Post, Query} from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { GetStatsPagedQuery } from '../queries/get-stats-paged.query';
 import { GetStatsCountQuery } from '../queries/get-stats-count.query';
 import { GetStatsQuery } from '../queries/get-stats.query';
+import {DocketDto} from "../../../domain";
+import {SaveDocketCommand} from "../../courts/commands";
 
 @Controller('manifests')
 export class ManifestsController {
@@ -39,5 +41,12 @@ export class ManifestsController {
   @Get('count')
   async getStatsCount(): Promise<number> {
     return this.queryBus.execute(new GetStatsCountQuery());
+  }
+
+  @Post()
+  async requestSync(@Body() docket: DocketDto) {
+    return this.commandBus.execute(
+        new SaveDocketCommand(docket.name, docket.display, docket._id),
+    );
   }
 }

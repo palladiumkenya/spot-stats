@@ -1,3 +1,3 @@
 export class RequestStatsCommand {
-  constructor(public facilityCode?: number) {}
+  constructor(public facilityCodes?: number[]) {}
 }
