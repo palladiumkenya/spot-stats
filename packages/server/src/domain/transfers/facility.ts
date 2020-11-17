@@ -90,7 +90,7 @@ export class Facility extends AggregateRoot {
     return undefined;
   }
 
-  hasSummaries(docket: string): boolean {
+  hasSummaries(): boolean {
     if (!this.summaries) {
       return false;
     }

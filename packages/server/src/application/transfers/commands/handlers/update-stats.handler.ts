@@ -30,9 +30,10 @@ export class UpdateStatsHandler implements ICommandHandler<UpdateStatsCommand> {
     if (facility) {
       facility = plainToClass(Facility, facility);
 
-      /*      if (!facility.hasSummaries(command.docket)) {
-        facility.updateSummary(command.docket, command.stats, command.updated);
-      }*/
+      // TODO:CHECK NEED TO REINTSUMMARIES
+      if (!facility.hasSummaries()) {
+        // facility.updateSummary(command.docket, command.stats, command.updated);
+      }
 
       facility.updateSummary(command.docket, command.stats, command.updated);
 
