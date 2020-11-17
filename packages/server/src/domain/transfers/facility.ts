@@ -36,7 +36,7 @@ export class Facility extends AggregateRoot {
   }
 
   summaryHasExtract(_id: string) {
-    const extract = this.summaries.find(s => s.extract._id === _id);
+    const extract = this.summaries.find((s) => s.extract._id === _id);
     if (extract) {
       return true;
     }
@@ -50,9 +50,9 @@ export class Facility extends AggregateRoot {
 
   updateSummary(docket: any, stats: any, updated: Date) {
     this.summaries
-      .filter(s => s.docket.name === docket.name)
-      .forEach(ss => {
-        const stat = stats.find(x => x.name === ss.extract.name);
+      .filter((s) => s.docket.name === docket.name)
+      .forEach((ss) => {
+        const stat = stats.find((x) => x.name === ss.extract.name);
         if (stat) {
           ss.recieved = stat.recieved;
           ss.updated = stat.updated;
@@ -63,7 +63,7 @@ export class Facility extends AggregateRoot {
 
   getPatientSummary(docket: string): any {
     const psum = this.summaries.find(
-      s => s.docket.name === docket && s.extract.isPatient,
+      (s) => s.docket.name === docket && s.extract.isPatient,
     );
 
     if (psum) {
@@ -73,7 +73,7 @@ export class Facility extends AggregateRoot {
   }
 
   resetSummary(_id: string, expected: any, updated: Date) {
-    this.summaries.forEach(s => {
+    this.summaries.forEach((s) => {
       if (s.extract._id === _id) {
         s.expected = expected;
         s.recieved = 0;
@@ -83,10 +83,22 @@ export class Facility extends AggregateRoot {
   }
 
   getStats(docket: string, extract: string) {
-    const s = this.summaries.find(f => f.extract.name === extract);
+    const s = this.summaries.find((f) => f.extract.name === extract);
     if (s) {
       return s;
     }
     return undefined;
+  }
+
+  hasSummaries(docket: string): boolean {
+    if (!this.summaries) {
+      return false;
+    }
+
+    if (this.summaries && this.summaries.length === 0) {
+      return false;
+    }
+
+    return true;
   }
 }

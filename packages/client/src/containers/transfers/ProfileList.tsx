@@ -85,6 +85,13 @@ export class ProfileList extends Component<Props, {}> {
           filter={true}
           filterMatchMode={"contains"}
         />
+        <Column
+          field="facility.masterFacility.mechanism.name"
+          header="Partner"
+          sortable={true}
+          filter={true}
+          filterMatchMode={"contains"}
+        />
         <Column field="docket" header="Docket" sortable={true} filter={true} />
         <Column field="patientCount" header="Expected" sortable={true} />
         <Column field="recievedCount" header="Recieved" sortable={true} />
