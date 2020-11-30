@@ -1,9 +1,4 @@
-import {
-  CommandBus,
-  CommandHandler,
-  EventPublisher,
-  ICommandHandler,
-} from '@nestjs/cqrs';
+import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
 import { LogManifestCommand } from '../log-manifest.command';
 import { Inject, Logger } from '@nestjs/common';
 import {
@@ -15,9 +10,10 @@ import {
 import { UpdateStatsCommand } from '../update-stats.command';
 import { plainToClass } from 'class-transformer';
 import { IManifestRepository } from '../../../../domain/transfers/manifest-repository.interface';
+import { SyncStatsCommand } from '../sync-stats.command';
 
-@CommandHandler(UpdateStatsCommand)
-export class UpdateStatsHandler implements ICommandHandler<UpdateStatsCommand> {
+@CommandHandler(SyncStatsCommand)
+export class SyncStatsHandler implements ICommandHandler<SyncStatsCommand> {
   constructor(
     @Inject('IDocketRepository')
     private readonly docketRepository: IDocketRepository,
@@ -26,21 +22,14 @@ export class UpdateStatsHandler implements ICommandHandler<UpdateStatsCommand> {
     @Inject('IManifestRepository')
     private readonly manifestRepository: IManifestRepository,
     private readonly publisher: EventPublisher,
-    private readonly commandBus: CommandBus,
   ) {}
 
-  async execute(command: UpdateStatsCommand): Promise<any> {
+  async execute(command: SyncStatsCommand): Promise<any> {
     let facility = await this.facilityRepository.findByCode(
       command.facilityCode,
     );
     if (facility) {
       facility = plainToClass(Facility, facility);
-
-      // TODO:CHECK NEED TO REINTSUMMARIES
-      if (!facility.hasSummaries()) {
-        // facility.updateSummary(command.docket, command.stats, command.updated);
-      }
-
       facility.updateSummary(command.docket, command.stats, command.updated);
 
       const updatedFacility = await this.facilityRepository.update(facility);
@@ -55,7 +44,6 @@ export class UpdateStatsHandler implements ICommandHandler<UpdateStatsCommand> {
         const recieved = facility.getPatientSummary(command.docket.name);
         if (recieved) {
           manifest.recievedCount = recieved;
-          manifest.recievedDate = command.updated;
           await this.manifestRepository.update(manifest);
         }
       }

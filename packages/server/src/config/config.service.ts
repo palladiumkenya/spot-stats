@@ -112,4 +112,8 @@ export class ConfigService {
   get SslCert(): string {
     return String(this.envConfig.STATS_CERT);
   }
+
+  getRoute(name: string): string {
+    return this.QueueStatsRoutes.find((c) => c.includes(name));
+  }
 }

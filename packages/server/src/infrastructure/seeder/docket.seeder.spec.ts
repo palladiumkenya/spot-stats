@@ -1,4 +1,4 @@
-import {  Logger } from '@nestjs/common';
+import { Logger } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { TestDbHelper } from '../../../test/test-db.helper';
 import { MongooseModule } from '@nestjs/mongoose';
@@ -31,6 +31,6 @@ describe('Dockets Seeder Tests', () => {
   it('should load Master Facility Seed', async () => {
     const seeds = await seeder.load();
     expect(seeds.length).toBeGreaterThan(-1);
-    seeds.forEach(s => Logger.debug(`${s.name} ${s} (${s._id})`));
+    seeds.forEach((s) => Logger.debug(`${s.name} ${s} (${s._id})`));
   });
 });

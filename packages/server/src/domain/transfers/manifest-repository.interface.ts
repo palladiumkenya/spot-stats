@@ -12,5 +12,6 @@ export interface IManifestRepository extends IRepository<Manifest> {
     sort?: any,
     filter?: any,
   ): Promise<any>;
+  getCurrentMissing(): Promise<any>;
   updateCurrent(code: number): Promise<any>;
 }

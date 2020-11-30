@@ -5,11 +5,11 @@ import { IDocketRepository } from '../../domain/courts/docket-repository.interfa
 import { Docket } from '../../domain/courts/docket';
 @Injectable()
 export class DocketSeeder {
-
-  constructor(private readonly reader: SeedReader,
-              @Inject('IDocketRepository')
-              private readonly repository: IDocketRepository) {
-  }
+  constructor(
+    private readonly reader: SeedReader,
+    @Inject('IDocketRepository')
+    private readonly repository: IDocketRepository,
+  ) {}
 
   async load(): Promise<Docket[]> {
     const seedData = await this.reader.read(Docket.name.toLowerCase());
