@@ -65,7 +65,6 @@ export class Facility extends AggregateRoot {
     const psum = this.summaries.find(
       (s) => s.docket.name === docket && s.extract.isPatient,
     );
-
     if (psum) {
       return psum.recieved;
     }
