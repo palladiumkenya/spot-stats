@@ -66,5 +66,8 @@
     "webpack-cli": "^3.3.7",
     "webpack-dev-server": "^3.8.0",
     "webpack-merge": "^4.2.1"
+  },
+  "resolutions": {
+    "@types/react": "^16.9.2"
   }
 }
