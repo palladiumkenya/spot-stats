@@ -45,6 +45,6 @@ describe('Notice Board Repository  Tests', () => {
   it('should load Notices', async () => {
     const noticeBoards = await repository.getAll();
     expect(noticeBoards.length).toBeGreaterThan(0);
-    noticeBoards.forEach((d) => Logger.debug(`${d.message}`));
+    noticeBoards.forEach(d => Logger.debug(`${d.message}`));
   });
 });

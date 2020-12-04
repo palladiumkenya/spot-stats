@@ -30,7 +30,9 @@ describe('Get MasterFacility Query Tests', () => {
     await dbHelper.initConnection();
     await dbHelper.seedDb('dockets', testMasterFacilities);
 
-    const getMasterFacilitiesHandler = module.get<GetMasterFacilitiesHandler>(GetMasterFacilitiesHandler);
+    const getMasterFacilitiesHandler = module.get<GetMasterFacilitiesHandler>(
+      GetMasterFacilitiesHandler,
+    );
 
     queryBus = module.get<QueryBus>(QueryBus);
     queryBus.bind(getMasterFacilitiesHandler, GetMasterFacilitiesQuery.name);
@@ -48,7 +50,10 @@ describe('Get MasterFacility Query Tests', () => {
 
   it('should get new MasterFacility', async () => {
     const query = new GetMasterFacilitiesQuery();
-    const result = await queryBus.execute<GetMasterFacilitiesQuery, MasterFacilityDto[]>(query);
+    const result = await queryBus.execute<
+      GetMasterFacilitiesQuery,
+      MasterFacilityDto[]
+    >(query);
     expect(result.length).toBeGreaterThan(0);
     result.forEach(c => Logger.debug(`${c}`));
   });

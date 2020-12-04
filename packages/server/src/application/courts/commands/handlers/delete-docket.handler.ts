@@ -5,12 +5,13 @@ import { IDocketRepository } from '../../../../domain/courts/docket-repository.i
 import { DocketDeletedEvent } from '../../events/docket-deleted.event';
 
 @CommandHandler(DeleteDocketCommand)
-export class DeleteDocketHandler implements ICommandHandler<DeleteDocketCommand> {
+export class DeleteDocketHandler
+  implements ICommandHandler<DeleteDocketCommand> {
   constructor(
     @Inject('IDocketRepository')
     private readonly repository: IDocketRepository,
-    private readonly eventBus: EventBus) {
-  }
+    private readonly eventBus: EventBus,
+  ) {}
 
   async execute(command: DeleteDocketCommand): Promise<boolean> {
     const result = await this.repository.delete(command._id);

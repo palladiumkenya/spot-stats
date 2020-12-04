@@ -5,11 +5,12 @@ import { MasterFacilityDto } from '../../../../domain/registries/dtos/master-fac
 import { IMasterFacilityRepository } from '../../../../domain/registries/master-facility-repository.interface';
 
 @QueryHandler(GetMasterFacilitiesQuery)
-export class GetMasterFacilitiesHandler implements IQueryHandler<GetMasterFacilitiesQuery, MasterFacilityDto[]> {
+export class GetMasterFacilitiesHandler
+  implements IQueryHandler<GetMasterFacilitiesQuery, MasterFacilityDto[]> {
   constructor(
     @Inject('IMasterFacilityRepository')
-    private readonly repository: IMasterFacilityRepository) {
-  }
+    private readonly repository: IMasterFacilityRepository,
+  ) {}
 
   async execute(query: GetMasterFacilitiesQuery): Promise<MasterFacilityDto[]> {
     const results = await this.repository.getAll();

@@ -21,7 +21,7 @@ describe('Seed Reader Tests', () => {
   });
 
   it('should read Seed', async () => {
-    const teams = await seedReader.read( 'team');
+    const teams = await seedReader.read('team');
     expect(teams.length).toBeGreaterThan(0);
     Logger.debug(teams);
   });

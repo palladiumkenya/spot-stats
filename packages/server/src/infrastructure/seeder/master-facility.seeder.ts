@@ -5,11 +5,11 @@ import { IMasterFacilityRepository } from '../../domain/registries/master-facili
 import { MasterFacility } from '../../domain/registries/master-facility';
 @Injectable()
 export class MasterFacilitySeeder {
-
-  constructor(private readonly reader: SeedReader,
-              @Inject('IMasterFacilityRepository')
-              private readonly masterFacilityRepository: IMasterFacilityRepository) {
-  }
+  constructor(
+    private readonly reader: SeedReader,
+    @Inject('IMasterFacilityRepository')
+    private readonly masterFacilityRepository: IMasterFacilityRepository,
+  ) {}
 
   async load(): Promise<MasterFacility[]> {
     const seedData = await this.reader.read(MasterFacility.name.toLowerCase());

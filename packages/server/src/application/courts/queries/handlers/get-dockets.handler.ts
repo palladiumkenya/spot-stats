@@ -5,11 +5,12 @@ import { IDocketRepository } from '../../../../domain/courts/docket-repository.i
 import { GetDocketsQuery } from '../get-dockets.query';
 
 @QueryHandler(GetDocketsQuery)
-export class GetDocketsHandler implements IQueryHandler<GetDocketsQuery, DocketDto[]> {
+export class GetDocketsHandler
+  implements IQueryHandler<GetDocketsQuery, DocketDto[]> {
   constructor(
     @Inject('IDocketRepository')
-    private readonly docketRepository: IDocketRepository) {
-  }
+    private readonly docketRepository: IDocketRepository,
+  ) {}
 
   async execute(query: GetDocketsQuery): Promise<DocketDto[]> {
     const results = await this.docketRepository.getAll();

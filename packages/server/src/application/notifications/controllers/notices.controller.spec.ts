@@ -44,6 +44,6 @@ describe('Notices Controller Tests', () => {
   it('should get All Notices', async () => {
     const result = await controller.getNotices();
     expect(result.length).toBeGreaterThan(0);
-    result.forEach((c) => Logger.debug(`${c}`));
+    result.forEach(c => Logger.debug(`${c}`));
   });
 });
