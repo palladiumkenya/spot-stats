@@ -9,11 +9,10 @@ export class SaveDocketHandler implements ICommandHandler<SaveDocketCommand> {
   constructor(
     @Inject('IDocketRepository')
     private readonly repository: IDocketRepository,
-    private readonly publisher: EventPublisher) {
-  }
+    private readonly publisher: EventPublisher,
+  ) {}
 
   async execute(command: SaveDocketCommand): Promise<any> {
-
     if (command._id && command._id !== '00000000-0000-0000-0000-000000000000') {
       return await this.updateDocket(command);
     }

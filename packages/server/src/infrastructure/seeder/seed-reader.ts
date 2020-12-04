@@ -4,7 +4,6 @@ import { ISeedReader } from '../../application/common/seeder-reader.interface';
 import { Logger } from '@nestjs/common';
 
 export class SeedReader implements ISeedReader {
-
   private pattern = '**/*.seed.json';
   private glob: any;
 
@@ -16,7 +15,9 @@ export class SeedReader implements ISeedReader {
 
   async read(fileMatch: string): Promise<string> {
     const seedFiles = await this.getFiles();
-    const fileToParse = seedFiles.find(f => f.includes(fileMatch.toLowerCase()));
+    const fileToParse = seedFiles.find(f =>
+      f.includes(fileMatch.toLowerCase()),
+    );
     if (fileToParse) {
       Logger.log(`reading seed [${fileToParse}]`);
       const contents = fs.readFileSync(fileToParse).toString();
