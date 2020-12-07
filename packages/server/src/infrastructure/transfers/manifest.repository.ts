@@ -121,4 +121,16 @@ export class ManifestRepository extends BaseRepository<Manifest>
       }
     }
   }
+
+  async syncManifest(code: number, masterFacility: any): Promise<any> {
+    const facResuls = await this.model.find({
+      isCurrent: true,
+      code,
+    });
+
+    for (const f of facResuls) {
+      f.facilityInfo.masterFacility = masterFacility;
+      await this.update(f);
+    }
+  }
 }
