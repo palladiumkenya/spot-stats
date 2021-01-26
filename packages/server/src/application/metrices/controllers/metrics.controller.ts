@@ -2,6 +2,7 @@ import {Controller, Get, Logger, Param, Post} from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { GetMetricQuery } from '../queries/get-metric.query';
 import {LogIndicatorCommand} from '../commands/log-indicator.command';
+import {GetIndicatorQuery} from "../queries/get-indicator.query";
 
 @Controller('facmetrics')
 export class MetricsController {
@@ -18,6 +19,11 @@ export class MetricsController {
 
   @Post()
   async createNewIndicator() {
-    await this.commandBus.execute(new LogIndicatorCommand('1', 'TX_CURR', '1500', new Date(), 'EMR', 'maragua', '5'));
+    await this.commandBus.execute(new LogIndicatorCommand('1', 'TX_CURR', '1500', new Date(), 'EMR', '48f6dd50-684d-11ea-bcf7-2f57382d536c', '5'));
+  }
+
+  @Get('getIndicatorsByFacilityId/:id')
+  async getIndicatorsByFacilityId(@Param('id') id) {
+    return await this.queryBus.execute(new GetIndicatorQuery(id));
   }
 }
