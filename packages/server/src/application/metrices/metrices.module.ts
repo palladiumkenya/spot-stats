@@ -8,8 +8,9 @@ import { CourtsInfrastructureModule } from '../../infrastructure/courts';
 import { TransfersInfrastructureModule } from '../../infrastructure/transfers';
 import { RegistriesInfrastructureModule } from '../../infrastructure/registries';
 import { MetricsController } from './controllers/metrics.controller';
+import {LogIndicatorHandler} from './commands/handlers/log-indicator.handler';
 
-const CommandHandlers = [LogMetricHandler];
+const CommandHandlers = [LogMetricHandler, LogIndicatorHandler];
 const EventHandlers = [MetricLoggedHandler];
 const QueryHandlers = [GetMetricHandler];
 
