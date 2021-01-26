@@ -11,6 +11,7 @@ import axios from "axios";
 import { Growl } from "primereact/growl";
 import { Messages } from "primereact/messages";
 import { ProfileDetail } from "./ProfileDetail";
+import {Indicator} from "./models/indicator";
 
 interface MatchParams {
   id: string;
@@ -20,9 +21,11 @@ interface Props extends RouteComponentProps<MatchParams> {}
 
 interface State {
   profileSummary: ProfileSummary;
+  indicators: Indicator[];
 }
 
 let url = `https://${window.location.hostname}:4720/api/v1/transfers/facilities/`;
+let indicatorsUrl = `https://${window.location.hostname}:4720/api/v1/metrics/facmetrics/getIndicatorsByFacilityId/`;
 
 class ProfileShowcase extends Component<Props, State> {
   private messages: any;
@@ -34,6 +37,7 @@ class ProfileShowcase extends Component<Props, State> {
         summaries: [],
         manifests: [],
       },
+      indicators: []
     };
   }
 
@@ -52,7 +56,6 @@ class ProfileShowcase extends Component<Props, State> {
       this.setState({
         profileSummary: data,
       });
-      console.log("ssssss", data);
     } catch (e) {
       this.messages.show({
         severity: "error",
@@ -62,8 +65,33 @@ class ProfileShowcase extends Component<Props, State> {
     }
   };
 
+  loadIndicators =  async (id: string) => {
+    this.messages.clear();
+    if (!id) {
+      this.messages.show({
+        severity: "error",
+        summary: "No indicators specified !",
+      });
+      return;
+    }
+    try {
+      let res = await axios.get(`${indicatorsUrl}${id}`);
+      let data = res.data;
+      this.setState({
+        indicators: data,
+      });
+    } catch (e) {
+      this.messages.show({
+        severity: "error",
+        summary: "Error loading",
+        detail: `${e}`,
+      });
+    }
+  }
+
   async componentDidMount() {
     this.loadData(this.props.match.params.id);
+    this.loadIndicators(this.props.match.params.id);
   }
 
   render() {
@@ -76,7 +104,7 @@ class ProfileShowcase extends Component<Props, State> {
         <hr />
         {this.state.profileSummary ? (
           <div>
-            <ProfileDetail profile={this.state.profileSummary} />
+            <ProfileDetail profile={this.state.profileSummary}  indicators={this.state.indicators}/>
           </div>
         ) : (
           <div />

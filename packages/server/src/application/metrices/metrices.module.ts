@@ -9,10 +9,11 @@ import { TransfersInfrastructureModule } from '../../infrastructure/transfers';
 import { RegistriesInfrastructureModule } from '../../infrastructure/registries';
 import { MetricsController } from './controllers/metrics.controller';
 import {LogIndicatorHandler} from './commands/handlers/log-indicator.handler';
+import {GetIndicatorHandler} from './queries/handlers/get-indicator.handler';
 
 const CommandHandlers = [LogMetricHandler, LogIndicatorHandler];
 const EventHandlers = [MetricLoggedHandler];
-const QueryHandlers = [GetMetricHandler];
+const QueryHandlers = [GetMetricHandler, GetIndicatorHandler];
 
 @Module({
   imports: [
