@@ -5,6 +5,7 @@ import { CommandBus } from '@nestjs/cqrs';
 import { LogManifestCommand } from '../../application/transfers/commands/log-manifest.command';
 import { UpdateStatsCommand } from '../../application/transfers/commands/update-stats.command';
 import { LogMetricCommand } from '../../application/metrices/commands/log-metric.command';
+import { LogIndicatorCommand } from '../../application/metrices/commands/log-indicator.command';
 import {
   AGENCY_SYNCED,
   ALL_FACILITY_SYNCED,
@@ -103,6 +104,30 @@ export class MessagingService {
         metric.cargo,
         metric.cargoType,
         metric.facilityManifestId,
+      ),
+    );
+  }
+
+  @RabbitSubscribe({
+    exchange: 'stats.exchange',
+    routingKey: 'indicator.route',
+    queue: 'indicator.queue',
+  })
+  public async subscribeToIndicator(data: any) {
+    const indicator = JSON.parse(data);
+    Logger.log(`+++++++++++++++++++++++++++++++++++++`);
+    Logger.log(`Received Indicator ${indicator.name}`);
+
+    await this.commandBus.execute(
+      new LogIndicatorCommand(
+        indicator.id,
+        indicator.facilityCode,
+        indicator.facilityName,
+        indicator.name,
+        indicator.value,
+        indicator.indicatorDate,
+        indicator.stage,
+        indicator.facilityManifestId,
       ),
     );
   }
