@@ -19,7 +19,7 @@ export class MetricsController {
 
   @Post()
   async createNewIndicator() {
-    await this.commandBus.execute(new LogIndicatorCommand('1', 'TX_CURR', '1500', new Date(), 'EMR', '48f6dd50-684d-11ea-bcf7-2f57382d536c', '5'));
+    await this.commandBus.execute(new LogIndicatorCommand('1', 13455, 'maragua', 'TX_CURR', '1500', new Date(), 'EMR', '5'));
   }
 
   @Get('getIndicatorsByFacilityId/:id')

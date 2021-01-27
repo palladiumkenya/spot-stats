@@ -1,4 +1,5 @@
 import * as mongoose from 'mongoose';
+import { Facility } from '../../../domain';
 
 export const indicatorSchema = new mongoose.Schema({
     _id: String,
@@ -6,6 +7,7 @@ export const indicatorSchema = new mongoose.Schema({
     value: String,
     indicatorDate: Date,
     stage: String,
-    facility: Object,
-    mId: String,
+    facility: { type: String, ref: Facility.name },
+    createDate: Date,
+    facilityManifestId: String,
 });

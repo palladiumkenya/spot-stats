@@ -8,10 +8,12 @@ export class Indicator extends AggregateRoot {
     public indicatorDate: Date;
     public stage: string;
     public facility: any;
-    public mId: string;
+    public facilityManifestId: string;
+    public createDate: Date;
 
     constructor() {
         super();
         this._id = uuid.v1();
+        this.createDate = new Date();
     }
 }
