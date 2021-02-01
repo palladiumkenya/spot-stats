@@ -16,14 +16,35 @@ export class LogIndicatorHandler implements ICommandHandler<LogIndicatorCommand>
 
     async execute(command: LogIndicatorCommand): Promise<any> {
         try {
-            const indicatorExists = await this.indicatorRepository.get(
-                command._id,
-            );
-            if (indicatorExists) {
-                return;
+            if (command.stage === 'EMR') {
+                return await this.createIndicator(command);
+            } else {
+                return await this.updateIndicator(command);
             }
+        } catch (e) {
+            Logger.error(e);
+        }
+    }
 
-            return await this.createIndicator(command);
+    private async updateIndicator(command: LogIndicatorCommand) {
+        try {
+            const facility = await this.facilityRepository.findByCode(
+                command.facilityCode,
+            );
+            if (facility && command.name) {
+                const indicator = await this.indicatorRepository.findIndicatorByFacilityIdAndName(facility._id, command.name);
+                if (indicator && indicator.length > 0) {
+                    indicator[0].dwhIndicatorDate = command.dwhIndicatorDate;
+                    indicator[0].dwhValue = command.dwhValue;
+                    Logger.debug(indicator[0]);
+                    return await this.indicatorRepository.update(indicator[0]);
+                } else {
+                    Logger.error('indicator is null');
+                }
+            } else {
+                Logger.error('facility and name not found');
+                return null;
+            }
         } catch (e) {
             Logger.error(e);
         }
@@ -31,7 +52,7 @@ export class LogIndicatorHandler implements ICommandHandler<LogIndicatorCommand>
 
     private async createIndicator(command: LogIndicatorCommand) {
         const facility = await this.facilityRepository.findByCode(
-            command.facilityCode
+            command.facilityCode,
         );
         if (facility && command.name) {
             const indicator = new Indicator();
@@ -39,8 +60,9 @@ export class LogIndicatorHandler implements ICommandHandler<LogIndicatorCommand>
             indicator.name = command.name;
             indicator.value = command.value;
             indicator.indicatorDate = command.indicatorDate;
-            indicator.stage = command.stage;
             indicator.facilityManifestId = command.facilityManifestId;
+            indicator.dwhValue = null;
+            indicator.dwhIndicatorDate = null;
             await this.indicatorRepository.create(indicator);
         }
     }

@@ -63,6 +63,21 @@ export class ProfileDetail extends Component<Prop, {}> {
       const mgsSummaries = this.props.profile.summaries!.filter(
         (x) => x.docket.name === "MGS"
       );
+
+      const dateBodyTemplate = (rowData: any) => {
+        return (
+            <React.Fragment>
+              <Moment format="DD MMM YYYY HH:mm:ss">{rowData.indicatorDate}</Moment>
+            </React.Fragment>
+        );
+      }
+
+      const differenceFunc = (rowData: any) => {
+        const val = parseInt(rowData.value, 10);
+        const dwhVal = parseInt(rowData.dwhValue, 10);
+        return val - dwhVal;
+      }
+
       return (
         <div>
           <div className="p-grid">
@@ -165,12 +180,14 @@ export class ProfileDetail extends Component<Prop, {}> {
                 <DataTable
                 value={this.props.indicators}
                 header={'Indicator Metrics'}>
-                  <Column field={'indicatorDate'} header={'Indicator Date'} />
+                  <Column field={'indicatorDate'} header={'Indicator Date'} body={dateBodyTemplate} />
                   <Column field={'name'} header={'Name'} />
                   <Column
                       field={'value'} header={'Value'}
                   />
-                  <Column field={'stage'} header={'Stage'} />
+                  <Column field={'dwhValue'} header={'NDWH Calculation'} />
+                  <Column field={'dwhIndicatorDate'} header={'NDWH Date'} body={dateBodyTemplate} />
+                  <Column field={'value'} header={'Difference'} body={differenceFunc} />
                 </DataTable>
               </div>
             </div>

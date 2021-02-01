@@ -8,5 +8,7 @@ export class LogIndicatorCommand {
         public indicatorDate: Date,
         public stage: string,
         public facilityManifestId: string,
+        public dwhValue?: string,
+        public dwhIndicatorDate?: Date,
     ) {}
 }
