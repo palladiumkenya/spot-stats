@@ -12,9 +12,15 @@ export class IndicatorRepository extends BaseRepository<Indicator> implements II
 
     async findByFacilityId(id: string): Promise<Indicator[]> {
         const result = await this.model
-            .find({ facility: id })
-            .populate('indicator')
-            .lean();
+            .aggregate([{ $match: { facility: id, dwhValue: { $exists: true, $ne: null } } }]);
+        return result;
+    }
+
+    async findIndicatorByFacilityIdAndName(facilityId: string, indicatorName: string): Promise<Indicator[]> {
+        const result = await this.model
+            .find({ facility: facilityId, name: indicatorName, dwhValue: null })
+            .sort({indicatorDate: -1})
+            .limit(1);
         return result;
     }
 }

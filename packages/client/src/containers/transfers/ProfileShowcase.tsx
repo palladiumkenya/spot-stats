@@ -74,6 +74,7 @@ class ProfileShowcase extends Component<Props, State> {
       });
       return;
     }
+
     try {
       let res = await axios.get(`${indicatorsUrl}${id}`);
       let data = res.data;

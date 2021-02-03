@@ -19,7 +19,14 @@ export class MetricsController {
 
   @Post()
   async createNewIndicator() {
-    await this.commandBus.execute(new LogIndicatorCommand('1', 13455, 'maragua', 'TX_CURR', '1500', new Date(), 'EMR', '5'));
+    return await this.commandBus.execute(new LogIndicatorCommand('1', 13929,
+        'Nyang\'oma Mission Health Centre', 'TX_CURR', '1500', new Date(), 'EMR', '5'));
+  }
+
+  @Post('updateIndicator')
+  async updateIndicator() {
+    return await this.commandBus.execute(new LogIndicatorCommand('1', 13929, 'Nyang\'oma Mission Health Centre',
+        'TX_CURR', '1500', new Date(), 'DWH', '5', '1000', new Date()));
   }
 
   @Get('getIndicatorsByFacilityId/:id')

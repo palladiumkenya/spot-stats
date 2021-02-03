@@ -6,10 +6,19 @@ export class Indicator extends AggregateRoot {
     public name: string;
     public value: string;
     public indicatorDate: Date;
-    public stage: string;
     public facility: any;
     public facilityManifestId: string;
     public createDate: Date;
+    public dwhValue: string;
+    public dwhIndicatorDate: Date;
+    Diff(): number {
+        // we can be smart to define calc based on indicator
+        if (parseInt(this.value, 10) && parseInt(this.dwhValue, 10)) {
+            return parseInt(this.value, 10) - parseInt(this.dwhValue, 10);
+        } else {
+            return null;
+        }
+    }
 
     constructor() {
         super();
