@@ -118,18 +118,38 @@ export class MessagingService {
     Logger.log(`+++++++++++++++++++++++++++++++++++++`);
     Logger.log(`Received Indicator ${indicator.name}`);
 
-    await this.commandBus.execute(
-      new LogIndicatorCommand(
-        indicator.id,
-        indicator.facilityCode,
-        indicator.facilityName,
-        indicator.name,
-        indicator.value,
-        indicator.indicatorDate,
-        indicator.stage,
-        indicator.facilityManifestId,
-      ),
-    );
+    if (indicator.stage == 'EMR') {
+      await this.commandBus.execute(
+        new LogIndicatorCommand(
+          indicator.id,
+          indicator.facilityCode,
+          indicator.facilityName,
+          indicator.name,
+          indicator.value,
+          indicator.indicatorDate,
+          indicator.stage,
+          indicator.facilityManifestId
+        ),
+      );
+    } else if (indicator.stage == 'DWH') {
+      await this.commandBus.execute(
+        new LogIndicatorCommand(
+          indicator.id,
+          indicator.facilityCode,
+          indicator.facilityName,
+          indicator.name,
+          null,
+          null,
+          indicator.stage,
+          indicator.facilityManifestId,
+          indicator.value,
+          indicator.indicatorDate
+        ),
+      );
+    } else {
+      Logger.error('unknown indicator stage');
+      Logger.error(indicator);
+    }
   }
 
   @RabbitSubscribe({

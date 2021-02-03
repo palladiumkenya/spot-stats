@@ -36,7 +36,6 @@ export class LogIndicatorHandler implements ICommandHandler<LogIndicatorCommand>
                 if (indicator && indicator.length > 0) {
                     indicator[0].dwhIndicatorDate = command.dwhIndicatorDate;
                     indicator[0].dwhValue = command.dwhValue;
-                    Logger.debug(indicator[0]);
                     return await this.indicatorRepository.update(indicator[0]);
                 } else {
                     Logger.error('indicator is null');
