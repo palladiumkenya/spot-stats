@@ -45,7 +45,7 @@ describe('Save Docket Command Tests', () => {
     await dbHelper.seedDb('dockets', [liveDocket]);
   });
 
-  it( 'should create Docket', async () => {
+  it('should create Docket', async () => {
     const command = new SaveDocketCommand('Demo', 'Demo');
     const result = await commandBus.execute(command);
     expect(result).not.toBeNull();
@@ -60,5 +60,4 @@ describe('Save Docket Command Tests', () => {
     expect(result._id).toBe(liveDocket._id);
     Logger.debug(result);
   });
-
 });

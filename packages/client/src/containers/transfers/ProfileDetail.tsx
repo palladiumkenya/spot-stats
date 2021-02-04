@@ -6,8 +6,10 @@ import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { TabPanel, TabView } from "primereact/tabview";
 import Moment from "react-moment";
+import {Indicator} from "./models/indicator";
 interface Prop {
   profile: ProfileSummary;
+  indicators: Indicator[];
 }
 export class ProfileDetail extends Component<Prop, {}> {
   dateTemplate = (rowData: any, column: any) => {
@@ -61,6 +63,21 @@ export class ProfileDetail extends Component<Prop, {}> {
       const mgsSummaries = this.props.profile.summaries!.filter(
         (x) => x.docket.name === "MGS"
       );
+
+      const dateBodyTemplate = (rowData: any) => {
+        return (
+            <React.Fragment>
+              <Moment format="DD MMM YYYY HH:mm:ss">{rowData.indicatorDate}</Moment>
+            </React.Fragment>
+        );
+      }
+
+      const differenceFunc = (rowData: any) => {
+        const val = parseInt(rowData.value, 10);
+        const dwhVal = parseInt(rowData.dwhValue, 10);
+        return val - dwhVal;
+      }
+
       return (
         <div>
           <div className="p-grid">
@@ -72,87 +89,107 @@ export class ProfileDetail extends Component<Prop, {}> {
                 </div>
               </Card>
             </div>
-            <div className="p-col-8">
-              <TabView>
-                <TabPanel header="NDWH">
-                  <DataTable value={dwhSummaries}>
-                    <Column field="extract.display" header="Extract" />
-                    <Column field="recieved" header="Recieved" />
-                    <Column field="expected" header="Expected" />
-                    <Column
-                      field="updated"
-                      header="Update"
-                      body={this.date2Template}
-                    />
-                  </DataTable>
-                </TabPanel>
+            <div className={'p-grid'}>
+              <div className="p-col-8">
+                <TabView>
+                  <TabPanel header="NDWH">
+                    <DataTable value={dwhSummaries}>
+                      <Column field="extract.display" header="Extract" />
+                      <Column field="recieved" header="Recieved" />
+                      <Column field="expected" header="Expected" />
+                      <Column
+                          field="updated"
+                          header="Update"
+                          body={this.date2Template}
+                      />
+                    </DataTable>
+                  </TabPanel>
 
-                <TabPanel header="HTS">
-                  <DataTable value={htsSummaries}>
-                    <Column field="extract.display" header="Extract" />
-                    <Column field="recieved" header="Recieved" />
-                    <Column field="expected" header="Expected" />
-                    <Column
-                      field="updated"
-                      header="Update"
-                      body={this.date2Template}
-                    />
-                  </DataTable>
-                </TabPanel>
+                  <TabPanel header="HTS">
+                    <DataTable value={htsSummaries}>
+                      <Column field="extract.display" header="Extract" />
+                      <Column field="recieved" header="Recieved" />
+                      <Column field="expected" header="Expected" />
+                      <Column
+                          field="updated"
+                          header="Update"
+                          body={this.date2Template}
+                      />
+                    </DataTable>
+                  </TabPanel>
 
-                <TabPanel header="MPI">
-                  <DataTable value={mpiSummaries}>
-                    <Column field="extract.display" header="Extract" />
-                    <Column field="recieved" header="Recieved" />
-                    <Column field="expected" header="Expected" />
-                    <Column
-                      field="updated"
-                      header="Update"
-                      body={this.date2Template}
-                    />
-                  </DataTable>
-                </TabPanel>
-                <TabPanel header="MGS">
-                  <DataTable value={mgsSummaries}>
-                    <Column field="extract.display" header="Extract" />
-                    <Column field="recieved" header="Recieved" />
-                    <Column field="expected" header="Expected" />
-                    <Column
-                      field="updated"
-                      header="Update"
-                      body={this.date2Template}
-                    />
-                  </DataTable>
-                </TabPanel>
-              </TabView>
+                  <TabPanel header="MPI">
+                    <DataTable value={mpiSummaries}>
+                      <Column field="extract.display" header="Extract" />
+                      <Column field="recieved" header="Recieved" />
+                      <Column field="expected" header="Expected" />
+                      <Column
+                          field="updated"
+                          header="Update"
+                          body={this.date2Template}
+                      />
+                    </DataTable>
+                  </TabPanel>
+                  <TabPanel header="MGS">
+                    <DataTable value={mgsSummaries}>
+                      <Column field="extract.display" header="Extract" />
+                      <Column field="recieved" header="Recieved" />
+                      <Column field="expected" header="Expected" />
+                      <Column
+                          field="updated"
+                          header="Update"
+                          body={this.date2Template}
+                      />
+                    </DataTable>
+                  </TabPanel>
+                </TabView>
+              </div>
+              <div className="p-col-4">
+                <DataTable
+                    value={this.props.profile.manifests}
+                    header="Uploads History"
+                >
+                  <Column
+                      field="logDate"
+                      header="Date"
+                      body={this.dateTemplate}
+                  />
+                  <Column field="docket" header="Docket" />
+                  <Column field="patientCount" header="Patient Count" />
+                </DataTable>
+              </div>
             </div>
-            <div className="p-col-4">
-              <DataTable
-                value={this.props.profile.manifests}
-                header="Uploads History"
-              >
-                <Column
-                  field="logDate"
-                  header="Date"
-                  body={this.dateTemplate}
-                />
-                <Column field="docket" header="Docket" />
-                <Column field="patientCount" header="Patient Count" />
-              </DataTable>
+            <div className={'p-grid'}>
+              <div className="p-col-8">
+                <DataTable
+                    value={this.props.profile.metrics}
+                    header="Facility Metrics"
+                >
+                  <Column field="measure.display" header="Measure" />
+                  <Column
+                      field="report"
+                      header="Metric"
+                      body={this.date3Template}
+                  />
+                  <Column field="measure.description" header="Description" />
+                </DataTable>
+              </div>
             </div>
-            <div className="p-col-8">
-              <DataTable
-                value={this.props.profile.metrics}
-                header="Facility Metrics"
-              >
-                <Column field="measure.display" header="Measure" />
-                <Column
-                  field="report"
-                  header="Metric"
-                  body={this.date3Template}
-                />
-                <Column field="measure.description" header="Description" />
-              </DataTable>
+            <div className={'p-grid'}>
+              <div className={'p-col-8'}>
+                <DataTable
+                value={this.props.indicators}
+                header={'Indicator Metrics'}>
+                  <Column field={'indicatorDate'} header={'Indicator Date'} body={dateBodyTemplate} />
+                  <Column field={'name'} header={'Name'} />
+                  <Column
+                      field={'value'} header={'Value'}
+                  />
+                  <Column field={'dwhValue'} header={'NDWH Calculation'} />
+                  <Column field={'dwhIndicatorDate'} header={'NDWH Date'} body={dateBodyTemplate} />
+                  <Column field={'value'} header={'Difference'} body={differenceFunc} />
+                </DataTable>
+              </div>
             </div>
           </div>
         </div>

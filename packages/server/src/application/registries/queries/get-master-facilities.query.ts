@@ -1,3 +1,1 @@
-export class GetMasterFacilitiesQuery {
-
-}
+export class GetMasterFacilitiesQuery {}

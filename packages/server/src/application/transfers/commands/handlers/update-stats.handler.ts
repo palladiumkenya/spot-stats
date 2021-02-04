@@ -1,4 +1,9 @@
-import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
+import {
+  CommandBus,
+  CommandHandler,
+  EventPublisher,
+  ICommandHandler,
+} from '@nestjs/cqrs';
 import { LogManifestCommand } from '../log-manifest.command';
 import { Inject, Logger } from '@nestjs/common';
 import {
@@ -21,6 +26,7 @@ export class UpdateStatsHandler implements ICommandHandler<UpdateStatsCommand> {
     @Inject('IManifestRepository')
     private readonly manifestRepository: IManifestRepository,
     private readonly publisher: EventPublisher,
+    private readonly commandBus: CommandBus,
   ) {}
 
   async execute(command: UpdateStatsCommand): Promise<any> {
@@ -29,6 +35,12 @@ export class UpdateStatsHandler implements ICommandHandler<UpdateStatsCommand> {
     );
     if (facility) {
       facility = plainToClass(Facility, facility);
+
+      // TODO:CHECK NEED TO REINTSUMMARIES
+      if (!facility.hasSummaries()) {
+        // facility.updateSummary(command.docket, command.stats, command.updated);
+      }
+
       facility.updateSummary(command.docket, command.stats, command.updated);
 
       const updatedFacility = await this.facilityRepository.update(facility);

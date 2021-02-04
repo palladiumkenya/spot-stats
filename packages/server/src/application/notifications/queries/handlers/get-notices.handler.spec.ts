@@ -53,6 +53,6 @@ describe('Get Notices Query Tests', () => {
       query,
     );
     expect(result.length).toBeGreaterThan(0);
-    result.forEach((c) => Logger.debug(`${c}`));
+    result.forEach(c => Logger.debug(`${c}`));
   });
 });

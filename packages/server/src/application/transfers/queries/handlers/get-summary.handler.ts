@@ -16,15 +16,19 @@ export class GetSummaryHandler implements IQueryHandler<GetSummaryQuery, any> {
   async execute(query: GetSummaryQuery): Promise<any> {
     const fac = await this.repository.getSummary(query._id);
     const metrics = await this.metricRepository.findByFacilityId(query._id);
-    fac.metrics = metrics.sort((a, b) => {
-      if (a.measure.rank > b.measure.rank) {
-        return 1;
-      }
-      if (b.measure.rank > a.measure.rank) {
-        return -1;
-      }
-      return 0;
-    });
+    if (metrics && metrics.length > 0) {
+      fac.metrics = metrics
+        .filter((x) => x.measure && x.measure.rank)
+        .sort((a, b) => {
+          if (a.measure.rank > b.measure.rank) {
+            return 1;
+          }
+          if (b.measure.rank > a.measure.rank) {
+            return -1;
+          }
+          return 0;
+        });
+    }
     return fac;
   }
 }

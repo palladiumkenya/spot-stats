@@ -8,12 +8,7 @@ import { DocketRepository } from './docket.repository';
   imports: [
     MongooseModule.forFeature([{ name: Docket.name, schema: docketSchema }]),
   ],
-  providers: [
-    { provide: 'IDocketRepository', useClass: DocketRepository },
-  ],
-  exports: [
-    { provide: 'IDocketRepository', useClass: DocketRepository },
-  ],
+  providers: [{ provide: 'IDocketRepository', useClass: DocketRepository }],
+  exports: [{ provide: 'IDocketRepository', useClass: DocketRepository }],
 })
-export class CourtsInfrastructureModule {
-}
+export class CourtsInfrastructureModule {}

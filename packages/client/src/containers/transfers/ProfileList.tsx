@@ -19,6 +19,17 @@ interface Props {
 }
 
 export class ProfileList extends Component<Props, {}> {
+  private dt: any;
+
+  constructor(props: Props | Readonly<Props>) {
+    super(props);
+
+    this.exportCSV = this.exportCSV.bind(this);
+  }
+  exportCSV() {
+    this.dt.exportCSV();
+  }
+
   manageAction = (event: any, rowData: any) => {
     event.preventDefault();
     this.props.onManage(rowData);
@@ -55,8 +66,18 @@ export class ProfileList extends Component<Props, {}> {
 
   render() {
     const header = (
-      <div className="p-clearfix" style={{ lineHeight: "1.87em" }}>
-        Profiles
+      <div>
+        <div className="p-clearfix" style={{ lineHeight: "1.87em" }}>
+          Profiles
+          <Button
+            type="button"
+            icon="pi pi-external-link"
+            label="Export to CSV"
+            className="p-button-success"
+            onClick={this.exportCSV}
+            style={{ float: "left" }}
+          ></Button>
+        </div>
       </div>
     );
 
@@ -69,6 +90,9 @@ export class ProfileList extends Component<Props, {}> {
         rows={this.props.rows}
         rowsPerPageOptions={[50, 100, 200, 500]}
         totalRecords={this.props.totalRecords}
+        ref={(el) => {
+          this.dt = el;
+        }}
       >
         <Column field="code" header="Code" sortable={true} filter={true} />
         <Column
@@ -81,6 +105,13 @@ export class ProfileList extends Component<Props, {}> {
         <Column
           field="facility.masterFacility.county.name"
           header="County"
+          sortable={true}
+          filter={true}
+          filterMatchMode={"contains"}
+        />
+        <Column
+          field="facility.masterFacility.mechanism.name"
+          header="Partner"
           sortable={true}
           filter={true}
           filterMatchMode={"contains"}

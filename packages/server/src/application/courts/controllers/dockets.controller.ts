@@ -7,15 +7,14 @@ import { DocketDto } from '../../../domain/courts/dtos/docket.dto';
 
 @Controller('dockets')
 export class DocketsController {
-  constructor(private readonly commandBus: CommandBus,
-              private readonly queryBus: QueryBus) {
-  }
+  constructor(
+    private readonly commandBus: CommandBus,
+    private readonly queryBus: QueryBus,
+  ) {}
 
   @Get()
   async getDockets(): Promise<any> {
-    return this.queryBus.execute(
-      new GetDocketsQuery(),
-    );
+    return this.queryBus.execute(new GetDocketsQuery());
   }
 
   @Post()
@@ -27,9 +26,6 @@ export class DocketsController {
 
   @Delete(':_id')
   async deleteDocket(@Param('id') id) {
-    return this.commandBus.execute(
-      new DeleteDocketCommand(id),
-    );
+    return this.commandBus.execute(new DeleteDocketCommand(id));
   }
-
 }

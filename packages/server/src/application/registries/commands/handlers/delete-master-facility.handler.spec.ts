@@ -9,7 +9,6 @@ import { getTestMasterFacilities } from '../../../../../test/test.data';
 import { DeleteMasterFacilityCommand } from '../delete-master-facility.command';
 import * as uuid from 'uuid';
 
-
 describe('Delete MasterFacility Command Tests', () => {
   let module: TestingModule;
   let commandBus: CommandBus;
@@ -28,7 +27,9 @@ describe('Delete MasterFacility Command Tests', () => {
     await dbHelper.initConnection();
     await dbHelper.seedDb('masterfacilities', testMasterFacilities);
 
-    const deleteHandler = module.get<DeleteMasterFacilityHandler>(DeleteMasterFacilityHandler);
+    const deleteHandler = module.get<DeleteMasterFacilityHandler>(
+      DeleteMasterFacilityHandler,
+    );
 
     commandBus = module.get<CommandBus>(CommandBus);
     commandBus.bind(deleteHandler, DeleteMasterFacilityCommand.name);
