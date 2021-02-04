@@ -7,6 +7,8 @@ import { Column } from "primereact/column";
 import { TabPanel, TabView } from "primereact/tabview";
 import Moment from "react-moment";
 import {Indicator} from "./models/indicator";
+import {Button} from "primereact/button";
+import {Manifest} from "./models/manifest";
 interface Prop {
   profile: ProfileSummary;
   indicators: Indicator[];
@@ -64,6 +66,15 @@ export class ProfileDetail extends Component<Prop, {}> {
         (x) => x.docket.name === "MGS"
       );
 
+      // @ts-ignore
+      this.props.profile.manifests.sort(function (a: Manifest, b: Manifest) {
+        // @ts-ignore
+        const logDateA = new Date(a.logDate.toString()).getTime();
+        // @ts-ignore
+        const logDateB = new Date(b.logDate.toString()).getTime();
+        return logDateB - logDateA;
+      });
+
       const dateBodyTemplate = (rowData: any) => {
         return (
             <React.Fragment>
@@ -77,6 +88,9 @@ export class ProfileDetail extends Component<Prop, {}> {
         const dwhVal = parseInt(rowData.dwhValue, 10);
         return val - dwhVal;
       }
+
+      const paginatorLeft = <Button type="button" icon="pi pi-refresh" className="p-button-text" />;
+      const paginatorRight = <Button type="button" icon="pi pi-cloud" className="p-button-text" />;
 
       return (
         <div>
@@ -146,8 +160,11 @@ export class ProfileDetail extends Component<Prop, {}> {
               </div>
               <div className="p-col-4">
                 <DataTable
+                    paginator
                     value={this.props.profile.manifests}
                     header="Uploads History"
+                    rows={5} rowsPerPageOptions={[5, 10,20,50]}
+                    paginatorLeft={paginatorLeft} paginatorRight={paginatorRight}
                 >
                   <Column
                       field="logDate"
