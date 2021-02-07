@@ -21,40 +21,42 @@ import { ManifestLoggedEvent } from '../../events/manifest-logged.event';
 import { LogHandshakeCommand } from '../log-handshake.command';
 import { HandshakeLoggedEvent } from '../../events/handshake-logged.event';
 
-@CommandHandler(LogManifestCommand)
+@CommandHandler(LogHandshakeCommand)
 export class LogHandshakeHandler
   implements ICommandHandler<LogHandshakeCommand> {
   constructor(
-    @Inject('IMasterFacilityRepository')
-    private readonly masterFacilityRepository: IMasterFacilityRepository,
-    @Inject('IDocketRepository')
-    private readonly docketRepository: IDocketRepository,
-    @Inject('IFacilityRepository')
-    private readonly facilityRepository: IFacilityRepository,
-    @Inject('IManifestRepository')
-    private readonly manifestRepository: IManifestRepository,
-    private readonly publisher: EventPublisher,
-    private readonly eventBus: EventBus,
-  ) {}
+      @Inject('IMasterFacilityRepository')
+      private readonly masterFacilityRepository: IMasterFacilityRepository,
+      @Inject('IDocketRepository')
+      private readonly docketRepository: IDocketRepository,
+      @Inject('IFacilityRepository')
+      private readonly facilityRepository: IFacilityRepository,
+      @Inject('IManifestRepository')
+      private readonly manifestRepository: IManifestRepository,
+      private readonly publisher: EventPublisher,
+      private readonly eventBus: EventBus,
+  ) {
+  }
 
   async execute(command: LogHandshakeCommand): Promise<any> {
-    const manifestExists = await this.manifestRepository.get(command.id);
+    const manifestExists = await this.manifestRepository.getByManifestId(command.id);
     if (!manifestExists) {
       return;
     }
-    if (manifestExists.hasSession()) {
-      manifestExists.endSession(command.end);
+    let manifest = plainToClass(Manifest, manifestExists)
+    if (manifest.hasSession()) {
+      manifest.endSession(command.end);
     } else {
-      manifestExists.createSession(
-        command.session,
-        command.start,
-        command.end,
-        command.tag,
+      manifest.createSession(
+          command.session,
+          command.start,
+          command.end,
+          command.tag,
       );
     }
-    await this.manifestRepository.update(manifestExists);
-    Logger.log(`Manifest handshake processed ${manifestExists.facility}`);
-    this.eventBus.publish(new HandshakeLoggedEvent(manifestExists._id));
-    return manifestExists;
+    await this.manifestRepository.update(manifest);
+    Logger.log(`Manifest handshake processed ${manifest.facility}`);
+    this.eventBus.publish(new HandshakeLoggedEvent(manifest._id));
+    return manifest;
   }
 }

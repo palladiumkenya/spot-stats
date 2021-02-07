@@ -20,15 +20,16 @@ import { LogHandshakeCommand } from '../../application/transfers/commands/log-ha
 @Injectable()
 export class MessagingService {
   constructor(
-    private readonly config: ConfigService,
-    private readonly amqpConnection: AmqpConnection,
-    private readonly commandBus: CommandBus,
-  ) {}
+      private readonly config: ConfigService,
+      private readonly amqpConnection: AmqpConnection,
+      private readonly commandBus: CommandBus,
+  ) {
+  }
 
   public async publish(
-    message: any,
-    exchange: string,
-    route: string,
+      message: any,
+      exchange: string,
+      route: string,
   ): Promise<boolean> {
     try {
       await this.amqpConnection.publish(exchange, route, message);
@@ -49,15 +50,15 @@ export class MessagingService {
     Logger.log(`Received Manifest  ${manifest.facilityName}`);
 
     let cmd = new LogManifestCommand(
-      manifest.id,
-      manifest.facilityCode,
-      manifest.facilityName,
-      manifest.docket,
-      manifest.logDate,
-      manifest.buildDate,
-      manifest.patientCount,
-      manifest.cargo,
-      true,
+        manifest.id,
+        manifest.facilityCode,
+        manifest.facilityName,
+        manifest.docket,
+        manifest.logDate,
+        manifest.buildDate,
+        manifest.patientCount,
+        manifest.cargo,
+        true,
     );
 
     cmd.start = manifest.start;
@@ -78,13 +79,13 @@ export class MessagingService {
     Logger.log(`+++++++++++ ${stats.docket} +++++++++`);
     Logger.log(`Received Stats  ${stats.facilityCode}`);
     await this.commandBus.execute(
-      new UpdateStatsCommand(
-        stats.facilityCode,
-        stats.docket,
-        stats.stats,
-        stats.updated,
-        stats.manifestId,
-      ),
+        new UpdateStatsCommand(
+            stats.facilityCode,
+            stats.docket,
+            stats.stats,
+            stats.updated,
+            stats.manifestId,
+        ),
     );
   }
 
@@ -103,14 +104,14 @@ export class MessagingService {
     }
 
     await this.commandBus.execute(
-      new LogMetricCommand(
-        metric.id,
-        metric.facilityCode,
-        metric.facilityName,
-        metric.cargo,
-        metric.cargoType,
-        metric.facilityManifestId,
-      ),
+        new LogMetricCommand(
+            metric.id,
+            metric.facilityCode,
+            metric.facilityName,
+            metric.cargo,
+            metric.cargoType,
+            metric.facilityManifestId,
+        ),
     );
   }
 
@@ -126,31 +127,31 @@ export class MessagingService {
 
     if (indicator.stage === 'EMR') {
       await this.commandBus.execute(
-        new LogIndicatorCommand(
-          indicator.id,
-          indicator.facilityCode,
-          indicator.facilityName,
-          indicator.name,
-          indicator.value,
-          indicator.indicatorDate,
-          indicator.stage,
-          indicator.facilityManifestId,
-        ),
+          new LogIndicatorCommand(
+              indicator.id,
+              indicator.facilityCode,
+              indicator.facilityName,
+              indicator.name,
+              indicator.value,
+              indicator.indicatorDate,
+              indicator.stage,
+              indicator.facilityManifestId
+          ),
       );
-    } else if (indicator.stage === 'DWH') {
+    } else if (indicator.stage == 'DWH') {
       await this.commandBus.execute(
-        new LogIndicatorCommand(
-          indicator.id,
-          indicator.facilityCode,
-          indicator.facilityName,
-          indicator.name,
-          null,
-          null,
-          indicator.stage,
-          indicator.facilityManifestId,
-          indicator.value,
-          indicator.indicatorDate,
-        ),
+          new LogIndicatorCommand(
+              indicator.id,
+              indicator.facilityCode,
+              indicator.facilityName,
+              indicator.name,
+              null,
+              null,
+              indicator.stage,
+              indicator.facilityManifestId,
+              indicator.value,
+              indicator.indicatorDate
+          ),
       );
     } else {
       Logger.error('unknown indicator stage');
@@ -176,8 +177,8 @@ export class MessagingService {
       await this.commandBus.execute(new UpdateMechanismCommand(messageBody));
     }
     if (
-      message.label === FACILITY_SYNCED ||
-      message.label === ALL_FACILITY_SYNCED
+        message.label === FACILITY_SYNCED ||
+        message.label === ALL_FACILITY_SYNCED
     ) {
       Logger.log(`syncing... Facility ${messageBody.name}`);
       await this.commandBus.execute(new UpdateFacilityCommand(messageBody));
@@ -191,16 +192,15 @@ export class MessagingService {
   })
   public async subscribeToHandshake(data: any) {
     const manifest = JSON.parse(data);
-    Logger.log(`Received Handshake  ${manifest.id}`);
-
+    Logger.log(`Received Handshake  ${manifest.facilityCode}-${manifest.facilityName}`);
     await this.commandBus.execute(
-      new LogHandshakeCommand(
-        manifest.id,
-        manifest.end,
-        manifest.start,
-        manifest.session,
-        manifest.tag,
-      ),
+        new LogHandshakeCommand(
+            manifest.id,
+            manifest.end,
+            manifest.start,
+            manifest.session,
+            manifest.tag,
+        ),
     );
   }
 }

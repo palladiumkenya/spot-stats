@@ -59,6 +59,14 @@ export class ManifestRepository extends BaseRepository<Manifest>
     return resuls;
   }
 
+  async getByManifestId(mId: string): Promise<any> {
+    const resuls = await this.model.findOne({ mId }).exec();
+    if (resuls) {
+      return resuls.toObject();
+    }
+    return null;
+  }
+
   async getCurrentDocket(facId: string, docketId: string): Promise<any> {
     if (facId) {
       const facResuls = await this.model

@@ -7,6 +7,8 @@ export interface IManifestRepository extends IRepository<Manifest> {
 
   getCurrent(facId?: string): Promise<any>;
 
+  getByManifestId(mId: string): Promise<any>;
+
   getCurrentDocket(facId: string, docketId: string): Promise<any>;
 
   getAllCurrentPaged(

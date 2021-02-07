@@ -10,10 +10,10 @@ export class Manifest extends AggregateRoot {
   public facilityInfo: any;
   public recievedCount: number;
   public recievedDate: Date;
-  public start: Date;
-  public end: Date;
-  public session: string;
-  public tag: string;
+  public start?: Date;
+  public end?: Date;
+  public session?: string;
+  public tag?: string;
 
   constructor(
     public mId: string,
