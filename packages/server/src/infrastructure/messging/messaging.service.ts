@@ -15,6 +15,7 @@ import {
 import { UpdateAgencyCommand } from '../../application/registries/commands/update-agency.command';
 import { UpdateFacilityCommand } from '../../application/registries/commands/update-facility.command';
 import { UpdateMechanismCommand } from '../../application/registries/commands/update-mechanism.command';
+import { LogHandshakeCommand } from '../../application/transfers/commands/log-handshake.command';
 
 @Injectable()
 export class MessagingService {
@@ -118,7 +119,7 @@ export class MessagingService {
     Logger.log(`+++++++++++++++++++++++++++++++++++++`);
     Logger.log(`Received Indicator ${indicator.name}`);
 
-    if (indicator.stage == 'EMR') {
+    if (indicator.stage === 'EMR') {
       await this.commandBus.execute(
         new LogIndicatorCommand(
           indicator.id,
@@ -128,10 +129,10 @@ export class MessagingService {
           indicator.value,
           indicator.indicatorDate,
           indicator.stage,
-          indicator.facilityManifestId
+          indicator.facilityManifestId,
         ),
       );
-    } else if (indicator.stage == 'DWH') {
+    } else if (indicator.stage === 'DWH') {
       await this.commandBus.execute(
         new LogIndicatorCommand(
           indicator.id,
@@ -143,7 +144,7 @@ export class MessagingService {
           indicator.stage,
           indicator.facilityManifestId,
           indicator.value,
-          indicator.indicatorDate
+          indicator.indicatorDate,
         ),
       );
     } else {
@@ -176,5 +177,25 @@ export class MessagingService {
       Logger.log(`syncing... Facility ${messageBody.name}`);
       await this.commandBus.execute(new UpdateFacilityCommand(messageBody));
     }
+  }
+
+  @RabbitSubscribe({
+    exchange: 'stats.exchange',
+    routingKey: 'handshake.route',
+    queue: 'handshake.queue',
+  })
+  public async subscribeToHandshake(data: any) {
+    const manifest = JSON.parse(data);
+    Logger.log(`Received Handshake  ${manifest.id}`);
+
+    await this.commandBus.execute(
+      new LogHandshakeCommand(
+        manifest.id,
+        manifest.end,
+        manifest.start,
+        manifest.session,
+        manifest.tag,
+      ),
+    );
   }
 }

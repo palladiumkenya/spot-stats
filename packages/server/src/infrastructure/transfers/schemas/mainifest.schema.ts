@@ -17,4 +17,8 @@ export const manifestSchema = new mongoose.Schema({
   recievedDate: Date,
   cargo: [Schema.Types.Mixed],
   isCurrent: Boolean,
+  start: Date,
+  end: Date,
+  session: String,
+  tag: String,
 });
