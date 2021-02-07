@@ -20,6 +20,7 @@ import { RequestStatsHandler } from './commands/handlers/request-stats.handler';
 import { MessagingModule } from '../../infrastructure/messging/messaging.module';
 import { ConfigModule } from '../../config/config.module';
 import { LogHandshakeHandler } from './commands/handlers/log-handshake.handler';
+import { HandshakeLoggedEvent } from './events/handshake-logged.event';
 
 const CommandHandlers = [
   LogManifestHandler,

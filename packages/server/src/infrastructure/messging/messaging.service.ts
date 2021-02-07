@@ -48,19 +48,24 @@ export class MessagingService {
     Logger.log(`+++++++++++ ${manifest.docket} +++++++++`);
     Logger.log(`Received Manifest  ${manifest.facilityName}`);
 
-    await this.commandBus.execute(
-      new LogManifestCommand(
-        manifest.id,
-        manifest.facilityCode,
-        manifest.facilityName,
-        manifest.docket,
-        manifest.logDate,
-        manifest.buildDate,
-        manifest.patientCount,
-        manifest.cargo,
-        true,
-      ),
+    const cmd = new LogManifestCommand(
+      manifest.id,
+      manifest.facilityCode,
+      manifest.facilityName,
+      manifest.docket,
+      manifest.logDate,
+      manifest.buildDate,
+      manifest.patientCount,
+      manifest.cargo,
+      true,
     );
+
+    cmd.start = manifest.start;
+    cmd.end = manifest.end;
+    cmd.session = manifest.session;
+    cmd.tag = manifest.tag;
+
+    await this.commandBus.execute(cmd);
   }
 
   @RabbitSubscribe({
