@@ -44,6 +44,10 @@ export class ManifestRepository extends BaseRepository<Manifest>
             docket: 1,
             patientCount: 1,
             isCurrent: 1,
+            start: 1,
+            end: 1,
+            session: 1,
+            tag: 1,
             facility: {
               _id: '$facilityInfo._id',
               masterFacility: '$facilityInfo.masterFacility',

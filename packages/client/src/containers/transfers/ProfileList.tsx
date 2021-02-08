@@ -119,6 +119,7 @@ export class ProfileList extends Component<Props, {}> {
         <Column field="docket" header="Docket" sortable={true} filter={true} />
         <Column field="patientCount" header="Expected" sortable={true} />
         <Column field="recievedCount" header="Recieved" sortable={true} />
+        <Column field="handshakeStatus" header="Status" sortable={true} />
         <Column
           field="logDate"
           header="Updated"
