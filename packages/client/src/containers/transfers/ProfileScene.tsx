@@ -130,7 +130,6 @@ export class ProfileScene extends Component<any, State> {
         loading: false,
         profiles: data,
       }));
-      console.log(data);
     } catch (e) {
       this.setState((prevState) => ({
         ...prevState,
