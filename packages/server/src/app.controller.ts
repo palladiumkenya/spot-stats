@@ -3,8 +3,12 @@ import { Controller, Get, Logger, Res } from '@nestjs/common';
 @Controller()
 export class AppController {
   @Get()
-  getAppName(): string {
-    return 'dwapi Stats v03FEB211200';
+  getAppName(): any {
+    return {
+      name: 'Dwapi Spot-Stats',
+      build: '09FEB211706',
+      staus: 'running',
+    };
   }
 
   @Get('version')

@@ -19,11 +19,13 @@ import { GetMisssingStatsHandler } from './queries/handlers/get-missing-stats.ha
 import { RequestStatsHandler } from './commands/handlers/request-stats.handler';
 import { MessagingModule } from '../../infrastructure/messging/messaging.module';
 import { ConfigModule } from '../../config/config.module';
+import {LogHandshakeHandler} from "./commands/handlers/log-handshake.handler";
 
 const CommandHandlers = [
   LogManifestHandler,
   UpdateStatsHandler,
   InitializeSummariesHandler,
+  LogHandshakeHandler
 ];
 const EventHandlers = [FacilityEnrolledHandler, ManifestLoggedHandler];
 const QueryHandlers = [

@@ -10,6 +10,10 @@ export class Manifest extends AggregateRoot {
   public facilityInfo: any;
   public recievedCount: number;
   public recievedDate: Date;
+  public start?: Date;
+  public end?: Date;
+  public session?: string;
+  public tag?: string;
 
   constructor(
     public mId: string,
@@ -31,5 +35,23 @@ export class Manifest extends AggregateRoot {
     this.facility = fac._id;
     this.facilityInfo = { ...fac };
     this.facilityInfo.manifests = [];
+  }
+
+  hasSession(): boolean {
+    if (this.session) {
+      return true;
+    }
+    return false;
+  }
+
+  endSession(endTime: Date) {
+    this.end = endTime;
+  }
+
+  createSession(session: string, start: Date, end: Date, tag: string) {
+    this.session = session;
+    this.start = start;
+    this.end = end;
+    this.tag = tag;
   }
 }
