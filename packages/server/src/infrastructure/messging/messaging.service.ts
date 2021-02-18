@@ -49,7 +49,7 @@ export class MessagingService {
     Logger.log(`+++++++++++ ${manifest.docket} +++++++++`);
     Logger.log(`Received Manifest  ${manifest.facilityName}`);
 
-    let cmd = new LogManifestCommand(
+    const cmd = new LogManifestCommand(
         manifest.id,
         manifest.facilityCode,
         manifest.facilityName,
