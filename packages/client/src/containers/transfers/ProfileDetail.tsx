@@ -202,7 +202,7 @@ export class ProfileDetail extends Component<Prop, {}> {
                 value={this.props.indicators}
                 header={'Indicator Metrics'}>
                   <Column field={'indicatorDate'} header={'Indicator Date'} body={dateBodyTemplate} />
-                  <Column field={'name'} header={'Name'} />
+                  <Column field={'name'} header={'Name'} className={'word-wrap'} />
                   <Column
                       field={'value'} header={'Value'}
                   />
