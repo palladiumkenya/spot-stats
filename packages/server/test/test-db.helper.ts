@@ -38,7 +38,7 @@ export class TestDbHelper {
       collections
         .map(({ name }) => name)
         .map((collection) => {
-          Logger.debug(`clearing ${collection}`);
+          Logger.debug(`clearing db ${collection}`);
 
           try {
             mongoose.connection.db.collection(collection).drop();
