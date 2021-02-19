@@ -104,10 +104,10 @@ export class LogManifestHandler implements ICommandHandler<LogManifestCommand> {
         command.isCurrent,
     );
 
-    manifest.start = command.start
-    manifest.end = command.end
-    manifest.session = command.session
-    manifest.tag = command.tag
+    manifest.start = command.start;
+    manifest.end = command.end;
+    manifest.session = command.session;
+    manifest.tag = command.tag;
 
     return manifest;
   }
