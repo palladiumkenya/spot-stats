@@ -84,9 +84,13 @@ export class ProfileDetail extends Component<Prop, {}> {
       }
 
       const differenceFunc = (rowData: any) => {
-        const val = parseInt(rowData.value, 10);
-        const dwhVal = parseInt(rowData.dwhValue, 10);
-        return val - dwhVal;
+        if (rowData.value && rowData.dwhValue) {
+          const val = parseInt(rowData.value, 10);
+          const dwhVal = parseInt(rowData.dwhValue, 10);
+          return val - dwhVal;
+        } else {
+          return null;
+        }
       }
 
       const paginatorLeft = <Button type="button" icon="pi pi-refresh" className="p-button-text" />;
@@ -198,7 +202,7 @@ export class ProfileDetail extends Component<Prop, {}> {
                 value={this.props.indicators}
                 header={'Indicator Metrics'}>
                   <Column field={'indicatorDate'} header={'Indicator Date'} body={dateBodyTemplate} />
-                  <Column field={'name'} header={'Name'} />
+                  <Column field={'name'} header={'Name'} className={'word-wrap'} />
                   <Column
                       field={'value'} header={'Value'}
                   />
