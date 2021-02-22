@@ -9,6 +9,10 @@ import Moment from "react-moment";
 import {Indicator} from "./models/indicator";
 import {Button} from "primereact/button";
 import {Manifest} from "./models/manifest";
+import Highcharts from "highcharts";
+import HighchartsReact from "highcharts-react-official";
+const config = require("./IndicatorsConfig.json");
+
 interface Prop {
   profile: ProfileSummary;
   indicators: Indicator[];
@@ -83,6 +87,18 @@ export class ProfileDetail extends Component<Prop, {}> {
         );
       }
 
+      const dateBodyDwhTemplate = (rowData: any) => {
+        if (rowData.dwhIndicatorDate) {
+          return (
+              <React.Fragment>
+                <Moment format="DD MMM YYYY HH:mm:ss">{rowData.dwhIndicatorDate}</Moment>
+              </React.Fragment>
+          );
+        } else {
+          return null;
+        }
+      }
+
       const differenceFunc = (rowData: any) => {
         if (rowData.value && rowData.dwhValue) {
           const val = parseInt(rowData.value, 10);
@@ -90,6 +106,154 @@ export class ProfileDetail extends Component<Prop, {}> {
           return val - dwhVal;
         } else {
           return null;
+        }
+      }
+
+      let indicatorArray: any[] = [];
+      const indicators = this.props.indicators;
+      for (const [key, value] of Object.entries(config)) {
+        const indicatorValues = indicators.filter(obj => obj.name === key);
+        if (indicatorValues && indicatorValues.length > 0) {
+          indicatorValues.sort(function(a: any, b: any){
+            // @ts-ignore
+            return new Date(a.indicatorDate) - new Date(b.indicatorDate);
+          });
+          // @ts-ignore
+          const val = value.toString();
+          indicatorArray.push(
+              {
+                dwhIndicatorDate: indicatorValues[indicatorValues.length - 1].dwhIndicatorDate,
+                dwhValue: indicatorValues[indicatorValues.length - 1].dwhValue,
+                indicatorDate: indicatorValues[indicatorValues.length - 1].indicatorDate,
+                name: val ? val.toString() : null,
+                value: indicatorValues[indicatorValues.length - 1].value
+              }
+          );
+        }
+      }
+
+
+      const today = new Date();
+      const lastYear = new Date();
+      lastYear.setFullYear(today.getFullYear() - 1);
+      lastYear.setDate(1);
+      const manifests = this.props.profile.manifests;
+      let filteredManifests: any = [];
+      if (manifests && manifests.length > 0) {
+        filteredManifests = manifests.filter(obj => obj.logDate ? new Date(obj.logDate).getTime() >= lastYear.getTime() && new Date(obj.logDate).getTime() <= today.getTime() : false);
+      }
+
+      filteredManifests.sort(function(a: any, b: any){
+        // @ts-ignore
+        return new Date(a.logDate) - new Date(b.logDate);
+      });
+      const categories: string[] = [];
+      const ndwh_value = [];
+      const hts_value = [];
+      const mpi_value = [];
+      const mgs_value = [];
+      for (const manifest of filteredManifests) {
+        const logDate = new Date(manifest.logDate).toLocaleDateString('en-GB', { month: 'short', year: 'numeric' }).replace(/ /g, '-');
+        if (!categories.includes(logDate)) {
+          categories.push(logDate);
+        } else {
+          continue ;
+        }
+
+        const dwh = filteredManifests.filter((obj: { docket: string; logDate: { toLocaleDateString: (arg0: string, arg1: { month: string; year: string; })
+                => { replace: (arg0: RegExp, arg1: string) => string; }; }; }) => obj.docket === 'NDWH'
+            && new Date(obj.logDate.toString()).toLocaleDateString('en-GB', { month: 'short', year: 'numeric' }).replace(/ /g, '-') === logDate);
+
+        if (dwh && dwh.length > 0) {
+          ndwh_value.push(dwh[dwh.length -1].patientCount);
+        } else {
+          ndwh_value.push(null);
+        }
+
+        const hts = filteredManifests.filter((obj: { docket: string; logDate: { toLocaleDateString: (arg0: string, arg1: { month: string; year: string; })
+                => { replace: (arg0: RegExp, arg1: string) => string; }; }; }) => obj.docket === 'HTS'
+            && new Date(obj.logDate.toString()).toLocaleDateString('en-GB', { month: 'short', year: 'numeric' }).replace(/ /g, '-') === logDate);
+
+        if (hts && hts.length > 0) {
+          hts_value.push(hts[hts.length -1].patientCount);
+        } else {
+          hts_value.push(null);
+        }
+
+        const mpi = filteredManifests.filter((obj: { docket: string; logDate: { toLocaleDateString: (arg0: string, arg1: { month: string; year: string; })
+                => { replace: (arg0: RegExp, arg1: string) => string; }; }; }) => obj.docket === 'MPI'
+            && new Date(obj.logDate.toString()).toLocaleDateString('en-GB', { month: 'short', year: 'numeric' }).replace(/ /g, '-') === logDate);
+
+        if (mpi && mpi.length > 0) {
+          mpi_value.push(mpi[mpi.length -1].patientCount);
+        } else {
+          mpi_value.push(null);
+        }
+
+        const mgs = filteredManifests.filter((obj: { docket: string; logDate: { toLocaleDateString: (arg0: string, arg1: { month: string; year: string; })
+                => { replace: (arg0: RegExp, arg1: string) => string; }; }; }) => obj.docket === 'MGS'
+            && new Date(obj.logDate.toString()).toLocaleDateString('en-GB', { month: 'short', year: 'numeric' }).replace(/ /g, '-') === logDate);
+
+        if (mgs && mgs.length > 0) {
+          mgs_value.push(mgs[mgs.length -1].patientCount);
+        } else {
+          mgs_value.push(null);
+        }
+      }
+
+      const getUploadHistoryOptions = {
+        title: {
+          text: 'Upload History'
+        },
+
+        subtitle: {
+          text: ''
+        },
+
+        yAxis: {
+          title: {
+            text: 'Patient Count'
+          }
+        },
+
+        xAxis: [{ categories: categories, title: { text: 'Months' }, crosshair: true }],
+
+        legend: {
+          layout: 'vertical',
+          align: 'right',
+          verticalAlign: 'middle'
+        },
+
+        plotOptions: {
+        },
+
+        series: [{
+          name: 'NDWH',
+          data: ndwh_value
+        }, {
+          name: 'HTS',
+          data: hts_value
+        }, {
+          name: 'MPI',
+          data: mpi_value
+        }, {
+          name: 'MGS',
+          data: mgs_value
+        }],
+
+        responsive: {
+          rules: [{
+            condition: {
+              maxWidth: 500
+            },
+            chartOptions: {
+              legend: {
+                layout: 'horizontal',
+                align: 'center',
+                verticalAlign: 'bottom'
+              }
+            }
+          }]
         }
       }
 
@@ -163,21 +327,7 @@ export class ProfileDetail extends Component<Prop, {}> {
                 </TabView>
               </div>
               <div className="p-col-4">
-                <DataTable
-                    paginator
-                    value={this.props.profile.manifests}
-                    header="Uploads History"
-                    rows={5} rowsPerPageOptions={[5, 10,20,50]}
-                    paginatorLeft={paginatorLeft} paginatorRight={paginatorRight}
-                >
-                  <Column
-                      field="logDate"
-                      header="Date"
-                      body={this.dateTemplate}
-                  />
-                  <Column field="docket" header="Docket" />
-                  <Column field="patientCount" header="Patient Count" />
-                </DataTable>
+                <HighchartsReact highcharts={Highcharts} options={getUploadHistoryOptions} />
               </div>
             </div>
             <div className={'p-grid'}>
@@ -199,7 +349,7 @@ export class ProfileDetail extends Component<Prop, {}> {
             <div className={'p-grid'}>
               <div className={'p-col-8'}>
                 <DataTable
-                value={this.props.indicators}
+                value={indicatorArray}
                 header={'Indicator Metrics'}>
                   <Column field={'indicatorDate'} header={'Indicator Date'} body={dateBodyTemplate} />
                   <Column field={'name'} header={'Name'} className={'word-wrap'} />
@@ -207,7 +357,7 @@ export class ProfileDetail extends Component<Prop, {}> {
                       field={'value'} header={'Value'}
                   />
                   <Column field={'dwhValue'} header={'NDWH Calculation'} />
-                  <Column field={'dwhIndicatorDate'} header={'NDWH Date'} body={dateBodyTemplate} />
+                  <Column field={'dwhIndicatorDate'} header={'NDWH Date'} body={dateBodyDwhTemplate} />
                   <Column field={'value'} header={'Difference'} body={differenceFunc} />
                 </DataTable>
               </div>

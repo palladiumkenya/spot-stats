@@ -11,8 +11,12 @@ export class IndicatorRepository extends BaseRepository<Indicator> implements II
     }
 
     async findByFacilityId(id: string): Promise<Indicator[]> {
+        const today = new Date();
+        const previous_month = new Date();
+        previous_month.setMonth(today.getMonth() - 1);
+        previous_month.setDate(1);
         const result = await this.model
-            .find({ facility: id })
+            .find({ facility: id, indicatorDate: { $gte: previous_month, $lt: today }})
             .sort({ indicatorDate: -1 });
         return result;
     }

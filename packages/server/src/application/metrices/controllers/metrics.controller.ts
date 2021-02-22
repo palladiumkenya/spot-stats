@@ -2,7 +2,7 @@ import {Controller, Get, Logger, Param, Post} from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { GetMetricQuery } from '../queries/get-metric.query';
 import {LogIndicatorCommand} from '../commands/log-indicator.command';
-import {GetIndicatorQuery} from "../queries/get-indicator.query";
+import {GetIndicatorQuery} from '../queries/get-indicator.query';
 
 @Controller('facmetrics')
 export class MetricsController {
@@ -19,8 +19,20 @@ export class MetricsController {
 
   @Post()
   async createNewIndicator() {
-    return await this.commandBus.execute(new LogIndicatorCommand('1', 13929,
-        'Nyang\'oma Mission Health Centre', 'TX_CURR', '1500', new Date(), 'EMR', '5'));
+    await this.commandBus.execute(new LogIndicatorCommand('1', 12769,
+        'St Orsola Mission Hospital', 'TX_NEW', '5000', new Date(), 'EMR', '5'));
+
+    await this.commandBus.execute(new LogIndicatorCommand('1', 12769,
+        'St Orsola Mission Hospital', 'HTS_TESTED', '1000', new Date(), 'EMR', '5'));
+
+    await this.commandBus.execute(new LogIndicatorCommand('1', 12769,
+        'St Orsola Mission Hospital', 'HTS_POSITIVE', '200', new Date(), 'EMR', '5'));
+
+    await this.commandBus.execute(new LogIndicatorCommand('1', 12769,
+        'St Orsola Mission Hospital', 'HTS_LINKED', '1000', new Date(), 'EMR', '5'));
+
+    return await this.commandBus.execute(new LogIndicatorCommand('1', 12769,
+        'St Orsola Mission Hospital', 'TX_CURR', '1000', new Date(), 'EMR', '5'));
   }
 
   @Post('updateIndicator')
