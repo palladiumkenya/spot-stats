@@ -123,44 +123,44 @@ export class LogMetricHandler implements ICommandHandler<LogMetricCommand> {
     if (command.cargoType === 1) {
       // EmrName
       const metric1 = new Metric(
-        command.id,
-        '7eb13e4a-bb7b-11e9-9cb5-2a2ae2dbcce4',
-        command.facilityCode,
-        command.cargo.EmrName,
-        command.facilityManifestId,
+          command.id,
+          '7eb13e4a-bb7b-11e9-9cb5-2a2ae2dbcce4',
+          command.facilityCode,
+          command.cargo.EmrName,
+          command.facilityManifestId,
       );
       metric1.reportDate = command.cargo.DateExtracted;
       metrics.push(metric1);
 
       // EmrVersion
       const metric2 = new Metric(
-        command.id,
-        '7eb14e4a-bb7b-11e9-9cb5-2a2ae2dbcce4',
-        command.facilityCode,
-        command.cargo.EmrVersion,
-        command.facilityManifestId,
+          command.id,
+          '7eb14e4a-bb7b-11e9-9cb5-2a2ae2dbcce4',
+          command.facilityCode,
+          command.cargo.EmrVersion,
+          command.facilityManifestId,
       );
       metric2.reportDate = command.cargo.DateExtracted;
       metrics.push(metric2);
 
       // LastLoginDate
       const metric3 = new Metric(
-        command.id,
-        '7eb15e4a-bb7b-11e9-9cb5-2a2ae2dbcce4',
-        command.facilityCode,
-        command.cargo.LastLoginDate,
-        command.facilityManifestId,
+          command.id,
+          '7eb15e4a-bb7b-11e9-9cb5-2a2ae2dbcce4',
+          command.facilityCode,
+          command.cargo.LastLoginDate,
+          command.facilityManifestId,
       );
       metric3.reportDate = command.cargo.DateExtracted;
       metrics.push(metric3);
 
       // LastMOH731RunDate
       const metric4 = new Metric(
-        command.id,
-        '7eb16e4a-bb7b-11e9-9cb5-2a2ae2dbcce4',
-        command.facilityCode,
-        command.cargo.LastMoH731RunDate,
-        command.facilityManifestId,
+          command.id,
+          '7eb16e4a-bb7b-11e9-9cb5-2a2ae2dbcce4',
+          command.facilityCode,
+          command.cargo.LastMoH731RunDate,
+          command.facilityManifestId,
       );
       metric4.reportDate = command.cargo.DateExtracted;
       metrics.push(metric4);
@@ -168,25 +168,33 @@ export class LogMetricHandler implements ICommandHandler<LogMetricCommand> {
 
     if (command.cargoType === 2) {
       const measure = await this.generateMeasure(
-        command.cargoType,
-        command.cargo,
+          command.cargoType,
+          command.cargo,
       );
+      let metavalue = command.cargo.LogDate;
+
+      if (measure === '7eb29e4a-bb7b-11e9-9cb5-2a2ae2dbcce4') {
+        metavalue = command.cargo.Version;
+      }
+
       const metric = new Metric(
-        command.id,
-        measure,
-        command.facilityCode,
-        command.cargo.LogDate,
-        command.facilityManifestId,
+          command.id,
+          measure,
+          command.facilityCode,
+          metavalue,
+          command.facilityManifestId,
       );
       metric.reportDate = command.cargo.LogDate;
-      metrics.push(metric);
+      const exisitngMetrics = metrics.filter(x => x._id === measure);
+      if (exisitngMetrics.length === 0) {
+        metrics.push(metric);
+      }
     }
-
     return metrics;
   }
 
   async generateMeasure(any: number, cargo: any): Promise<string> {
-    const area = cargo.Name;
+    let area = cargo.Name;
     let name;
 
     if (cargo.Action === 'Sent') {
@@ -194,6 +202,10 @@ export class LogMetricHandler implements ICommandHandler<LogMetricCommand> {
     }
     if (cargo.Action === 'Loaded') {
       name = 'ExtractLoaded';
+    }
+    if (cargo.Name === 'MetricService') {
+      area = 'Dwapi';
+      name = 'DwapiVersion';
     }
 
     const m = await this.measureRepository.getByName(area, name);

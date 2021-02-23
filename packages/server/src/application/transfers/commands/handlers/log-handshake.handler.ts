@@ -43,7 +43,7 @@ export class LogHandshakeHandler
     if (!manifestExists) {
       return;
     }
-    let manifest = plainToClass(Manifest, manifestExists)
+    const manifest = plainToClass(Manifest, manifestExists);
     if (manifest.hasSession()) {
       manifest.endSession(command.end);
     } else {
