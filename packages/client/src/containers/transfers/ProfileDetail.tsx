@@ -82,7 +82,7 @@ export class ProfileDetail extends Component<Prop, {}> {
       const dateBodyTemplate = (rowData: any) => {
         return (
             <React.Fragment>
-              <Moment format="DD MMM YYYY HH:mm:ss">{rowData.indicatorDate}</Moment>
+              <Moment format="DD MMM YYYY">{rowData.indicatorDate}</Moment>
             </React.Fragment>
         );
       }
@@ -91,7 +91,7 @@ export class ProfileDetail extends Component<Prop, {}> {
         if (rowData.dwhIndicatorDate) {
           return (
               <React.Fragment>
-                <Moment format="DD MMM YYYY HH:mm:ss">{rowData.dwhIndicatorDate}</Moment>
+                <Moment format="DD MMM YYYY">{rowData.dwhIndicatorDate}</Moment>
               </React.Fragment>
           );
         } else {
@@ -120,12 +120,14 @@ export class ProfileDetail extends Component<Prop, {}> {
           });
           // @ts-ignore
           const val = value.toString();
+          const description = key.toString();
           indicatorArray.push(
               {
                 dwhIndicatorDate: indicatorValues[indicatorValues.length - 1].dwhIndicatorDate,
                 dwhValue: indicatorValues[indicatorValues.length - 1].dwhValue,
                 indicatorDate: indicatorValues[indicatorValues.length - 1].indicatorDate,
-                name: val ? val.toString() : null,
+                name: key ? key: null,
+                description: val ? val: null,
                 value: indicatorValues[indicatorValues.length - 1].value
               }
           );
@@ -352,6 +354,7 @@ export class ProfileDetail extends Component<Prop, {}> {
                 value={indicatorArray}
                 header={'Indicator Metrics'}>
                   <Column field={'name'} header={'Indicator Name'} className={'word-wrap'} />
+                  <Column field={'description'} header={'Indicator Description'} className={'word-wrap'} />
                   <Column field={'indicatorDate'} header={'EMR Indicator Date'} body={dateBodyTemplate} />
                   <Column
                       field={'value'} header={'EMR Value'}
