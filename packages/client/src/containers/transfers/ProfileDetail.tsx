@@ -238,11 +238,8 @@ export class ProfileDetail extends Component<Prop, {}> {
           name: 'HTS',
           data: hts_value
         }, {
-          name: 'MPI',
+          name: 'PKV',
           data: mpi_value
-        }, {
-          name: 'MGS',
-          data: mgs_value
         }],
 
         responsive: {
