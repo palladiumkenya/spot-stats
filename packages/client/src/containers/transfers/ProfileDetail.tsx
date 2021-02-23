@@ -213,6 +213,8 @@ export class ProfileDetail extends Component<Prop, {}> {
         },
 
         yAxis: {
+          type: 'logarithmic',
+          minorTickInterval: 0.1,
           title: {
             text: 'Patient Count'
           }
