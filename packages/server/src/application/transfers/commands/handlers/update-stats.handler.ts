@@ -15,6 +15,7 @@ import {
 import { UpdateStatsCommand } from '../update-stats.command';
 import { plainToClass } from 'class-transformer';
 import { IManifestRepository } from '../../../../domain/transfers/manifest-repository.interface';
+import {InitializeSummariesCommand} from '../initialize-summaries-command';
 
 @CommandHandler(UpdateStatsCommand)
 export class UpdateStatsHandler implements ICommandHandler<UpdateStatsCommand> {
@@ -36,9 +37,21 @@ export class UpdateStatsHandler implements ICommandHandler<UpdateStatsCommand> {
     if (facility) {
       facility = plainToClass(Facility, facility);
 
+      const currentManifest = await this.manifestRepository.getCurrentDocket(
+          facility._id,
+          command.docket.name,
+      );
+
       // TODO:CHECK NEED TO REINTSUMMARIES
       if (!facility.hasSummaries()) {
-        // facility.updateSummary(command.docket, command.stats, command.updated);
+        await this.commandBus.execute(
+            new InitializeSummariesCommand(facility._id, currentManifest._id),
+        );
+
+        const fac = await this.facilityRepository.findByCode(
+            command.facilityCode,
+        );
+        facility = plainToClass(Facility, fac);
       }
 
       facility.updateSummary(command.docket, command.stats, command.updated);

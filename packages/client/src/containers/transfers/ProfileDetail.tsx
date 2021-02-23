@@ -301,7 +301,7 @@ export class ProfileDetail extends Component<Prop, {}> {
                     </DataTable>
                   </TabPanel>
 
-                  <TabPanel header="MPI">
+                  <TabPanel header="PKV">
                     <DataTable value={mpiSummaries}>
                       <Column field="extract.display" header="Extract" />
                       <Column field="recieved" header="Recieved" />
@@ -313,18 +313,18 @@ export class ProfileDetail extends Component<Prop, {}> {
                       />
                     </DataTable>
                   </TabPanel>
-                  <TabPanel header="MGS">
-                    <DataTable value={mgsSummaries}>
-                      <Column field="extract.display" header="Extract" />
-                      <Column field="recieved" header="Recieved" />
-                      <Column field="expected" header="Expected" />
-                      <Column
-                          field="updated"
-                          header="Update"
-                          body={this.date2Template}
-                      />
-                    </DataTable>
-                  </TabPanel>
+                  {/*<TabPanel header="MGS">*/}
+                  {/*  <DataTable value={mgsSummaries}>*/}
+                  {/*    <Column field="extract.display" header="Extract" />*/}
+                  {/*    <Column field="recieved" header="Recieved" />*/}
+                  {/*    <Column field="expected" header="Expected" />*/}
+                  {/*    <Column*/}
+                  {/*        field="updated"*/}
+                  {/*        header="Update"*/}
+                  {/*        body={this.date2Template}*/}
+                  {/*    />*/}
+                  {/*  </DataTable>*/}
+                  {/*</TabPanel>*/}
                 </TabView>
               </div>
               <div className="p-col-4">
