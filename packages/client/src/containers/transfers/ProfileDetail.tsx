@@ -351,10 +351,10 @@ export class ProfileDetail extends Component<Prop, {}> {
                 <DataTable
                 value={indicatorArray}
                 header={'Indicator Metrics'}>
-                  <Column field={'indicatorDate'} header={'Indicator Date'} body={dateBodyTemplate} />
-                  <Column field={'name'} header={'Name'} className={'word-wrap'} />
+                  <Column field={'name'} header={'Indicator Name'} className={'word-wrap'} />
+                  <Column field={'indicatorDate'} header={'EMR Indicator Date'} body={dateBodyTemplate} />
                   <Column
-                      field={'value'} header={'Value'}
+                      field={'value'} header={'EMR Value'}
                   />
                   <Column field={'dwhValue'} header={'NDWH Calculation'} />
                   <Column field={'dwhIndicatorDate'} header={'NDWH Date'} body={dateBodyDwhTemplate} />
