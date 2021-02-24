@@ -6,7 +6,7 @@ export class AppController {
   getAppName(): any {
     return {
       name: 'Dwapi Spot-Stats',
-      build: '23FEB210754',
+      build: '24FEB211242',
       staus: 'running',
     };
   }

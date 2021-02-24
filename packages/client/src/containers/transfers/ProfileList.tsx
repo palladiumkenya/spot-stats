@@ -5,6 +5,7 @@ import { Column } from "primereact/column";
 import { Button } from "primereact/button";
 import Moment from "react-moment";
 import TimeAgo from "react-timeago";
+import moment from "moment";
 
 interface Props {
   profiles: Profile[];
@@ -56,10 +57,10 @@ export class ProfileList extends Component<Props, {}> {
   };
 
   elapsedTemplate = (rowData: any, column: any) => {
-    const dt = rowData["logDate"];
+    const dt =moment(rowData["buildDate"]).subtract(3,'hour').valueOf();
     return (
       <span>
-        <TimeAgo date={dt}></TimeAgo>
+        <TimeAgo live={false} date={dt}></TimeAgo>
       </span>
     );
   };
