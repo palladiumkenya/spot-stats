@@ -59,6 +59,13 @@
         "display": "Patient Adverse Events",
         "isPatient": false,
         "rank": 8
+      },
+      {
+        "_id": "6dc970e0-bf1e-11e9-9cb5-2a2ae2dbcce4",
+        "name": "Detained",
+        "display": "Patient Not Sent",
+        "isPatient": false,
+        "rank": 99
       }
     ]
   },
