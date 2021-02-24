@@ -58,7 +58,10 @@ export class ProfileDetail extends Component<Prop, {}> {
       return <div />;
     } else {
       const dwhSummaries = this.props.profile.summaries!.filter(
-        (x) => x.docket.name === "NDWH"
+        (x) => x.docket.name === "NDWH" && x.extract.name!=="Detained"
+      );
+      const dwhNotSentSummaries = this.props.profile.summaries!.filter(
+          (x) => x.docket.name === "NDWH" && x.extract.name=="Detained"
       );
       const htsSummaries = this.props.profile.summaries!.filter(
         (x) => x.docket.name === "HTS"
@@ -286,6 +289,17 @@ export class ProfileDetail extends Component<Prop, {}> {
                           body={this.date2Template}
                       />
                     </DataTable>
+                    <br/>
+                    {dwhNotSentSummaries.length>0 &&
+                    <DataTable value={dwhNotSentSummaries}>
+                      <Column field="extract.display" header="Summary" />
+                      <Column field="expected" header="" />
+                      <Column field="" header="" />
+                      <Column
+                          field=""
+                          header=""
+                      />
+                    </DataTable>}
                   </TabPanel>
 
                   <TabPanel header="HTS">
