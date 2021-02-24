@@ -66,8 +66,6 @@ export class ProfileList extends Component<Props, {}> {
   };
 
   render() {
-    const m='2021-02-24T08:31:07.000Z';
-    console.log(moment(m).subtract(3,'hour').fromNow());
     const header = (
       <div>
         <div className="p-clearfix" style={{ lineHeight: "1.87em" }}>
