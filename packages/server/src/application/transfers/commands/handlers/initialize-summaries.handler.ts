@@ -77,13 +77,12 @@ export class InitializeSummariesHandler
 
   private getExpected(manifest: any, docket: any, e: any) {
     try {
-      if (docket.name === 'HTS') {
-        e.name = e.name.replace('Extract', '');
-      }
       if (manifest.cargo) {
         const cargoes = JSON.parse(manifest.cargo);
         const stats = cargoes.filter(c =>
-            c.name === e.name &&
+            (c.name === e.name ||
+                c.name === e.name.replace('Extract', '') ||
+                c.name === `${e.name}Extract`) &&
             c.docketId === docket.name)[0];
         if (stats) {
           return stats.stats;

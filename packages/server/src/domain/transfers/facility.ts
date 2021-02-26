@@ -8,6 +8,7 @@ import { ManifestLoggedEvent } from '../../application/transfers/events/manifest
 import { FacilityUpdatedEvent } from '../../application/transfers/events/facility-updated.event';
 import { FacilityStatsUpdatedEvent } from '../../application/transfers/events/facility-stats-updated.event';
 import { Metric } from '../metrices/metric';
+import {Docket} from '../courts/docket';
 
 export class Facility extends AggregateRoot {
   manifests?: any[] = [];
@@ -52,7 +53,9 @@ export class Facility extends AggregateRoot {
     this.summaries
       .filter((s) => s.docket.name === docket.name)
       .forEach((ss) => {
-        const stat = stats.find((x) => x.name === ss.extract.name);
+        const stat = stats.find((x) => x.name === ss.extract.name ||
+            x.name === `${ss.extract.name}Extract` ||
+            x.name === ss.extract.name.replace('Extract', ''));
         if (stat) {
           ss.recieved = stat.recieved;
           ss.updated = stat.updated;
@@ -98,6 +101,18 @@ export class Facility extends AggregateRoot {
       return false;
     }
 
+    return true;
+  }
+
+  hasDocketSummaries(docket: string): boolean {
+    if (!this.summaries) {
+      return false;
+    }
+
+    if (this.summaries && this.summaries.length > 0) {
+      const ds = this.summaries.filter(xx => xx.docket.name === docket);
+      return ds.length > 0;
+    }
     return true;
   }
 }
