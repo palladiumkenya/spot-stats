@@ -16,7 +16,7 @@ export class IndicatorRepository extends BaseRepository<Indicator> implements II
         previous_month.setMonth(today.getMonth() - 1);
         previous_month.setDate(1);
         const result = await this.model
-            .find({ facility: id, indicatorDate: { $gte: previous_month, $lt: today }})
+            .find({ facility: id })
             .sort({ indicatorDate: -1 });
         return result;
     }
