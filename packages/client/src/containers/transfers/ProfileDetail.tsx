@@ -145,7 +145,7 @@ export class ProfileDetail extends Component<Prop, {}> {
       const manifests = this.props.profile.manifests;
       let filteredManifests: any = [];
       if (manifests && manifests.length > 0) {
-        filteredManifests = manifests.filter(obj => obj.logDate ? new Date(obj.logDate).getTime() >= lastYear.getTime() && new Date(obj.logDate).getTime() <= today.getTime() : false);
+        filteredManifests = manifests.filter(obj => obj.logDate ? new Date(obj.logDate).getTime() >= lastYear.getTime() : false);
       }
 
       filteredManifests.sort(function(a: any, b: any){
@@ -194,16 +194,6 @@ export class ProfileDetail extends Component<Prop, {}> {
         } else {
           mpi_value.push(null);
         }
-
-        const mgs = filteredManifests.filter((obj: { docket: string; logDate: { toLocaleDateString: (arg0: string, arg1: { month: string; year: string; })
-                => { replace: (arg0: RegExp, arg1: string) => string; }; }; }) => obj.docket === 'MGS'
-            && new Date(obj.logDate.toString()).toLocaleDateString('en-GB', { month: 'short', year: 'numeric' }).replace(/ /g, '-') === logDate);
-
-        if (mgs && mgs.length > 0) {
-          mgs_value.push(mgs[mgs.length -1].patientCount);
-        } else {
-          mgs_value.push(null);
-        }
       }
 
       const getUploadHistoryOptions = {
@@ -217,7 +207,6 @@ export class ProfileDetail extends Component<Prop, {}> {
 
         yAxis: {
           type: 'logarithmic',
-          minorTickInterval: 0.1,
           title: {
             text: 'Patient Count'
           }
