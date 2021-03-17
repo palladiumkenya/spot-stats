@@ -114,6 +114,9 @@ export class ProfileDetail extends Component<Prop, {}> {
 
       let indicatorArray: any[] = [];
       const indicators = this.props.indicators;
+      const hiddenIndicators = [
+        'TX_RTT', 'TX_ML', 'MMD', 'RETENTION_ON_ART_12_MONTHS', 'RETENTION_ON_ART_VL_1000_12_MONTHS'
+      ];
       for (const [key, value] of Object.entries(config)) {
         const indicatorValues = indicators.filter(obj => obj.name === key);
         if (indicatorValues && indicatorValues.length > 0) {
@@ -124,7 +127,8 @@ export class ProfileDetail extends Component<Prop, {}> {
           // @ts-ignore
           const val = value.toString();
           const description = key.toString();
-          indicatorArray.push(
+          if(hiddenIndicators.indexOf(key) === -1) {
+            indicatorArray.push(
               {
                 dwhIndicatorDate: indicatorValues[indicatorValues.length - 1].dwhIndicatorDate,
                 dwhValue: indicatorValues[indicatorValues.length - 1].dwhValue,
@@ -133,7 +137,8 @@ export class ProfileDetail extends Component<Prop, {}> {
                 description: val ? val: null,
                 value: indicatorValues[indicatorValues.length - 1].value
               }
-          );
+            );
+          }
         }
       }
 
