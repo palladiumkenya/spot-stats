@@ -60,6 +60,71 @@
         "isPatient": false,
         "rank": 8
       },
+
+      {
+        "_id": "2bbeec20-7754-11eb-9439-0242ac130002",
+        "name": "AllergiesChronicIllnessExtract",
+        "display": "Allergies ChronicIllness",
+        "isPatient": false,
+        "rank": 11
+      },
+      {
+        "_id": "2bbeec21-7754-11eb-9439-0242ac130002",
+        "name": "IptExtract",
+        "display": "IPT",
+        "isPatient": false,
+        "rank": 12
+      },
+      {
+        "_id": "2bbeec22-7754-11eb-9439-0242ac130002",
+        "name": "DepressionScreeningExtract",
+        "display": "Depression Screening",
+        "isPatient": false,
+        "rank": 13
+      },
+      {
+        "_id": "2bbeec23-7754-11eb-9439-0242ac130002",
+        "name": "ContactListingExtract",
+        "display": "Contact Listing",
+        "isPatient": false,
+        "rank": 14
+      },
+      {
+        "_id": "2bbeec24-7754-11eb-9439-0242ac130002",
+        "name": "GbvScreeningExtract",
+        "display": "GBV Screening",
+        "isPatient": false,
+        "rank": 15
+      },
+      {
+        "_id": "2bbeec25-7754-11eb-9439-0242ac130002",
+        "name": "EnhancedAdherenceCounsellingExtract",
+        "display": "Enhanced Adherence Counselling",
+        "isPatient": false,
+        "rank": 16
+      },
+      {
+        "_id": "2bbeec26-7754-11eb-9439-0242ac130002",
+        "name": "DrugAlcoholScreeningExtract",
+        "display": "Drug and Alcohol Screening",
+        "isPatient": false,
+        "rank": 17
+      },
+      {
+        "_id": "2bbeec27-7754-11eb-9439-0242ac130002",
+        "name": "OvcExtract",
+        "display": "OVC",
+        "isPatient": false,
+        "rank": 18
+      },
+      {
+        "_id": "2bbeec28-7754-11eb-9439-0242ac130002",
+        "name": "OtzExtract",
+        "display": "OTZ",
+        "isPatient": false,
+        "rank": 19
+      },
+
       {
         "_id": "6dc970e0-bf1e-11e9-9cb5-2a2ae2dbcce4",
         "name": "Detained",
