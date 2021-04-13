@@ -86,7 +86,14 @@ export class ProfileList extends Component<Props, {}> {
 
         return (
             <DataTable
-                value={this.props.profiles}
+                value={this.props.profiles.map(l => {
+                    if (l.docket === 'NDWH') {
+                        l.docket = 'C&T';
+                    } else if (l.docket === 'MPI') {
+                        l.docket = 'PKV';
+                    }
+                    return l;
+                })}
                 header={header}
                 loading={this.props.loading}
                 paginator={true}
@@ -121,7 +128,7 @@ export class ProfileList extends Component<Props, {}> {
                 />
                 <Column field="docket" header="Docket" sortable={true} filter={true}/>
                 <Column field="patientCount" header="Expected" sortable={true}/>
-                <Column field="recievedCount" header="Recieved" sortable={true}/>
+                <Column field="recievedCount" header="Received" sortable={true}/>
                 <Column field="handshakeStatus" header="Status" sortable={true}/>
                 <Column
                     field="logDate"
