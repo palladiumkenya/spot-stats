@@ -229,7 +229,7 @@ export class ProfileDetail extends Component<Prop, {}> {
         },
 
         series: [{
-          name: 'CTX',
+          name: 'C&T',
           data: ndwh_value
         }, {
           name: 'HTS',
