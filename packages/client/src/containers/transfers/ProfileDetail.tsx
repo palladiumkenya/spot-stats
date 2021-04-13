@@ -115,7 +115,7 @@ export class ProfileDetail extends Component<Prop, {}> {
       let indicatorArray: any[] = [];
       const indicators = this.props.indicators;
       const hiddenIndicators = [
-        'TX_RTT', 'TX_ML', 'MMD', 'RETENTION_ON_ART_12_MONTHS', 'RETENTION_ON_ART_VL_1000_12_MONTHS'
+        'TX_RTT', 'TX_ML', 'MMD', 'TX_PVLS'
       ];
       for (const [key, value] of Object.entries(config)) {
         const indicatorValues = indicators.filter(obj => obj.name === key);
