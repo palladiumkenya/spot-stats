@@ -12,6 +12,6 @@ export interface ProfileSummary {
   summaries?: Summary[];
   manifests?: Manifest[];
   masterFacility?: MasterFacility;
-  metrics?: Metric[];
+  metrics?: any[];
   indicators?: Indicator[];
 }

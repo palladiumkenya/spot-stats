@@ -45,7 +45,11 @@ export class UpdateStatsHandler implements ICommandHandler<UpdateStatsCommand> {
           command.docket.name,
       );
 
-      // TODO:CHECK NEED TO REINTSUMMARIES
+      if (!currentManifest) {
+          return null;
+      }
+
+        // TODO:CHECK NEED TO REINTSUMMARIES
       if (!facility.hasSummaries()) {
         await this.commandBus.execute(
             new InitializeSummariesCommand(facility._id, currentManifest._id),
