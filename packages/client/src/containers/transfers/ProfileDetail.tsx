@@ -55,7 +55,7 @@ export class ProfileDetail extends Component<Prop, {}> {
   };
 
   numExpTemplate = (rowData: any, column: any) => {
-    const dt =Number(rowData["expected"]).toLocaleString();
+    const dt = Number(rowData["expected"]).toLocaleString();
     return (
         <span>
           {dt}
@@ -64,8 +64,7 @@ export class ProfileDetail extends Component<Prop, {}> {
   };
 
   numRecTemplate = (rowData: any, column: any) => {
-    console.log(rowData["recieved"])
-    const dt =Number(rowData["recieved"]).toLocaleString();
+    const dt = Number(rowData["recieved"]).toLocaleString();
     return (
         <span>
           {dt}
@@ -74,12 +73,15 @@ export class ProfileDetail extends Component<Prop, {}> {
   };
 
   render() {
-    if (!this.props.profile) {
-      return <div />;
-    } else {
+    if (!this.props.profile || (this.props.profile && this.props.profile.summaries && this.props.profile.summaries.length===0)) {
+      return <div/>;
+    }
+    else {
+
       const dwhSummaries = this.props.profile.summaries!.filter(
         (x) => x.docket.name === "NDWH" && x.extract.name!=="Detained"
       );
+
       const dwhNotSentSummaries = this.props.profile.summaries!.filter(
           (x) => x.docket.name === "NDWH" && x.extract.name=="Detained"
       );
@@ -155,9 +157,10 @@ export class ProfileDetail extends Component<Prop, {}> {
 
       const differenceFunc = (rowData: any) => {
         if (rowData.value && rowData.dwhValue) {
-          const val = parseInt(rowData.value, 10);
-          const dwhVal = parseInt(rowData.dwhValue, 10);
-          return val - dwhVal;
+          const val = parseInt(rowData.value.replace(/,/g, ''), 10);
+          const dwhVal = parseInt(rowData.dwhValue.replace(/,/g, ''), 10);
+          const result= val - dwhVal;
+          return Number(result).toLocaleString();
         } else {
           return null;
         }
@@ -195,8 +198,14 @@ export class ProfileDetail extends Component<Prop, {}> {
 
       const formatedInd=(ind:any)=> {
         ind.name=ind.name.split('_').join(' ');
-        ind.value=Number(ind.value).toLocaleString();
-        // ind.dwhValue=Number(ind.dwhValue).toLocaleString();
+        if (ind.value)
+        {
+          ind.value=Number(ind.value).toLocaleString();
+        }
+        if (ind.dwhValue)
+        {
+          ind.dwhValue=Number(ind.dwhValue).toLocaleString();
+        }
         return ind;
       }
 

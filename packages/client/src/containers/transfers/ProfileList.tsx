@@ -58,7 +58,7 @@ export class ProfileList extends Component<Props, {}> {
     };
 
     elapsedTemplate = (rowData: any, column: any) => {
-        const utcDt=moment.utc(rowData["buildDate"]).toDate();
+        const utcDt = moment.utc(rowData["buildDate"]).toDate();
         const dt = moment(utcDt).local(true).toDate().valueOf();
         return (
             <span>
@@ -68,7 +68,10 @@ export class ProfileList extends Component<Props, {}> {
     };
 
     numExpTemplate = (rowData: any, column: any) => {
-        const dt =Number(rowData["patientCount"]).toLocaleString();
+        let dt = rowData["recievedCount"];
+        if (rowData["recievedCount"]) {
+            dt = Number(rowData["recievedCount"]).toLocaleString();
+        }
         return (
             <span>
           {dt}
@@ -77,10 +80,9 @@ export class ProfileList extends Component<Props, {}> {
     };
 
     numRecTemplate = (rowData: any, column: any) => {
-        let dt =rowData["recievedCount"];
-        if (rowData["recievedCount"])
-        {
-            dt =Number(rowData["recievedCount"]).toLocaleString();
+        let dt = rowData["recievedCount"];
+        if (rowData["recievedCount"]) {
+            dt = Number(rowData["recievedCount"]).toLocaleString();
         }
         return (
             <span>
@@ -149,7 +151,7 @@ export class ProfileList extends Component<Props, {}> {
                     filterMatchMode={"contains"}
                 />
                 <Column field="docket" header="Docket" sortable={true} filter={true}/>
-                <Column field="patientCount" header="Expected" sortable={true}  body={this.numExpTemplate}/>
+                <Column field="patientCount" header="Expected" sortable={true} body={this.numExpTemplate}/>
                 <Column field="recievedCount" header="Received" sortable={true} body={this.numRecTemplate}/>
                 <Column field="handshakeStatus" header="Status" sortable={true}/>
                 <Column
