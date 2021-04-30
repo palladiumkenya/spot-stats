@@ -12,6 +12,7 @@ import {Manifest} from "./models/manifest";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 const config = require("./IndicatorsConfig.json");
+const messageConfig = require("./MessagesConfig.json");
 
 interface Prop {
   profile: ProfileSummary;
@@ -53,6 +54,25 @@ export class ProfileDetail extends Component<Prop, {}> {
     return <span>{dt} </span>;
   };
 
+  numExpTemplate = (rowData: any, column: any) => {
+    const dt =Number(rowData["expected"]).toLocaleString();
+    return (
+        <span>
+          {dt}
+      </span>
+    );
+  };
+
+  numRecTemplate = (rowData: any, column: any) => {
+    console.log(rowData["recieved"])
+    const dt =Number(rowData["recieved"]).toLocaleString();
+    return (
+        <span>
+          {dt}
+      </span>
+    );
+  };
+
   render() {
     if (!this.props.profile) {
       return <div />;
@@ -63,6 +83,16 @@ export class ProfileDetail extends Component<Prop, {}> {
       const dwhNotSentSummaries = this.props.profile.summaries!.filter(
           (x) => x.docket.name === "NDWH" && x.extract.name=="Detained"
       );
+      if (dwhNotSentSummaries && dwhNotSentSummaries.length>0) {
+        let ms: any
+        for (const [key, value] of Object.entries(messageConfig)) {
+          if (key === 'Detained')
+            ms = value;
+        }
+        dwhNotSentSummaries.map(x => (
+            x.reason = `${ms}`
+        ))
+      }
       const htsSummaries = this.props.profile.summaries!.filter(
         (x) => x.docket.name === "HTS"
       );
@@ -72,6 +102,27 @@ export class ProfileDetail extends Component<Prop, {}> {
       const mgsSummaries = this.props.profile.summaries!.filter(
         (x) => x.docket.name === "MGS"
       );
+
+      const formatedMet=(met:any)=> {
+        met.measure.display= met.measure.display
+            .replace('Emr', 'EMR')
+            .replace('Dwapi', 'DWAPI')
+            .replace('MPI', 'PKV');
+
+        met.measure.description= met.measure.description
+            .replace('Emr', 'EMR')
+            .replace('Dwapi', 'DWAPI')
+            .replace('MPI', 'PKV');
+        return met;
+      }
+
+      const facMetricsSummaries = this.props.profile.metrics;
+      if (facMetricsSummaries && facMetricsSummaries.length>0) {
+        facMetricsSummaries.map(x => (
+            x = formatedMet(x)
+        ))
+      }
+
 
       // @ts-ignore
       this.props.profile.manifests.sort(function (a: Manifest, b: Manifest) {
@@ -115,7 +166,7 @@ export class ProfileDetail extends Component<Prop, {}> {
       let indicatorArray: any[] = [];
       const indicators = this.props.indicators;
       const hiddenIndicators = [
-        'TX_RTT', 'TX_ML', 'MMD', 'RETENTION_ON_ART_12_MONTHS', 'RETENTION_ON_ART_VL_1000_12_MONTHS'
+        'TX_RTT', 'TX_ML', 'MMD', 'TX_PVLS','HTS_LINKED'
       ];
       for (const [key, value] of Object.entries(config)) {
         const indicatorValues = indicators.filter(obj => obj.name === key);
@@ -133,7 +184,7 @@ export class ProfileDetail extends Component<Prop, {}> {
                 dwhIndicatorDate: indicatorValues[indicatorValues.length - 1].dwhIndicatorDate,
                 dwhValue: indicatorValues[indicatorValues.length - 1].dwhValue,
                 indicatorDate: indicatorValues[indicatorValues.length - 1].indicatorDate,
-                name: key ? key: null,
+                name: key ? key : null,
                 description: val ? val: null,
                 value: indicatorValues[indicatorValues.length - 1].value
               }
@@ -142,6 +193,18 @@ export class ProfileDetail extends Component<Prop, {}> {
         }
       }
 
+      const formatedInd=(ind:any)=> {
+        ind.name=ind.name.split('_').join(' ');
+        ind.value=Number(ind.value).toLocaleString();
+        // ind.dwhValue=Number(ind.dwhValue).toLocaleString();
+        return ind;
+      }
+
+      if (indicatorArray && indicatorArray.length>0) {
+        indicatorArray.map(x => (
+            x = formatedInd(x)
+        ))
+      }
 
       const today = new Date();
       const lastYear = new Date();
@@ -229,7 +292,7 @@ export class ProfileDetail extends Component<Prop, {}> {
         },
 
         series: [{
-          name: 'NDWH',
+          name: 'C&T',
           data: ndwh_value
         }, {
           name: 'HTS',
@@ -275,8 +338,8 @@ export class ProfileDetail extends Component<Prop, {}> {
                   <TabPanel header="NDWH">
                     <DataTable value={dwhSummaries}>
                       <Column field="extract.display" header="Extract" />
-                      <Column field="recieved" header="Recieved" />
-                      <Column field="expected" header="Expected" />
+                      <Column field="recieved" header="Recieved" body={this.numRecTemplate}/>
+                      <Column field="expected" header="Expected" body={this.numExpTemplate} />
                       <Column
                           field="updated"
                           header="Update"
@@ -287,20 +350,17 @@ export class ProfileDetail extends Component<Prop, {}> {
                     {dwhNotSentSummaries.length>0 &&
                     <DataTable value={dwhNotSentSummaries}>
                       <Column field="extract.display" header="Summary" />
-                      <Column field="expected" header="" />
-                      <Column field="" header="" />
-                      <Column
-                          field=""
-                          header=""
-                      />
+                      <Column field="expected" header="Count" body={this.numExpTemplate}/>
+                      <Column field="reason" header="Reason"/>
+                      <Column field="" header=""/>
                     </DataTable>}
                   </TabPanel>
 
                   <TabPanel header="HTS">
                     <DataTable value={htsSummaries}>
                       <Column field="extract.display" header="Extract" />
-                      <Column field="recieved" header="Recieved" />
-                      <Column field="expected" header="Expected" />
+                      <Column field="recieved" header="Recieved" body={this.numRecTemplate}/>
+                      <Column field="expected" header="Expected" body={this.numExpTemplate}/>
                       <Column
                           field="updated"
                           header="Update"
@@ -312,8 +372,8 @@ export class ProfileDetail extends Component<Prop, {}> {
                   <TabPanel header="PKV">
                     <DataTable value={mpiSummaries}>
                       <Column field="extract.display" header="Extract" />
-                      <Column field="recieved" header="Recieved" />
-                      <Column field="expected" header="Expected" />
+                      <Column field="recieved" header="Recieved" body={this.numRecTemplate}/>
+                      <Column field="expected" header="Expected" body={this.numExpTemplate}/>
                       <Column
                           field="updated"
                           header="Update"
@@ -342,13 +402,13 @@ export class ProfileDetail extends Component<Prop, {}> {
             <div className={'p-grid'}>
               <div className="p-col-8">
                 <DataTable
-                    value={this.props.profile.metrics}
+                    value={facMetricsSummaries}
                     header="Facility Metrics"
                 >
-                  <Column field="measure.display" header="Measure" />
+                  <Column field="measure.display" header="Metric" />
                   <Column
                       field="report"
-                      header="Metric"
+                      header="Value"
                       body={this.date3Template}
                   />
                   <Column field="measure.description" header="Description" />

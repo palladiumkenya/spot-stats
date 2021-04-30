@@ -67,6 +67,28 @@ export class ProfileList extends Component<Props, {}> {
         );
     };
 
+    numExpTemplate = (rowData: any, column: any) => {
+        const dt =Number(rowData["patientCount"]).toLocaleString();
+        return (
+            <span>
+          {dt}
+      </span>
+        );
+    };
+
+    numRecTemplate = (rowData: any, column: any) => {
+        let dt =rowData["recievedCount"];
+        if (rowData["recievedCount"])
+        {
+            dt =Number(rowData["recievedCount"]).toLocaleString();
+        }
+        return (
+            <span>
+          {dt}
+      </span>
+        );
+    };
+
     render() {
         const header = (
             <div>
@@ -86,7 +108,14 @@ export class ProfileList extends Component<Props, {}> {
 
         return (
             <DataTable
-                value={this.props.profiles}
+                value={this.props.profiles.map(l => {
+                    if (l.docket === 'NDWH') {
+                        l.docket = 'C&T';
+                    } else if (l.docket === 'MPI') {
+                        l.docket = 'PKV';
+                    }
+                    return l;
+                })}
                 header={header}
                 loading={this.props.loading}
                 paginator={true}
@@ -120,8 +149,8 @@ export class ProfileList extends Component<Props, {}> {
                     filterMatchMode={"contains"}
                 />
                 <Column field="docket" header="Docket" sortable={true} filter={true}/>
-                <Column field="patientCount" header="Expected" sortable={true}/>
-                <Column field="recievedCount" header="Recieved" sortable={true}/>
+                <Column field="patientCount" header="Expected" sortable={true}  body={this.numExpTemplate}/>
+                <Column field="recievedCount" header="Received" sortable={true} body={this.numRecTemplate}/>
                 <Column field="handshakeStatus" header="Status" sortable={true}/>
                 <Column
                     field="logDate"

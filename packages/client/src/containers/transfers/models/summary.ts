@@ -5,4 +5,5 @@ export interface Summary {
   expected?: number;
   recieved?: number;
   updated?: Date;
+  reason?:string;
 }
