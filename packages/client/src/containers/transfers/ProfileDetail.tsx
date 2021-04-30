@@ -101,6 +101,16 @@ export class ProfileDetail extends Component<Prop, {}> {
       const mpiSummaries = this.props.profile.summaries!.filter(
         (x) => x.docket.name === "MPI"
       );
+      const formatedSummary=(summr:any)=> {
+        summr.extract.display= summr.extract.display
+            .replace('Master Patient Index', 'Patient Key Values')
+        return summr;
+      }
+      if (mpiSummaries && mpiSummaries.length>0) {
+        mpiSummaries.map(x => (
+            x = formatedSummary(x)
+        ))
+      }
       const mgsSummaries = this.props.profile.summaries!.filter(
         (x) => x.docket.name === "MGS"
       );
