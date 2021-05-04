@@ -12,7 +12,8 @@ export class LogIndicatorHandler implements ICommandHandler<LogIndicatorCommand>
         private readonly indicatorRepository: IIndicatorRepository,
         @Inject('IFacilityRepository')
         private readonly facilityRepository: IFacilityRepository,
-    ) {}
+    ) {
+    }
 
     async execute(command: LogIndicatorCommand): Promise<any> {
         try {
@@ -63,6 +64,8 @@ export class LogIndicatorHandler implements ICommandHandler<LogIndicatorCommand>
             indicator.dwhValue = null;
             indicator.dwhIndicatorDate = null;
             await this.indicatorRepository.create(indicator);
+        } else {
+            Logger.error('facility not found or invalid command');
         }
     }
 }

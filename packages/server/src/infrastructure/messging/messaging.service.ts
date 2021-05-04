@@ -71,26 +71,6 @@ export class MessagingService {
 
     @RabbitSubscribe({
         exchange: 'stats.exchange',
-        routingKey: 'stats.route',
-        queue: 'stats.queue',
-    })
-    public async subscribeToStats(data: any) {
-        const stats = JSON.parse(data);
-        Logger.log(`+++++++++++ ${stats.docket} +++++++++`);
-        Logger.log(`Received Stats  ${stats.facilityCode}`);
-        await this.commandBus.execute(
-            new UpdateStatsCommand(
-                stats.facilityCode,
-                stats.docket,
-                stats.stats,
-                stats.updated,
-                stats.manifestId,
-            ),
-        );
-    }
-
-    @RabbitSubscribe({
-        exchange: 'stats.exchange',
         routingKey: 'metric.route',
         queue: 'metric.queue',
     })
@@ -204,6 +184,26 @@ export class MessagingService {
                 manifest.start,
                 manifest.session,
                 manifest.tag,
+            ),
+        );
+    }
+
+    @RabbitSubscribe({
+        exchange: 'stats.exchange',
+        routingKey: 'stats.route',
+        queue: 'stats.queue',
+    })
+    public async subscribeToStats(data: any) {
+        const stats = JSON.parse(data);
+        Logger.log(`+++++++++++ ${stats.docket} +++++++++`);
+        Logger.log(`Received Stats  ${stats.facilityCode}`);
+        await this.commandBus.execute(
+            new UpdateStatsCommand(
+                stats.facilityCode,
+                stats.docket,
+                stats.stats,
+                stats.updated,
+                stats.manifestId,
             ),
         );
     }
