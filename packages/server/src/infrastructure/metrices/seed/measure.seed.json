@@ -128,5 +128,13 @@
     "display": "Last MGS Sent",
     "description": "Date of the last MGS Extract Sent",
     "rank": 190
+  },
+  {
+    "_id": "7eb29e4a-bb7b-11e9-9cb5-2a2ae2dbcce4",
+    "name": "DwapiVersion",
+    "area": "Dwapi",
+    "display": "Dwapi Version",
+    "description": "Dwapi Version",
+    "rank": -1
   }
 ]

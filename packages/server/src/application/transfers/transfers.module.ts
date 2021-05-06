@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import {CacheModule, Module} from '@nestjs/common';
 import { CqrsModule } from '@nestjs/cqrs';
 import { TransfersInfrastructureModule } from '../../infrastructure/transfers';
 import { UpdateStatsHandler } from './commands/handlers/update-stats.handler';
@@ -19,11 +19,13 @@ import { GetMisssingStatsHandler } from './queries/handlers/get-missing-stats.ha
 import { RequestStatsHandler } from './commands/handlers/request-stats.handler';
 import { MessagingModule } from '../../infrastructure/messging/messaging.module';
 import { ConfigModule } from '../../config/config.module';
+import {LogHandshakeHandler} from './commands/handlers/log-handshake.handler';
 
 const CommandHandlers = [
   LogManifestHandler,
   UpdateStatsHandler,
   InitializeSummariesHandler,
+  LogHandshakeHandler
 ];
 const EventHandlers = [FacilityEnrolledHandler, ManifestLoggedHandler];
 const QueryHandlers = [
@@ -44,6 +46,7 @@ const QueryHandlers = [
     TransfersInfrastructureModule,
     RegistriesInfrastructureModule,
     CourtsInfrastructureModule,
+    CacheModule.register({ttl: null}),
   ],
   controllers: [FacilitiesController, ManifestsController],
   providers: [...CommandHandlers, ...QueryHandlers, ...EventHandlers],

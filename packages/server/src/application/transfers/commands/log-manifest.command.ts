@@ -1,4 +1,8 @@
 export class LogManifestCommand {
+  public start?: Date;
+  public end?: Date;
+  public session?: string;
+  public tag?: string;
   constructor(
     public id: string,
     public facilityCode: number,

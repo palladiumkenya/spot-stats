@@ -34,4 +34,12 @@ export class FacilityRepository extends BaseRepository<Facility>
   updateMasterFacility(code: number): Promise<Facility> {
     return undefined;
   }
+
+  async findWithManifestByCode(code: number): Promise<Facility> {
+    const facilty = await this.model.find({ code , 'manifests.0': {$exists: true}}).exec();
+    if (facilty && facilty.length > 0) {
+      return facilty[0].toObject();
+    }
+    return undefined;
+  }
 }

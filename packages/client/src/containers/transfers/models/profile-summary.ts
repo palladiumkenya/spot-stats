@@ -2,6 +2,7 @@ import { Manifest } from "./manifest";
 import { Summary } from "./summary";
 import { MasterFacility } from "./master-facility";
 import { Metric } from "./metric";
+import {Indicator} from "./indicator";
 
 export interface ProfileSummary {
   _id?: string;
@@ -11,5 +12,6 @@ export interface ProfileSummary {
   summaries?: Summary[];
   manifests?: Manifest[];
   masterFacility?: MasterFacility;
-  metrics?: Metric[];
+  metrics?: any[];
+  indicators?: Indicator[];
 }
