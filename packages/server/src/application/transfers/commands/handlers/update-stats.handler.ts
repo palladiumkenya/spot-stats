@@ -63,7 +63,6 @@ export class UpdateStatsHandler implements ICommandHandler<UpdateStatsCommand> {
           await this.commandBus.execute(
             new InitializeSummariesCommand(facility._id, currentManifest._id),
           );
-
           const fac = await this.facilityRepository.findByCode(
             command.facilityCode,
           );

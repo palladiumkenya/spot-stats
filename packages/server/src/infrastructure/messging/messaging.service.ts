@@ -24,7 +24,6 @@ export class MessagingService {
     private readonly amqpConnection: AmqpConnection,
     private readonly commandBus: CommandBus,
   ) {}
-
   public async publish(
     message: any,
     exchange: string,
@@ -176,7 +175,7 @@ export class MessagingService {
   public async subscribeToHandshake(data: any) {
     const manifest = JSON.parse(data);
     Logger.log(
-      `Received Handshake  ${manifest.facilityCode}-${manifest.facilityName}`,
+      `Received  Handshake  ${manifest.facilityCode}-${manifest.facilityName}`,
     );
     await this.commandBus.execute(
       new LogHandshakeCommand(

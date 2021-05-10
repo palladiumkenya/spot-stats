@@ -16,7 +16,6 @@ export class IndicatorRepository extends BaseRepository<Indicator>
       .sort({ indicatorDate: -1 });
     return result;
   }
-
   async findIndicatorByFacilityIdAndName(
     facilityId: string,
     indicatorName: string,

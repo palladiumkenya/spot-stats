@@ -108,6 +108,7 @@ export class ProfileList extends Component<Props, {}> {
           } else if (l.docket === "MPI") {
             l.docket = "PKV";
           }
+
           return l;
         })}
         header={header}
@@ -142,6 +143,7 @@ export class ProfileList extends Component<Props, {}> {
           filter={true}
           filterMatchMode={"contains"}
         />
+
         <Column field="docket" header="Docket" sortable={true} filter={true} />
         <Column
           field="patientCount"
