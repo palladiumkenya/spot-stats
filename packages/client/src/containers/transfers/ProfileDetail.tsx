@@ -101,21 +101,21 @@ export class ProfileDetail extends Component<Prop, {}> {
       const mpiSummaries = this.props.profile.summaries!.filter(
         (x) => x.docket.name === "MPI"
       );
-      const formatedSummary=(summr:any)=> {
+      const formattedSummary=(summr:any)=> {
         summr.extract.display= summr.extract.display
             .replace('Master Patient Index', 'Patient Key Values')
         return summr;
       }
       if (mpiSummaries && mpiSummaries.length>0) {
         mpiSummaries.map(x => (
-            x = formatedSummary(x)
+            x = formattedSummary(x)
         ))
       }
       const mgsSummaries = this.props.profile.summaries!.filter(
         (x) => x.docket.name === "MGS"
       );
 
-      const formatedMet=(met:any)=> {
+      const formattedMetrics=(met:any)=> {
         met.measure.display= met.measure.display
             .replace('Emr', 'EMR')
             .replace('Dwapi', 'DWAPI')
@@ -131,7 +131,7 @@ export class ProfileDetail extends Component<Prop, {}> {
       const facMetricsSummaries = this.props.profile.metrics;
       if (facMetricsSummaries && facMetricsSummaries.length>0) {
         facMetricsSummaries.map(x => (
-            x = formatedMet(x)
+            x = formattedMetrics(x)
         ))
       }
 

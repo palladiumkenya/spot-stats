@@ -68,9 +68,9 @@ export class ProfileList extends Component<Props, {}> {
     };
 
     numExpTemplate = (rowData: any, column: any) => {
-        let dt = rowData["recievedCount"];
-        if (rowData["recievedCount"]) {
-            dt = Number(rowData["recievedCount"]).toLocaleString();
+        let dt = rowData["patientCount"];
+        if (rowData["patientCount"]) {
+            dt = Number(rowData["patientCount"]).toLocaleString();
         }
         return (
             <span>
