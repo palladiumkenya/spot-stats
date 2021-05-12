@@ -5,7 +5,7 @@ import {
   ICommandHandler,
 } from '@nestjs/cqrs';
 import { LogManifestCommand } from '../log-manifest.command';
-import {CACHE_MANAGER, Inject, Logger} from '@nestjs/common';
+import { CACHE_MANAGER, Inject, Logger } from '@nestjs/common';
 import {
   Facility,
   IDocketRepository,
@@ -15,59 +15,56 @@ import {
 import { UpdateStatsCommand } from '../update-stats.command';
 import { plainToClass } from 'class-transformer';
 import { IManifestRepository } from '../../../../domain/transfers/manifest-repository.interface';
-import {InitializeSummariesCommand} from '../initialize-summaries-command';
-import {Cache} from 'cache-manager';
+import { InitializeSummariesCommand } from '../initialize-summaries-command';
+import { Cache } from 'cache-manager';
 
 @CommandHandler(UpdateStatsCommand)
 export class UpdateStatsHandler implements ICommandHandler<UpdateStatsCommand> {
   constructor(
-      @Inject('IDocketRepository')
-      private readonly docketRepository: IDocketRepository,
-      @Inject('IFacilityRepository')
-      private readonly facilityRepository: IFacilityRepository,
-      @Inject('IManifestRepository')
-      private readonly manifestRepository: IManifestRepository,
-      private readonly publisher: EventPublisher,
-      private readonly commandBus: CommandBus,
-      @Inject(CACHE_MANAGER) private cacheManager: Cache,
-  ) {
-  }
+    @Inject('IDocketRepository')
+    private readonly docketRepository: IDocketRepository,
+    @Inject('IFacilityRepository')
+    private readonly facilityRepository: IFacilityRepository,
+    @Inject('IManifestRepository')
+    private readonly manifestRepository: IManifestRepository,
+    private readonly publisher: EventPublisher,
+    private readonly commandBus: CommandBus,
+    @Inject(CACHE_MANAGER) private cacheManager: Cache,
+  ) {}
 
   async execute(command: UpdateStatsCommand): Promise<any> {
     let facility = await this.facilityRepository.findByCode(
-        command.facilityCode,
+      command.facilityCode,
     );
     if (facility) {
       facility = plainToClass(Facility, facility);
 
       const currentManifest = await this.manifestRepository.getCurrentDocket(
-          facility._id,
-          command.docket.name,
+        facility._id,
+        command.docket.name,
       );
 
       if (!currentManifest) {
-          return null;
+        return null;
       }
 
-        // TODO:CHECK NEED TO REINTSUMMARIES
+      // TODO:CHECK NEED TO REINTSUMMARIES
       if (!facility.hasSummaries()) {
         await this.commandBus.execute(
-            new InitializeSummariesCommand(facility._id, currentManifest._id),
+          new InitializeSummariesCommand(facility._id, currentManifest._id),
         );
 
         const fac = await this.facilityRepository.findByCode(
-            command.facilityCode,
+          command.facilityCode,
         );
         facility = plainToClass(Facility, fac);
       } else {
-
         if (!facility.hasDocketSummaries(command.docket.name)) {
           await this.commandBus.execute(
-              new InitializeSummariesCommand(facility._id, currentManifest._id),
+            new InitializeSummariesCommand(facility._id, currentManifest._id),
           );
-
           const fac = await this.facilityRepository.findByCode(
-              command.facilityCode,
+            command.facilityCode,
           );
           facility = plainToClass(Facility, fac);
         }
@@ -80,8 +77,8 @@ export class UpdateStatsHandler implements ICommandHandler<UpdateStatsCommand> {
       Logger.log(`Updated Stats ${facility.name}`);
 
       const manifest = await this.manifestRepository.getCurrentDocket(
-          facility._id,
-          command.docket.name,
+        facility._id,
+        command.docket.name,
       );
       if (manifest) {
         const recieved = facility.getPatientSummary(command.docket.name);
