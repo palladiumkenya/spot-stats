@@ -3,8 +3,8 @@ import {Profile} from "./models/profile";
 import {DataTable} from "primereact/datatable";
 import {Column} from "primereact/column";
 import {Button} from "primereact/button";
-import Moment from "react-moment";
 import TimeAgo from "react-timeago";
+import Moment from "react-moment";
 import moment from "moment";
 
 interface Props {
@@ -40,6 +40,7 @@ export class ProfileList extends Component<Props, {}> {
     manageTemplate = (rowData: any, column: any) => {
         return (
             <div>
+
                 <Button
                     icon="pi pi-plus"
                     onClick={(event) => this.manageAction(event, rowData)}
@@ -150,6 +151,7 @@ export class ProfileList extends Component<Props, {}> {
                     filter={true}
                     filterMatchMode={"contains"}
                 />
+
                 <Column field="docket" header="Docket" sortable={true} filter={true}/>
                 <Column field="patientCount" header="Expected" sortable={true} body={this.numExpTemplate}/>
                 <Column field="recievedCount" header="Received" sortable={true} body={this.numRecTemplate}/>

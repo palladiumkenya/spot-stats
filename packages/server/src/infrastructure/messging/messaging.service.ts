@@ -46,7 +46,7 @@ export class MessagingService {
     })
     public async subscribeToManifest(data: any) {
         const manifest = JSON.parse(data);
-        Logger.log(`+++++++++++ ${manifest.docket} +++++++++`);
+        Logger.log(`++++++++++++ ${manifest.docket} +++++++++`);
         Logger.log(`Received Manifest  ${manifest.facilityName}`);
 
         const cmd = new LogManifestCommand(

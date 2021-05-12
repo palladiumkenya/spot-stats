@@ -13,6 +13,7 @@ export class IndicatorRepository extends BaseRepository<Indicator> implements II
         const result = await this.model
             .find({ facility: id })
             .sort({ indicatorDate: -1 });
+
         return result;
     }
 
@@ -21,6 +22,7 @@ export class IndicatorRepository extends BaseRepository<Indicator> implements II
             .find({ facility: facilityId, name: indicatorName, dwhValue: null })
             .sort({indicatorDate: -1})
             .limit(1);
+
         return result;
     }
 }

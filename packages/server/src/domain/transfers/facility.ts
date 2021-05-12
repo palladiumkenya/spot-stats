@@ -7,8 +7,6 @@ import {FacilityEnrolledEvent} from '../../application/transfers/events/facility
 import {ManifestLoggedEvent} from '../../application/transfers/events/manifest-logged.event';
 import {FacilityUpdatedEvent} from '../../application/transfers/events/facility-updated.event';
 import {FacilityStatsUpdatedEvent} from '../../application/transfers/events/facility-stats-updated.event';
-import {Metric} from '../metrices/metric';
-import {Docket} from '../courts/docket';
 
 export class Facility extends AggregateRoot {
     manifests?: any[] = [];
@@ -114,7 +112,6 @@ export class Facility extends AggregateRoot {
         if (!this.summaries) {
             return false;
         }
-
         if (this.summaries && this.summaries.length > 0) {
             const ds = this.summaries.filter(xx => xx.docket.name === docket);
             return ds.length > 0;
