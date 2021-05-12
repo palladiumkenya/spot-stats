@@ -13,6 +13,7 @@ import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 const config = require("./IndicatorsConfig.json");
 const messageConfig = require("./MessagesConfig.json");
+import moment from "moment";
 
 interface Prop {
   profile: ProfileSummary;
@@ -127,12 +128,20 @@ export class ProfileDetail extends Component<Prop, {}> {
             .replace('MPI', 'PKV');
         return met;
       }
-
-      const facMetricsSummaries = this.props.profile.metrics;
-      if (facMetricsSummaries && facMetricsSummaries.length>0) {
-        facMetricsSummaries.map(x => (
-            x = formattedMetrics(x)
-        ))
+      let facMetricsSummaries = [];
+      let xfacMetricsSummaries = this.props.profile.metrics;
+      if (xfacMetricsSummaries && xfacMetricsSummaries.length>0) {
+        const dwapi=xfacMetricsSummaries.filter(x=>x.measure.name==="DwapiVersion")[0];
+        if (dwapi) {
+          facMetricsSummaries = xfacMetricsSummaries.filter(x => {
+            var a = moment(dwapi.createDate);
+            var b = moment(x.createDate);
+            return a.diff(b, 'days') < 1
+          })
+          facMetricsSummaries.map(x => (
+              x = formattedMetrics(x)
+          ))
+        }
       }
 
 
