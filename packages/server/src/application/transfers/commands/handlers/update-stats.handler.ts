@@ -4,6 +4,7 @@ import {
   EventPublisher,
   ICommandHandler,
 } from '@nestjs/cqrs';
+import { LogManifestCommand } from '../log-manifest.command';
 import {CACHE_MANAGER, Inject, Logger} from '@nestjs/common';
 import {
   Facility,
