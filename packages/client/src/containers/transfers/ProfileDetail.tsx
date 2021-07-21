@@ -116,6 +116,10 @@ export class ProfileDetail extends Component<Prop, {}> {
         (x) => x.docket.name === "MGS"
       );
 
+      const mnchSummaries = this.props.profile.summaries!.filter(
+          (x) => x.docket.name === "MNCH"
+      );
+
       const formattedMetrics=(met:any)=> {
         met.measure.display= met.measure.display
             .replace('Emr', 'EMR')
@@ -421,6 +425,18 @@ export class ProfileDetail extends Component<Prop, {}> {
                   {/*    />*/}
                   {/*  </DataTable>*/}
                   {/*</TabPanel>*/}
+                  <TabPanel header="MNCH">
+                    <DataTable value={mnchSummaries}>
+                      <Column field="extract.display" header="Extract" />
+                      <Column field="recieved" header="Recieved" body={this.numRecTemplate}/>
+                      <Column field="expected" header="Expected" body={this.numExpTemplate}/>
+                      <Column
+                          field="updated"
+                          header="Update"
+                          body={this.date2Template}
+                      />
+                    </DataTable>
+                  </TabPanel>
                 </TabView>
               </div>
               <div className="p-col-4">
