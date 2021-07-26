@@ -116,6 +116,10 @@ export class ProfileDetail extends Component<Prop, {}> {
         (x) => x.docket.name === "MGS"
       );
 
+      const mnchSummaries = this.props.profile.summaries!.filter(
+          (x) => x.docket.name === "MNCH"
+      );
+
       const formattedMetrics=(met:any)=> {
         met.measure.display= met.measure.display
             .replace('Emr', 'EMR')
@@ -253,6 +257,7 @@ export class ProfileDetail extends Component<Prop, {}> {
       const hts_value = [];
       const mpi_value = [];
       const mgs_value = [];
+      const mnch_value = [];
       for (const manifest of filteredManifests) {
         const logDate = new Date(manifest.logDate).toLocaleDateString('en-GB', { month: 'short', year: 'numeric' }).replace(/ /g, '-');
         if (!categories.includes(logDate)) {
@@ -289,6 +294,16 @@ export class ProfileDetail extends Component<Prop, {}> {
           mpi_value.push(mpi[mpi.length -1].patientCount);
         } else {
           mpi_value.push(null);
+        }
+
+        const mnch = filteredManifests.filter((obj: { docket: string; logDate: { toLocaleDateString: (arg0: string, arg1: { month: string; year: string; })
+                => { replace: (arg0: RegExp, arg1: string) => string; }; }; }) => obj.docket === 'MNCH'
+            && new Date(obj.logDate.toString()).toLocaleDateString('en-GB', { month: 'short', year: 'numeric' }).replace(/ /g, '-') === logDate);
+
+        if (mnch && mnch.length > 0) {
+          mnch_value.push(mnch[mnch.length -1].patientCount);
+        } else {
+          mnch_value.push(null);
         }
       }
 
@@ -328,6 +343,9 @@ export class ProfileDetail extends Component<Prop, {}> {
         }, {
           name: 'PKV',
           data: mpi_value
+        },{
+          name: 'MNCH',
+          data: mnch_value
         }],
 
         responsive: {
@@ -421,6 +439,18 @@ export class ProfileDetail extends Component<Prop, {}> {
                   {/*    />*/}
                   {/*  </DataTable>*/}
                   {/*</TabPanel>*/}
+                  <TabPanel header="MNCH">
+                    <DataTable value={mnchSummaries}>
+                      <Column field="extract.display" header="Extract" />
+                      <Column field="recieved" header="Recieved" body={this.numRecTemplate}/>
+                      <Column field="expected" header="Expected" body={this.numExpTemplate}/>
+                      <Column
+                          field="updated"
+                          header="Update"
+                          body={this.date2Template}
+                      />
+                    </DataTable>
+                  </TabPanel>
                 </TabView>
               </div>
               <div className="p-col-4">
