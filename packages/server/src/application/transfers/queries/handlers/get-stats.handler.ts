@@ -27,8 +27,8 @@ export class GetStatsHandler implements IQueryHandler<GetStatsQuery, ManifestDto
           if (m.start) {
             const today = moment(new Date());
             const sent = moment(m.start);
-            const diffDays = today.diff(sent, 'hours');
-            if (diffDays > 3) {
+            const diffHours = today.diff(sent, 'hours');
+            if (diffHours > 6) {
               m.handshakeStatus = 'Incomplete';
             }
           }
