@@ -121,7 +121,7 @@ export class ManifestRepository extends BaseRepository<Manifest>
       { isCurrent: false },
     );
 
-    for (const docket of ['HTS', 'NDWH', 'MPI', 'MGS', 'MNCH']) {
+    for (const docket of ['HTS', 'NDWH', 'MPI', 'MGS', 'MNCH', 'PREP']) {
       const latest = await this.model
         .find({ code, docket })
         .sort({ logDate: -1 })

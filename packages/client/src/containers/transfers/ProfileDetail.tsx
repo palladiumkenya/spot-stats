@@ -120,6 +120,10 @@ export class ProfileDetail extends Component<Prop, {}> {
           (x) => x.docket.name === "MNCH"
       );
 
+      const prepSummaries = this.props.profile.summaries!.filter(
+          (x) => x.docket.name === "PREP"
+      );
+
       const formattedMetrics=(met:any)=> {
         met.measure.display= met.measure.display
             .replace('Emr', 'EMR')
@@ -258,6 +262,7 @@ export class ProfileDetail extends Component<Prop, {}> {
       const mpi_value = [];
       const mgs_value = [];
       const mnch_value = [];
+      const prep_value = [];
       for (const manifest of filteredManifests) {
         const logDate = new Date(manifest.logDate).toLocaleDateString('en-GB', { month: 'short', year: 'numeric' }).replace(/ /g, '-');
         if (!categories.includes(logDate)) {
@@ -305,6 +310,16 @@ export class ProfileDetail extends Component<Prop, {}> {
         } else {
           mnch_value.push(null);
         }
+
+        const prep = filteredManifests.filter((obj: { docket: string; logDate: { toLocaleDateString: (arg0: string, arg1: { month: string; year: string; })
+                => { replace: (arg0: RegExp, arg1: string) => string; }; }; }) => obj.docket === 'PREP'
+            && new Date(obj.logDate.toString()).toLocaleDateString('en-GB', { month: 'short', year: 'numeric' }).replace(/ /g, '-') === logDate);
+
+        if (prep && prep.length > 0) {
+          prep_value.push(prep[prep.length -1].patientCount);
+        } else {
+          prep_value.push(null);
+        }
       }
 
       const getUploadHistoryOptions = {
@@ -346,6 +361,9 @@ export class ProfileDetail extends Component<Prop, {}> {
         },{
           name: 'MNCH',
           data: mnch_value
+        },{
+          name: 'PREP',
+          data: prep_value
         }],
 
         responsive: {
@@ -441,6 +459,18 @@ export class ProfileDetail extends Component<Prop, {}> {
                   {/*</TabPanel>*/}
                   <TabPanel header="MNCH">
                     <DataTable value={mnchSummaries}>
+                      <Column field="extract.display" header="Extract" />
+                      <Column field="recieved" header="Recieved" body={this.numRecTemplate}/>
+                      <Column field="expected" header="Expected" body={this.numExpTemplate}/>
+                      <Column
+                          field="updated"
+                          header="Update"
+                          body={this.date2Template}
+                      />
+                    </DataTable>
+                  </TabPanel>
+                  <TabPanel header="PREP">
+                    <DataTable value={prepSummaries}>
                       <Column field="extract.display" header="Extract" />
                       <Column field="recieved" header="Recieved" body={this.numRecTemplate}/>
                       <Column field="expected" header="Expected" body={this.numExpTemplate}/>
