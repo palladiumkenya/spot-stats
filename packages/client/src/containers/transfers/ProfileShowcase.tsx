@@ -24,8 +24,8 @@ interface State {
   indicators: Indicator[];
 }
 
-let url = `https://${window.location.hostname}:4702/api/v1/transfers/facilities/`;
-let indicatorsUrl = `https://${window.location.hostname}:4702/api/v1/metrics/facmetrics/getIndicatorsByFacilityId/`;
+let url = `https://${window.location.hostname}:4720/api/v1/transfers/facilities/`;
+let indicatorsUrl = `https://${window.location.hostname}:4720/api/v1/metrics/facmetrics/getIndicatorsByFacilityId/`;
 
 class ProfileShowcase extends Component<Props, State> {
   private messages: any;
@@ -53,6 +53,7 @@ class ProfileShowcase extends Component<Props, State> {
     try {
       let res = await axios.get(`${url}${id}`);
       let data = res.data;
+      console.log('data', data)
       this.setState({
         profileSummary: data,
       });
