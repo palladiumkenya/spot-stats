@@ -312,49 +312,63 @@
         "name": "PrepBehaviourRiskExtract",
         "display": "Prep Behaviour Risk",
         "isPatient": false,
-        "rank": 31.00
+        "rank": 31.0
       },
       {
         "_id": "8265201a-9db2-11eb-a8b3-0242ac130003",
         "name": "PrepVisitExtract",
         "display": "Prep Visit",
         "isPatient": false,
-        "rank": 32.00
+        "rank": 32.0
       },
       {
         "_id": "8265213c-9db2-11eb-a8b3-0242ac130003",
         "name": "PrepLabExtract",
         "display": "Prep Labs",
         "isPatient": false,
-        "rank": 33.00
+        "rank": 33.0
       },
       {
         "_id": "82652358-9db2-11eb-a8b3-0242ac130003",
         "name": "PrepAdverseEventExtract",
         "display": "Prep Adverse Events",
         "isPatient": false,
-        "rank": 35.00
+        "rank": 35.0
       },
       {
         "_id": "82652470-9db2-11eb-a8b3-0242ac130003",
         "name": "PrepCareTerminationExtract",
         "display": "Prep Care Termination",
         "isPatient": false,
-        "rank": 35.00
+        "rank": 35.0
       },
       {
         "_id": "82652272-9db2-11eb-a8b3-0242ac130003",
         "name": "PrepPharmacyExtract",
         "display": "Prep Pharmacy",
         "isPatient": false,
-        "rank": 34.00
+        "rank": 34.0
       },
       {
         "_id": "82651dea-9db2-11eb-a8b3-0242ac130003",
         "name": "PatientPrepExtract",
         "display": "Patient Prep",
         "isPatient": true,
-        "rank": 30.00
+        "rank": 30.0
+      }
+    ]
+  },
+  {
+    "_id": "6dc94fe8-bf1e-11e9-9cb5-2a2ae2dbcce4",
+    "name": "CRS",
+    "display": "CRS",
+    "extracts": [
+      {
+        "_id": "2F8A4A81-FEFB-49BF-AB07-C9F529F6EA13",
+        "name": "ClientRegistryExtract",
+        "display": "Client Registry Service",
+        "isPatient": true,
+        "rank": 1.0
       }
     ]
   }

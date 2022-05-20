@@ -11,7 +11,7 @@ import axios from "axios";
 import { Growl } from "primereact/growl";
 import { Messages } from "primereact/messages";
 import { ProfileDetail } from "./ProfileDetail";
-import {Indicator} from "./models/indicator";
+import { Indicator } from "./models/indicator";
 
 interface MatchParams {
   id: string;
@@ -37,7 +37,7 @@ class ProfileShowcase extends Component<Props, State> {
         summaries: [],
         manifests: [],
       },
-      indicators: []
+      indicators: [],
     };
   }
 
@@ -65,7 +65,7 @@ class ProfileShowcase extends Component<Props, State> {
     }
   };
 
-  loadIndicators =  async (id: string) => {
+  loadIndicators = async (id: string) => {
     this.messages.clear();
     if (!id) {
       this.messages.show({
@@ -88,7 +88,7 @@ class ProfileShowcase extends Component<Props, State> {
         detail: `${e}`,
       });
     }
-  }
+  };
 
   async componentDidMount() {
     this.loadData(this.props.match.params.id);
@@ -105,7 +105,10 @@ class ProfileShowcase extends Component<Props, State> {
         <hr />
         {this.state.profileSummary ? (
           <div>
-            <ProfileDetail profile={this.state.profileSummary}  indicators={this.state.indicators}/>
+            <ProfileDetail
+              profile={this.state.profileSummary}
+              indicators={this.state.indicators}
+            />
           </div>
         ) : (
           <div />
