@@ -367,7 +367,7 @@
         "_id": "2F8A4A81-FEFB-49BF-AB07-C9F529F6EA13",
         "name": "ClientRegistryExtract",
         "display": "Client Registry Service",
-        "isPatient": false,
+        "isPatient": true,
         "rank": 1.00
       }
     ]
