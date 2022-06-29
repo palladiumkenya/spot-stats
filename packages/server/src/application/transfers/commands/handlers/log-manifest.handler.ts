@@ -102,6 +102,7 @@ export class LogManifestHandler implements ICommandHandler<LogManifestCommand> {
         command.patientCount,
         command.cargo,
         command.isCurrent,
+        command.firstTimeUpload,
     );
 
     manifest.start = command.start;

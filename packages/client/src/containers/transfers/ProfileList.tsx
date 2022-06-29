@@ -116,6 +116,15 @@ export class ProfileList extends Component<Props, {}> {
                     } else if (l.docket === 'MPI') {
                         l.docket = 'PKV';
                     }
+
+                    if (typeof l.firstTimeUpload === "boolean" && l.firstTimeUpload === true) {
+                        l.firstTimeUpload = 'YES';
+                    } else if (typeof l.firstTimeUpload === "boolean" && l.firstTimeUpload === false) {
+                        l.firstTimeUpload = 'NO';
+                    }else{
+                        l.firstTimeUpload = '';
+                    }
+
                     return l;
                 })}
                 header={header}
@@ -161,6 +170,7 @@ export class ProfileList extends Component<Props, {}> {
                     sortable={true}
                 />
                 <Column field="logDate" header="" body={this.elapsedTemplate}/>
+                <Column field="firstTimeUpload" header="First Time Upload" sortable={true}/>
                 <Column
                     body={this.manageTemplate}
                     style={{textAlign: "center", width: "5em"}}

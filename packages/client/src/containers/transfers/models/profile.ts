@@ -18,4 +18,5 @@ export interface Profile {
   session?: string,
   tag?: string,
   handshakeStatus?: string,
+  firstTimeUpload?: string,
 }
