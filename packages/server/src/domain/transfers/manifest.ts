@@ -25,6 +25,7 @@ export class Manifest extends AggregateRoot {
     public patientCount: number,
     public cargo: any,
     public isCurrent: boolean,
+    public firstTimeUpload: boolean,
   ) {
     super();
     this._id = uuid.v1();

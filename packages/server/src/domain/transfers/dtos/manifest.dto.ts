@@ -18,4 +18,5 @@ export interface ManifestDto {
   cargo?: any;
   isCurrent?: boolean;
   handshakeStatus?: string;
+  firstTimeUpload?: boolean;
 }
