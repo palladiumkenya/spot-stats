@@ -6,7 +6,7 @@ const webpack = require("webpack");
 
 common.devServer.proxy = {
   "/api/": {
-    target: "https://localhost4720",
+    target: "https://localhost:4720",
     pathRewrite: { "^/api": "" }
   }
 };
