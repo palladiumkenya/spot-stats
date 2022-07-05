@@ -13,7 +13,7 @@ interface State {
   activeDocket: Docket;
 }
 
-const url = `https://${window.location.hostname}:4720/api/v1/courts/dockets/`;
+const url = `https://${window.location.hostname}4720/api/v1/courts/dockets/`;
 
 export class DocketScene extends Component<{}, State> {
   private messages: any;
