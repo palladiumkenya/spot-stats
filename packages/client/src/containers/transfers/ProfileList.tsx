@@ -145,7 +145,7 @@ export class ProfileList extends Component<Props, {}> {
                         } else if (typeof l.firstTimeUpload === "string" && l.firstTimeUpload === 'false') {
                             l.firstTimeUpload = 'NO';
                         }else{
-                            l.firstTimeUpload = '';
+                            l.firstTimeUpload = 'NO';
                         }
                     }
                     return l;
