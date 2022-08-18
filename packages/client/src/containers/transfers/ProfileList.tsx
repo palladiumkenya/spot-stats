@@ -148,6 +148,7 @@ export class ProfileList extends Component<Props, {}> {
                             l.firstTimeUpload = 'NO';
                         }
                     }
+                    console.log('firstTimeUpload here --> ', l.firstTimeUpload);
                     return l;
                 })}
                 header={header}
