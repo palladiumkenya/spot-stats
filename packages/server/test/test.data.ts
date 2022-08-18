@@ -152,6 +152,7 @@ export const getManifests = (count = 2) => {
         (i + 1) * 45,
         '',
         i === 1,
+          i === 1,
       ),
     );
   }

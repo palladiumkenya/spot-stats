@@ -44,6 +44,7 @@ export class ManifestRepository extends BaseRepository<Manifest>
             docket: 1,
             patientCount: 1,
             isCurrent: 1,
+            firstTimeUpload: 1,
             start: 1,
             end: 1,
             session: 1,
@@ -130,6 +131,13 @@ export class ManifestRepository extends BaseRepository<Manifest>
       if (latest && latest.length > 0) {
         latest[0].isCurrent = true;
         await this.update(latest[0]);
+      }
+
+      const firstTime = await this.model
+          .find({ code, docket });
+      if (firstTime && firstTime.length === 1) {
+        firstTime[0].firstTimeUpload = true;
+        await this.update(firstTime[0]);
       }
     }
   }
