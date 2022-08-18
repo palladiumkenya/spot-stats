@@ -187,6 +187,13 @@
         "display": "Hts Partner Notification Services",
         "isPatient": false,
         "rank": 7
+      },
+      {
+        "_id": "6ff63de4-7fa9-433c-a7ac-a4c925a63174",
+        "name": "HtsEligibilityExtract",
+        "display": "Hts Eligibility Screening",
+        "isPatient": false,
+        "rank": 8
       }
     ]
   },
