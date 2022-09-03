@@ -1,4 +1,4 @@
-import {Controller, Get, Logger, Param, Post} from '@nestjs/common';
+import {Controller, Get, Logger, Param, Post, Body} from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { GetMetricQuery } from '../queries/get-metric.query';
 import {LogIndicatorCommand} from '../commands/log-indicator.command';
@@ -33,6 +33,24 @@ export class MetricsController {
 
     return await this.commandBus.execute(new LogIndicatorCommand('1', 12769,
         'St Orsola Mission Hospital', 'TX_CURR', '1000', new Date(), 'EMR', '5'));
+  }
+
+  @Post('dwhIndicator')
+  async createNewDWHIndicator(@Body() indicator: any) {
+    return await this.commandBus.execute(
+      new LogIndicatorCommand(
+        null,
+        indicator.facilityCode,
+        indicator.facilityName,
+        indicator.name,
+        null,
+        null,
+        indicator.stage,
+        null,
+        indicator.value,
+        indicator.indicatorDate,
+      ),
+    );
   }
 
   @Post('updateIndicator')
