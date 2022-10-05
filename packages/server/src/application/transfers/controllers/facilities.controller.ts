@@ -10,15 +10,15 @@ export class FacilitiesController {
     private readonly queryBus: QueryBus,
   ) {}
 
-  @Get(':id')
-  async getFacilityStats(@Param('id') id) {
-    const result = await this.queryBus.execute(new GetSummaryQuery(id));
-    return result;
-  }
-
   @Get('all')
   async getAllFacilityStats() {
     const result = await this.queryBus.execute(new GetAllSummaryQuery());
+    return result;
+  }
+
+  @Get(':id')
+  async getFacilityStats(@Param('id') id) {
+    const result = await this.queryBus.execute(new GetSummaryQuery(id));
     return result;
   }
 }
