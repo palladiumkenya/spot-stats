@@ -31,6 +31,25 @@ export class FacilityRepository extends BaseRepository<Facility>
     return null;
   }
 
+  async getSummaryAll(): Promise<Facility> {
+    const result = await this.model
+      .find(
+        { code: { $ne: null } },
+        {
+          code: 1,
+          name: 1,
+          summaries: 1,
+          masterFacility: 1,
+          _id: 0,
+        },
+      )
+      .exec();
+    if (result) {
+      return result;
+    }
+    return null;
+  }
+
   updateMasterFacility(code: number): Promise<Facility> {
     return undefined;
   }

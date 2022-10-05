@@ -22,9 +22,9 @@ export class UpdateFacilityHandler
       this.publisher.mergeObjectContext(mf).commit();
       try {
         await this.manifestRepository.syncManifest(mf.code, mf);
-        Logger.log(`${mf.name} erroy manifest  synced!`);
+        Logger.log(`${mf.name} manifest  synced!`);
       } catch (e) {
-        Logger.log(`erroy manifest  sync!`);
+        Logger.log(`error manifest  sync!`);
       }
     }
     return updated.length;
