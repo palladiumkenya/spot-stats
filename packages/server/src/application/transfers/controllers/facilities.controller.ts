@@ -10,6 +10,10 @@ export class FacilitiesController {
     private readonly queryBus: QueryBus,
   ) {}
 
+  /**
+   * @description : This endpoint gets the summaries for all facilities
+   */
+
   @Get('all')
   async getAllFacilityStats() {
     const result = await this.queryBus.execute(new GetAllSummaryQuery());
