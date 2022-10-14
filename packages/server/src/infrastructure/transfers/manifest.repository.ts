@@ -74,7 +74,11 @@ export class ManifestRepository extends BaseRepository<Manifest>
   async getCurrentDocket(facId: string, docketId: string): Promise<any> {
     if (facId) {
       const facResuls = await this.model
-        .find({ isCurrent: true, facility: facId, docket: docketId })
+        .find({
+          isCurrent: true,
+          facility: facId,
+          docket: docketId,
+        })
         .populate(Facility.name.toLowerCase())
         .exec();
       if (facResuls && facResuls.length > 0) {
@@ -144,5 +148,28 @@ export class ManifestRepository extends BaseRepository<Manifest>
       f.facilityInfo.masterFacility = masterFacility;
       await this.update(f);
     }
+  }
+
+  async updateSession(): Promise<any> {
+    const result = await this.model
+      .updateMany(
+        {
+          $where: 'this.patientCount == this.recievedCount',
+          isCurrent: true,
+          end: null,
+          session: /.*-.*/i,
+        },
+        {
+          $set: { end: new Date().toISOString() },
+        },
+        {
+          multi: true,
+        },
+      )
+      .exec();
+    if (result) {
+      return result;
+    }
+    return null;
   }
 }

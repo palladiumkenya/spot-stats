@@ -21,12 +21,15 @@ import { MessagingModule } from '../../infrastructure/messging/messaging.module'
 import { ConfigModule } from '../../config/config.module';
 import {LogHandshakeHandler} from './commands/handlers/log-handshake.handler';
 import { GetAllSummaryHandler } from './queries/handlers/get-all-summaries.handler';
+import { UpdateSessionJob } from './jobs/update-session.job';
+import { UpdateSessionHandler } from './queries/handlers/update-session.handler';
 
 const CommandHandlers = [
   LogManifestHandler,
   UpdateStatsHandler,
   InitializeSummariesHandler,
-  LogHandshakeHandler
+  LogHandshakeHandler,
+  UpdateSessionHandler
 ];
 const EventHandlers = [FacilityEnrolledHandler, ManifestLoggedHandler];
 const QueryHandlers = [
@@ -48,9 +51,17 @@ const QueryHandlers = [
     TransfersInfrastructureModule,
     RegistriesInfrastructureModule,
     CourtsInfrastructureModule,
-    CacheModule.register({ttl: null}),
+    CacheModule.register({ ttl: null }),
   ],
   controllers: [FacilitiesController, ManifestsController],
-  providers: [...CommandHandlers, ...QueryHandlers, ...EventHandlers],
+  providers: [...CommandHandlers, ...QueryHandlers, ...EventHandlers, UpdateSessionJob],
 })
-export class TransfersModule {}
+export class TransfersModule {
+  constructor(
+    private readonly updateSessions: UpdateSessionJob
+  ) {}
+
+  async update() {
+    await this.updateSessions.update();
+  }
+}

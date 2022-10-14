@@ -6,6 +6,7 @@ import { GetStatsQuery } from '../queries/get-stats.query';
 import { RequestSyncDto } from 'src/domain/transfers/dtos/request-sync.dto';
 import { RequestStatsCommand } from '../commands/request-stats.command';
 import { GetMisssingStatsQuery } from '../queries/get-misssing-stats.query';
+import { UpdateSessionQuery } from '../queries/update-session.query';
 
 @Controller('manifests')
 export class ManifestsController {
@@ -60,5 +61,10 @@ export class ManifestsController {
         new RequestStatsCommand(requestSync.codes),
       );
     }
+  }
+
+  @Get('updatesessions')
+  async updateSession(): Promise<any> {
+    return this.queryBus.execute(new UpdateSessionQuery());
   }
 }
