@@ -20,13 +20,13 @@ jobs:
            cd /apps/githubworkflows 
            sudo rm -rf spot-stats
            sudo mkdir spot-stats
-           sudo chown -R cicd2:cicd2 spot-stats
+           sudo chown -R cicd:cicd spot-stats
            git config --global --add safe.directory /apps/githubworkflows/spot-stats
            cd /apps/githubworkflows/spot-stats
            git clone -b staging https://github.com/palladiumkenya/spot-stats.git .
-           sudo chown -R cicd2:cicd2 /apps/githubworkflows/spot-stats
+           sudo chown -R cicd:cicd /apps/githubworkflows/spot-stats
            git status
-           sudo cp /apps/dockerApps/spotstaging/spot-stats/packages/server/secrets/ /apps/githubworkflows/spot-stats/packages/server/
+           sudo cp -r /apps/dockerApps/spotstaging/spot-stats/packages/server/secrets/ /apps/githubworkflows/spot-stats/packages/server/
            sudo cp /apps/dockerApps/spotstaging/spot-stats/packages/server/production.env /apps/githubworkflows/spot-stats/packages/server/
            sudo docker build -t cicdapplication/statsqa:latest .
            sudo docker stop spot-statsqa
