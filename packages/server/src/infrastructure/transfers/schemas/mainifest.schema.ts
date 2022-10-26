@@ -21,4 +21,5 @@ export const manifestSchema = new mongoose.Schema({
   end: Date,
   session: String,
   tag: String,
+  firstTimeUpload: Boolean,
 });

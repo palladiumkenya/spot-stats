@@ -1,4 +1,5 @@
 {
+    "DB_STATE": "Stale Databases status. Database with current visits being less that 50% of avergae visits from April 2022 are considered stale",
     "HTS_TESTED": "Individuals who received a HIV test. Computation : Count of all individuals who received HIV Testing Services (HTS) and received their test results in a given month",
     "HTS_TESTED_POS": "Individuals who tested positive during a HIV test. Computation: Count of all individuals with a positive in a given month",
     "HTS_LINKED": "Individuals who tested positive and have been enrolled to care. Computation: Count of all individuals. Computation: Count of all individuals with a linkage record in the EMR in a given month ",
