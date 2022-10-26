@@ -28,7 +28,7 @@ jobs:
            git status
            sudo cp -r /apps/dockerApps/spot-stats/packages/server/secrets/ /apps/githubworkflows/spot-stats/packages/server/
            sudo cp /apps/dockerApps/spot-stats/packages/server/production.env /apps/githubworkflows/spot-stats/packages/server/
-           sudo docker build -t cicdapplication/stats:latest.
+           sudo docker build -t cicdapplication/stats:latest .
            sudo docker stop spotstats 
            sudo docker rm spotstats
            sudo docker run -p 4720:4720 -d --name=spotstats --restart=always cicdapplication/stats:latest
