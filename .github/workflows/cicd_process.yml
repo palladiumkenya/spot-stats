@@ -1,0 +1,34 @@
+name: deploy to spot-production
+on:
+  push:
+    branches: [ master ]
+jobs:
+
+  build:
+    name: Deploy
+    runs-on: ubuntu-latest
+    steps:
+    - name: executing remote connection
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.CICD_SECRET }}
+        port: ${{ secrets.PORT }}
+        command_timeout: 200m
+        script: |
+           cd /apps/githubworkflows/spot/ 
+           sudo rm -rf spot-stats
+           sudo mkdir spot-stats
+           sudo chown -R cicd:cicd spot-stats
+           git config --global --add safe.directory /apps/githubworkflows/spot/spot-stats
+           cd /apps/githubworkflows/spot/spot-stats
+           git clone https://github.com/palladiumkenya/spot-stats.git .
+           sudo chown -R cicd:cicd /apps/githubworkflows/spot/spot-stats
+           git status
+           sudo cp -r /apps/dockerApps/spot-stats/packages/server/secrets/ /apps/githubworkflows/spot-stats/packages/server/
+           sudo cp /apps/dockerApps/spot-stats/packages/server/production.env /apps/githubworkflows/spot-stats/packages/server/
+           sudo docker build -t cicdapplication/stats:latest.
+           sudo docker stop spotstats 
+           sudo docker rm spotstats
+           sudo docker run -p 4720:4720 -d --name=spotstats --restart=always cicdapplication/stats:latest
