@@ -34,7 +34,7 @@ module.exports = {
         "X-Requested-With, content-type, Authorization"
     },
     proxy: {
-      "/api": "https://localhost:4702"
+      "/api": "https://localhost:4720"
     }
   },
   devtool: "source-map",

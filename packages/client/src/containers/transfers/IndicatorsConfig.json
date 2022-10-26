@@ -12,5 +12,7 @@
     "TX_PVLS": "Percentage of ART patients with a suppressed viral load (<1000 copies/ml) within the past 12 months. Computation: Numerator: Count individuals with a suppressed VL (<1000copies/ml)in the last 12 months Denominator: Count individuals with a VL result documented in the past 12 months ",
     "MMD": "Individuals dispensed drugs for Multi month dispense (>= 90 days).Computation: Count individuals who have been dispensed drugs >=90 days",
     "RETENTION_ON_ART_12_MONTHS": "Individuals who are still alive and on ART 12 months after initiating treatment. : Count individuals newly initiated on ART 12 months prior",
-    "RETENTION_ON_ART_VL_1000_12_MONTHS": "Individuals who are suppressed 12 months after initiating treatment. Computation: Count individuals who initiated ART are virally suppressed 12 months after initiating ART "
+    "RETENTION_ON_ART_VL_1000_12_MONTHS": "Individuals who are suppressed 12 months after initiating treatment. Computation: Count individuals who initiated ART are virally suppressed 12 months after initiating ART ",
+    "EMR_ETL_REFRESH": "Last EMR ETL Refresh date",
+    "LAST_ENCOUNTER_CREATE_DATE":"Last EMR Encounter Create date"
 }
