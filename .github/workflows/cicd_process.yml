@@ -26,8 +26,8 @@ jobs:
            git clone https://github.com/palladiumkenya/spot-stats.git .
            sudo chown -R cicd:cicd /apps/githubworkflows/spot/spot-stats
            git status
-           sudo cp -r /apps/dockerApps/spot-stats/packages/server/secrets/ /apps/githubworkflows/spot-stats/packages/server/
-           sudo cp /apps/dockerApps/spot-stats/packages/server/production.env /apps/githubworkflows/spot-stats/packages/server/
+           sudo cp -r /apps/dockerApps/spot-stats/packages/server/secrets/ /apps/githubworkflows/spot/spot-stats/packages/server/
+           sudo cp /apps/dockerApps/spot-stats/packages/server/production.env /apps/githubworkflows/spot/spot-stats/packages/server/
            sudo docker build -t cicdapplication/stats:latest .
            sudo docker stop spotstats 
            sudo docker rm spotstats
