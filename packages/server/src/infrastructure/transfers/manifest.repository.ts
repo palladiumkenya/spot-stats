@@ -51,6 +51,7 @@ export class ManifestRepository extends BaseRepository<Manifest>
             facility: {
               _id: '$facilityInfo._id',
               masterFacility: '$facilityInfo.masterFacility',
+              subcounty: '$facilityInfo.masterFacility.subcounty',
             },
             recievedCount: 1,
             recievedDate: 1,

@@ -144,6 +144,13 @@ export class ProfileList extends Component<Props, {}> {
                     filterMatchMode={"contains"}
                 />
                 <Column
+                    field="facility.masterFacility.subcounty"
+                    header="Sub-county"
+                    sortable={true}
+                    filter={true}
+                    filterMatchMode={"contains"}
+                />
+                <Column
                     field="facility.masterFacility.mechanism.name"
                     header="Partner"
                     sortable={true}
