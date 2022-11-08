@@ -26,6 +26,24 @@ export class ProfileList extends Component<Props, {}> {
         super(props);
 
         this.exportCSV = this.exportCSV.bind(this);
+        this.colorTemplate = this.colorTemplate.bind(this);
+        this.rowClassName = this.rowClassName.bind(this);
+
+    }
+
+    colorTemplate = (rowData: any, column: any) => {
+        if(rowData['firstTimeUpload'] === 'YES'){
+            var setColor = 'white'
+        }else{
+            var setColor = 'silver'
+        }
+        return (<span style={{color: setColor}}>{rowData['firstTimeUpload']}</span>);
+    }
+
+    rowClassName(rowData:any) {
+        let firstTimeUpload = rowData.firstTimeUpload;
+
+        return {'p-highlight' : (firstTimeUpload === 'YES')};
     }
 
     exportCSV() {
@@ -91,6 +109,8 @@ export class ProfileList extends Component<Props, {}> {
         );
     };
 
+
+
     render() {
         const header = (
             <div>
@@ -109,13 +129,26 @@ export class ProfileList extends Component<Props, {}> {
         );
 
         return (
-            <DataTable
+            <DataTable rowClassName={this.rowClassName}
                 value={this.props.profiles.map(l => {
                     if (l.docket === 'NDWH') {
                         l.docket = 'C&T';
                     } else if (l.docket === 'MPI') {
                         l.docket = 'PKV';
                     }
+
+                    if (typeof l.firstTimeUpload === "boolean"){
+                        l.firstTimeUpload = String(l.firstTimeUpload);
+
+                        if (typeof l.firstTimeUpload === "string" && l.firstTimeUpload === 'true') {
+                            l.firstTimeUpload = 'YES';
+                        } else if (typeof l.firstTimeUpload === "string" && l.firstTimeUpload === 'false') {
+                            l.firstTimeUpload = 'NO';
+                        }else{
+                            l.firstTimeUpload = 'NO';
+                        }
+                    }
+
                     return l;
                 })}
                 header={header}
@@ -168,6 +201,8 @@ export class ProfileList extends Component<Props, {}> {
                     sortable={true}
                 />
                 <Column field="logDate" header="" body={this.elapsedTemplate}/>
+                <Column field="firstTimeUpload" header="First Time Upload" sortable={true} body={this.colorTemplate}/>
+
                 <Column
                     body={this.manageTemplate}
                     style={{textAlign: "center", width: "5em"}}

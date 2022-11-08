@@ -59,6 +59,7 @@ export class MessagingService {
             manifest.patientCount,
             manifest.cargo,
             true,
+            false,
         );
 
         cmd.start = manifest.start;

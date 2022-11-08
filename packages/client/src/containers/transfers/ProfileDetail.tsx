@@ -231,7 +231,9 @@ export class ProfileDetail extends Component<Prop, {}> {
         ind.name=ind.name.split('_').join(' ');
         if (ind.value)
         {
-          ind.value=Number(ind.value).toLocaleString();
+          if (!['DB STATE', 'LAST ENCOUNTER CREATE DATE'].includes(ind.name)){
+            ind.value=Number(ind.value).toLocaleString();
+          }
         }
         if (ind.dwhValue)
         {
