@@ -191,6 +191,9 @@ export class ProfileDetail extends Component<Prop, {}> {
 
       let indicatorArray: any[] = [];
       const indicators = this.props.indicators;
+      indicators.forEach(obj => {
+        if(obj.name === "HTS_TST_POS") obj.name = "HTS_TESTED_POS";
+      })
       const hiddenIndicators = [
         'TX_RTT', 'TX_ML', 'MMD', 'TX_PVLS', 'HTS_LINKED'
       ];
