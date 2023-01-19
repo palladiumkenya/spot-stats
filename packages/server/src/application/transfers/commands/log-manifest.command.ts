@@ -3,6 +3,7 @@ export class LogManifestCommand {
   public end?: Date;
   public session?: string;
   public tag?: string;
+  // @ts-ignore
   constructor(
     public id: string,
     public facilityCode: number,
@@ -13,6 +14,7 @@ export class LogManifestCommand {
     public patientCount: number,
     public cargo: string,
     public isCurrent: boolean,
+    public firstTimeUpload: boolean,
     public recievedCount?: number,
     public recievedDate?: Date,
   ) {}

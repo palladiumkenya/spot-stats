@@ -44,6 +44,7 @@ export class ManifestRepository extends BaseRepository<Manifest>
             docket: 1,
             patientCount: 1,
             isCurrent: 1,
+            firstTimeUpload: 1,
             start: 1,
             end: 1,
             session: 1,
@@ -51,6 +52,7 @@ export class ManifestRepository extends BaseRepository<Manifest>
             facility: {
               _id: '$facilityInfo._id',
               masterFacility: '$facilityInfo.masterFacility',
+              subcounty: '$facilityInfo.masterFacility.subcounty',
             },
             recievedCount: 1,
             recievedDate: 1,
@@ -74,7 +76,11 @@ export class ManifestRepository extends BaseRepository<Manifest>
   async getCurrentDocket(facId: string, docketId: string): Promise<any> {
     if (facId) {
       const facResuls = await this.model
-        .find({ isCurrent: true, facility: facId, docket: docketId })
+        .find({
+          isCurrent: true,
+          facility: facId,
+          docket: docketId,
+        })
         .populate(Facility.name.toLowerCase())
         .exec();
       if (facResuls && facResuls.length > 0) {
@@ -121,7 +127,7 @@ export class ManifestRepository extends BaseRepository<Manifest>
       { isCurrent: false },
     );
 
-    for (const docket of ['HTS', 'NDWH', 'MPI', 'MGS', 'MNCH']) {
+    for (const docket of ['HTS', 'NDWH', 'MPI', 'MGS', 'MNCH', 'PREP', 'CRS']) {
       const latest = await this.model
         .find({ code, docket })
         .sort({ logDate: -1 })
@@ -130,6 +136,13 @@ export class ManifestRepository extends BaseRepository<Manifest>
       if (latest && latest.length > 0) {
         latest[0].isCurrent = true;
         await this.update(latest[0]);
+      }
+
+      const firstTime = await this.model
+          .find({ code, docket });
+      if (firstTime && firstTime.length === 1) {
+        firstTime[0].firstTimeUpload = true;
+        await this.update(firstTime[0]);
       }
     }
   }
@@ -144,5 +157,28 @@ export class ManifestRepository extends BaseRepository<Manifest>
       f.facilityInfo.masterFacility = masterFacility;
       await this.update(f);
     }
+  }
+
+  async updateSession(): Promise<any> {
+    const result = await this.model
+      .updateMany(
+        {
+          $where: 'this.patientCount == this.recievedCount',
+          isCurrent: true,
+          end: null,
+          session: /.*-.*/i,
+        },
+        {
+          $set: { end: new Date().toISOString() },
+        },
+        {
+          multi: true,
+        },
+      )
+      .exec();
+    if (result) {
+      return result;
+    }
+    return null;
   }
 }

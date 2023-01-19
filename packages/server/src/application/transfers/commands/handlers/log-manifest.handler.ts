@@ -36,7 +36,9 @@ export class LogManifestHandler implements ICommandHandler<LogManifestCommand> {
 
   async execute(command: LogManifestCommand): Promise<any> {
     // check if manifest Exists
-    const manifestExists = await this.manifestRepository.get(command.id);
+    const manifestExists = await this.manifestRepository.getByManifestId(
+      command.id,
+    );
     if (manifestExists) {
       return;
     }
@@ -102,6 +104,7 @@ export class LogManifestHandler implements ICommandHandler<LogManifestCommand> {
         command.patientCount,
         command.cargo,
         command.isCurrent,
+        command.firstTimeUpload,
     );
 
     manifest.start = command.start;

@@ -7,4 +7,5 @@ export const masterFacilitySchema = new mongoose.Schema({
   name: String,
   county: Schema.Types.Mixed,
   mechanism: Schema.Types.Mixed,
+  subcounty: String,
 });

@@ -9,6 +9,7 @@ export class MasterFacility extends AggregateRoot {
     public name: string,
     public county?: any,
     public mechanism?: any,
+    public subcounty?: any,
   ) {
     super();
   }

@@ -4,6 +4,7 @@ import { FacilityStatsDto } from './dtos/facility-stats.dto';
 
 export interface IFacilityRepository extends IRepository<Facility> {
   getSummary(id: string): Promise<Facility>;
+  getSummaryAll(): Promise<Facility>;
   findByCode(code: number): Promise<Facility>;
   findWithManifestByCode(code: number): Promise<Facility>;
   updateMasterFacility(code: number): Promise<Facility>;

@@ -22,5 +22,7 @@ export interface IManifestRepository extends IRepository<Manifest> {
 
   updateCurrent(code: number): Promise<any>;
 
+  updateSession(): Promise<any>;
+
   syncManifest(code: number, masterFacility: any): Promise<any>;
 }

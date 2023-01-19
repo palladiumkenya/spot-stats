@@ -8,7 +8,7 @@
     "build": "rimraf dist && tsc -p tsconfig.build.json",
     "format": "prettier --write \"src/**/*.ts\"",
     "start": "NODE_ENV=development ts-node -r tsconfig-paths/register src/main.ts",
-    "start:dev": "NODE_ENV=development tsc-watch -p tsconfig.build.json --onSuccess \"node dist/main.js\"",
+    "start:dev": "set NODE_ENV=development&& tsc-watch -p tsconfig.build.json --onSuccess \"node dist/main.js\"",
     "start:debug": "NODE_ENV=development tsc-watch -p tsconfig.build.json --onSuccess \"node --inspect-brk dist/main.js\"",
     "start:prod": "NODE_ENV=production node dist/main.js",
     "lint": "tslint -p tsconfig.json -c tslint.json",
@@ -32,6 +32,7 @@
     "amqplib": "^0.5.5",
     "cache-manager": "^3.4.0",
     "class-transformer": "^0.2.3",
+    "cron": "^2.1.0",
     "dotenv": "^8.1.0",
     "fast-glob": "^3.0.4",
     "glob": "^7.1.4",
@@ -46,6 +47,7 @@
   "devDependencies": {
     "@nestjs/testing": "6.1.1",
     "@types/cache-manager": "^3.4.0",
+    "@types/cron": "^2.0.0",
     "@types/dotenv": "^6.1.1",
     "@types/express": "4.16.1",
     "@types/glob": "^7.1.1",
@@ -85,4 +87,5 @@
     ],
     "testResultsProcessor": "jest-junit"
   }
+  
 }
