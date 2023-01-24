@@ -25,6 +25,7 @@ export class ReInitializeAllSummariesHandler
   ) {}
 
   async execute(query: ReInitializeAllSummariesQuery): Promise<any> {
+    Logger.log(`Summaries re-initialize start`);
     let facilities = await this.facilityRepository.findAll();
 
     for (let i = 0; i <= facilities.length; i++) {
