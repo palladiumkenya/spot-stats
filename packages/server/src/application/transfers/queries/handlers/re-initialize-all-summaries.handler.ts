@@ -65,6 +65,8 @@ export class ReInitializeAllSummariesHandler
                 );
                 if (e.isPatient) {
                   summary.expected = manifest.patientCount;
+                } else {
+                  this.setExpected(summary, manifest, docket, e);
                 }
                 summary.recieved = 0;
                 summary.updated = new Date();
@@ -91,5 +93,30 @@ export class ReInitializeAllSummariesHandler
       }
     }
     return facilities;
+  }
+
+  private setExpected(summary: Summary, manifest: any, docket: any, e: any) {
+    summary.expected = this.getExpected(manifest, docket, e);
+  }
+
+  private getExpected(manifest: any, docket: any, e: any) {
+    try {
+      if (manifest.cargo) {
+        const cargoes = JSON.parse(manifest.cargo);
+        const stats = cargoes.filter(
+          c =>
+            (c.name === e.name ||
+              c.name === e.name.replace('Extract', '') ||
+              c.name === `${e.name}Extract`) &&
+            c.docketId === docket.name,
+        )[0];
+        if (stats) {
+          return stats.stats;
+        }
+      }
+    } catch (e) {
+      Logger.error(e);
+    }
+    return null;
   }
 }
