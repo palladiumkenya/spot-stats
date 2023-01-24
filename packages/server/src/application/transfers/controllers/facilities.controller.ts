@@ -2,7 +2,7 @@ import { Controller, Get, Param } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { GetSummaryQuery } from '../queries/get-summary.query';
 import { GetAllSummaryQuery } from './../queries/get-all-summary.query';
-import { ReInitializeAllSummariesQuery } from './../queries/re-initialize-all-summaries-query';
+import { ReInitializeAllSummariesQuery } from '../queries/re-initialize-all-summaries.query';
 
 @Controller('facilities')
 export class FacilitiesController {
@@ -27,7 +27,7 @@ export class FacilitiesController {
     return result;
   }
 
-  @Get('reInitializeAllSsummaries')
+  @Get('reInitializeAllSummaries')
   async reInitializeAllSummaries() {
     const result = await this.queryBus.execute(new ReInitializeAllSummariesQuery());
     return result;
