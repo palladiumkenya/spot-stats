@@ -1,6 +1,4 @@
-import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
-import { LogManifestCommand } from '../../commands/log-manifest.command';
-import { InitializeSummariesCommand } from '../../commands/initialize-summaries-command';
+import {  EventPublisher, IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { Inject, Logger } from '@nestjs/common';
 import {
   Docket,
@@ -11,11 +9,11 @@ import {
 } from '../../../../domain';
 import { plainToClass } from 'class-transformer';
 import { IManifestRepository } from '../../../../domain/transfers/manifest-repository.interface';
-import { ReInitializeAllSummariesQuery } from '../re-initialize-all-summaries-query';
+import { ReInitializeAllSummariesQuery } from '../re-initialize-all-summaries.query';
 
-@CommandHandler(ReInitializeAllSummariesQuery)
+@QueryHandler(ReInitializeAllSummariesQuery)
 export class ReInitializeAllSummariesHandler
-  implements ICommandHandler<ReInitializeAllSummariesQuery> {
+  implements IQueryHandler<ReInitializeAllSummariesQuery> {
   constructor(
     @Inject('IFacilityRepository')
     private readonly facilityRepository: IFacilityRepository,
