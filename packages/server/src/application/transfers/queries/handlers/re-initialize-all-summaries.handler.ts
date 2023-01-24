@@ -1,4 +1,4 @@
-import {  EventPublisher, IQueryHandler, QueryHandler } from '@nestjs/cqrs';
+import { EventPublisher, IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { Inject, Logger } from '@nestjs/common';
 import {
   Docket,
@@ -13,7 +13,7 @@ import { ReInitializeAllSummariesQuery } from '../re-initialize-all-summaries.qu
 
 @QueryHandler(ReInitializeAllSummariesQuery)
 export class ReInitializeAllSummariesHandler
-  implements IQueryHandler<ReInitializeAllSummariesQuery> {
+  implements IQueryHandler<ReInitializeAllSummariesQuery, any> {
   constructor(
     @Inject('IFacilityRepository')
     private readonly facilityRepository: IFacilityRepository,
@@ -28,20 +28,22 @@ export class ReInitializeAllSummariesHandler
     Logger.log(`Summaries re-initialize start`);
     let facilities = await this.facilityRepository.findAll();
 
-    for (let i = 0; i <= facilities.length; i++) {
-      let facility = facilities[i];
+    for (let i = 0; i < facilities.length; i++) {
+      if (!facilities[i].code) continue;
+      let facility = await this.facilityRepository.findByCode(
+        facilities[i].code,
+      );
 
       if (facility) {
+        facility = plainToClass(Facility, facility);
         const currentManifest = await this.manifestRepository.getCurrentDocket(
           facility._id,
-          "NDWH"
+          'NDWH',
         );
 
         if (!currentManifest) {
           continue;
         }
-
-        facility = plainToClass(Facility, facility);
 
         const manifest = await this.manifestRepository.get(currentManifest._id);
 
