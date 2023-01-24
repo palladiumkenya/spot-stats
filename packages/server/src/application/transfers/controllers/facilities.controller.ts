@@ -27,7 +27,7 @@ export class FacilitiesController {
     return result;
   }
 
-  @Get('re-initialize-all-summaries')
+  @Get('reInitializeAllSsummaries')
   async reInitializeAllSummaries() {
     const result = await this.queryBus.execute(new ReInitializeAllSummariesQuery());
     return result;
