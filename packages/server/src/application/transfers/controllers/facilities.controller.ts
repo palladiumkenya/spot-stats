@@ -21,15 +21,15 @@ export class FacilitiesController {
     return result;
   }
 
-  @Get(':id')
-  async getFacilityStats(@Param('id') id) {
-    const result = await this.queryBus.execute(new GetSummaryQuery(id));
-    return result;
-  }
-
   @Get('reInitializeAllSummaries')
   async reInitializeAllSummaries() {
     const result = await this.queryBus.execute(new ReInitializeAllSummariesQuery());
+    return result;
+  }
+
+  @Get(':id')
+  async getFacilityStats(@Param('id') id) {
+    const result = await this.queryBus.execute(new GetSummaryQuery(id));
     return result;
   }
 }
