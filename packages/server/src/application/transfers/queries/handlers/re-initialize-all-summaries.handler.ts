@@ -88,7 +88,7 @@ export class ReInitializeAllSummariesHandler
           }
         }
       }
-      return facility;
     }
+    return facilities;
   }
 }
