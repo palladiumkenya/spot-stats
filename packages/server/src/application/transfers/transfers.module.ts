@@ -23,13 +23,15 @@ import {LogHandshakeHandler} from './commands/handlers/log-handshake.handler';
 import { GetAllSummaryHandler } from './queries/handlers/get-all-summaries.handler';
 import { UpdateSessionJob } from './jobs/update-session.job';
 import { UpdateSessionHandler } from './queries/handlers/update-session.handler';
+import { ReInitializeAllSummariesHandler } from './queries/handlers/re-initialize-all-summaries.handler';
 
 const CommandHandlers = [
   LogManifestHandler,
   UpdateStatsHandler,
   InitializeSummariesHandler,
   LogHandshakeHandler,
-  UpdateSessionHandler
+  UpdateSessionHandler,
+  ReInitializeAllSummariesHandler,
 ];
 const EventHandlers = [FacilityEnrolledHandler, ManifestLoggedHandler];
 const QueryHandlers = [
