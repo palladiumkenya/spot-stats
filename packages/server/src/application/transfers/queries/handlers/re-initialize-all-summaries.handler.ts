@@ -79,7 +79,11 @@ export class ReInitializeAllSummariesHandler
                     new Date(),
                   );
                 } else {
-                  facility.resetSummary(e._id, null, new Date());
+                  facility.resetSummary(
+                    e._id,
+                    this.getExpected(manifest, docket, e),
+                    new Date(),
+                  );
                 }
               }
             });
