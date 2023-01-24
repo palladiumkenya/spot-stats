@@ -20,6 +20,14 @@ export class FacilityRepository extends BaseRepository<Facility>
     return undefined;
   }
 
+  async findAll(): Promise<any> {
+    const facilty = await this.model.find({}).exec();
+    if (facilty && facilty.length > 0) {
+      return facilty;
+    }
+    return undefined;
+  }
+
   async getSummary(id: string): Promise<Facility> {
     const result = await this.model
       .findById(id)
