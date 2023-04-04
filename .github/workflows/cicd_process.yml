@@ -31,5 +31,5 @@ jobs:
            sudo docker build -t cicdapplication/statsqa:latest .
            sudo docker stop spot-statsqa
            sudo docker rm spot-statsqa
-           sudo docker run -p 4702:4720 -d --name=spot-statsqa --restart=always --link mongodb --link rabbitmq --net spot-globe_spot cicdapplication/statsqa:latest
+           sudo docker run -p 4702:4720 -d --name=spot-statsqa --restart=always --link mongodb --link rabbitmq --net spot_spot cicdapplication/statsqa:latest
        
