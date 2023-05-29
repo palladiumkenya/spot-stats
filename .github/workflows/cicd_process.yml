@@ -25,7 +25,6 @@ jobs:
            cd /apps/githubworkflows/spot-stats
            git clone -b staging https://github.com/palladiumkenya/spot-stats.git .
            sudo chown -R cicd:cicd /apps/githubworkflows/spot-stats
-           git status
            sudo cp -r /apps/dockerApps/spotstaging/spot-stats/packages/server/secrets/ /apps/githubworkflows/spot-stats/packages/server/
            sudo cp /apps/dockerApps/spotstaging/spot-stats/packages/server/production.env /apps/githubworkflows/spot-stats/packages/server/
            sudo docker build -t cicdapplication/statsqa:latest .
