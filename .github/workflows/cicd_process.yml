@@ -1,7 +1,7 @@
-name: deploy to spot-production
+name: deploy to spot-staging
 on:
   push:
-    branches: [ master ]
+    branches: [ staging ]
 jobs:
 
   build:
@@ -17,18 +17,19 @@ jobs:
         port: ${{ secrets.PORT }}
         command_timeout: 200m
         script: |
-           cd /apps/githubworkflows/spot/ 
+           cd /apps/githubworkflows 
            sudo rm -rf spot-stats
            sudo mkdir spot-stats
            sudo chown -R cicd:cicd spot-stats
-           git config --global --add safe.directory /apps/githubworkflows/spot/spot-stats
-           cd /apps/githubworkflows/spot/spot-stats
-           git clone -b master https://github.com/palladiumkenya/spot-stats.git .
-           sudo chown -R cicd:cicd /apps/githubworkflows/spot/spot-stats
+           git config --global --add safe.directory /apps/githubworkflows/spot-stats
+           cd /apps/githubworkflows/spot-stats
+           git clone -b staging https://github.com/palladiumkenya/spot-stats.git .
+           sudo chown -R cicd:cicd /apps/githubworkflows/spot-stats
            git status
-           sudo cp -r /apps/dockerApps/spot-stats/packages/server/secrets/ /apps/githubworkflows/spot/spot-stats/packages/server/
-           sudo cp /apps/dockerApps/spot-stats/packages/server/production.env /apps/githubworkflows/spot/spot-stats/packages/server/
-           sudo docker build -t cicdapplication/stats:latest .
-           sudo docker stop spotstats 
-           sudo docker rm spotstats
-           sudo docker run -p 4720:4720 -d --name=spotstats --restart=always cicdapplication/stats:latest
+           sudo cp -r /apps/dockerApps/spotstaging/spot-stats/packages/server/secrets/ /apps/githubworkflows/spot-stats/packages/server/
+           sudo cp /apps/dockerApps/spotstaging/spot-stats/packages/server/production.env /apps/githubworkflows/spot-stats/packages/server/
+           sudo docker build -t cicdapplication/statsqa:latest .
+           sudo docker stop spot-statsqa
+           sudo docker rm spot-statsqa
+           sudo docker run -p 4702:4720 -d --name=spot-statsqa --restart=always --link mongodb --link rabbitmq --net spotapps_spot cicdapplication/statsqa:latest
+       
