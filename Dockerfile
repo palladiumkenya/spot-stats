@@ -1,10 +1,8 @@
 FROM node:12
- 
+
 WORKDIR /workspaces
 
 COPY . /workspaces
-
-RUN npm rebuild node-sass
 
 RUN yarn install --frozen-lockfile --no-cache
 
