@@ -19,4 +19,6 @@ export interface Profile {
   tag?: string,
   handshakeStatus?: string,
   firstTimeUpload?: string,
+  metrics?: any[],
+
 }
