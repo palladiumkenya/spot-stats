@@ -81,7 +81,7 @@ export class UpdateStatsHandler implements ICommandHandler<UpdateStatsCommand> {
 
       const manifest = await this.manifestRepository.getCurrentDocket(
           facility._id,
-          command.docket.name,
+          command.docket.name.toUpperCase(),
       );
       if (manifest) {
         const recieved = facility.getPatientSummary(command.docket.name);

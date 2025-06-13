@@ -57,14 +57,18 @@ export class Facility extends AggregateRoot {
 
     updateSummary(docket: any, stats: any, updated: Date) {
         this.summaries
-            .filter((s) => s.docket.name === docket.name)
+            .filter((s) => s.docket.name === docket.name.toUpperCase())
             .forEach((ss) => {
                 const stat = stats.find((x) => x.name === ss.extract.name ||
                     x.name === `${ss.extract.name}Extract` ||
                     x.name === ss.extract.name.replace('Extract', ''));
                 if (stat) {
                     ss.recieved = stat.recieved;
-                    ss.updated = stat.updated;
+                    if (stat.updated) {
+                        ss.updated = stat.updated;
+                    } else {
+                        ss.updated = new Date();
+                    }
                 }
             });
         this.apply(new FacilityStatsUpdatedEvent(this._id));

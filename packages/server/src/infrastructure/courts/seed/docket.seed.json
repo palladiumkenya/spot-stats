@@ -124,6 +124,34 @@
         "isPatient": false,
         "rank": 19
       },
+      {
+        "_id": "3cceec28-7754-11eb-9439-0242ac130002",
+        "name": "CancerScreeningExtract",
+        "display": "Cancer Screening",
+        "isPatient": false,
+        "rank": 20
+      },
+      {
+        "_id": "4bceec28-7754-11eb-9439-0242ac130002",
+        "name": "IITRiskScoresExtract",
+        "display": "IIT Risk Scores",
+        "isPatient": false,
+        "rank": 21
+      },
+      {
+        "_id": "8db933e0-bf1e-11e9-9cb5-2a2ae2dbcce4",
+        "name": "ArtFastTrackExtract",
+        "display": "Art Fast Track",
+        "isPatient": false,
+        "rank": 22
+      },
+      {
+        "_id": "4cc983e0-bf1e-11e9-9cb5-2a2ae2dbcce4",
+        "name": "RelationshipsExtract",
+        "display": "Relationships",
+        "isPatient": false,
+        "rank": 23
+      },
 
       {
         "_id": "6dc970e0-bf1e-11e9-9cb5-2a2ae2dbcce4",
@@ -187,6 +215,13 @@
         "display": "Hts Partner Notification Services",
         "isPatient": false,
         "rank": 7
+      },
+      {
+        "_id": "77c989bc-bf1e-11e9-9cb5-2a2ae2dbcce4",
+        "name": "HtsEligibilityExtract",
+        "display": "Hts PEligibility",
+        "isPatient": false,
+        "rank": 8
       }
     ]
   },
@@ -369,6 +404,48 @@
         "display": "Client Registry Service",
         "isPatient": true,
         "rank": 1.0
+      }
+    ]
+  },
+  {
+    "_id": "6dc94fe7-bf1e-11e9-9cb5-2a2ae2dbcce4",
+    "name": "VMMC",
+    "display": "VMMC",
+    "extracts": [
+      {
+        "_id": "91651f02-9db2-11eb-a8b3-0242ac130003",
+        "name": "VmmcEnrollmentExtract",
+        "display": "Vmmc Enrollment",
+        "isPatient": true,
+        "rank": 37
+      },
+      {
+        "_id": "9265201a-9db2-11eb-a8b3-0242ac130003",
+        "name": "VmmcMhpeExtract",
+        "display": "Vmmc Mhpe",
+        "isPatient": false,
+        "rank": 41
+      },
+      {
+        "_id": "9365213c-9db2-11eb-a8b3-0242ac130003",
+        "name": "VmmcFollowupVisitExtract",
+        "display": "Vmmc FollowupVisit",
+        "isPatient": false,
+        "rank": 40
+      },
+      {
+        "_id": "94652358-9db2-11eb-a8b3-0242ac130003",
+        "name": "VmmcDiscontinuationExtract",
+        "display": "Vmmc Discontinuation",
+        "isPatient": false,
+        "rank": 38
+      },
+      {
+        "_id": "95652470-9db2-11eb-a8b3-0242ac130003",
+        "name": "VmmcProcedureExtract",
+        "display": "Vmmc Procedure",
+        "isPatient": false,
+        "rank": 39
       }
     ]
   }

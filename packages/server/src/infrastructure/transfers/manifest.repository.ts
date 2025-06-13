@@ -78,7 +78,7 @@ export class ManifestRepository extends BaseRepository<Manifest>
         .find({
           isCurrent: true,
           facility: facId,
-          docket: docketId,
+          docket: docketId.toUpperCase(),
         })
         .populate(Facility.name.toLowerCase())
         .exec();
@@ -126,7 +126,7 @@ export class ManifestRepository extends BaseRepository<Manifest>
       { isCurrent: false },
     );
 
-    for (const docket of ['HTS', 'NDWH', 'MPI', 'MGS', 'MNCH', 'PREP', 'CRS']) {
+    for (const docket of ['HTS', 'NDWH', 'MPI', 'MGS', 'MNCH', 'PREP', 'CRS', 'VMMC']) {
       const latest = await this.model
         .find({ code, docket })
         .sort({ logDate: -1 })

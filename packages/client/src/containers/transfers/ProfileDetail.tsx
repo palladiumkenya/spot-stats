@@ -128,6 +128,10 @@ export class ProfileDetail extends Component<Prop, {}> {
           (x) => x.docket.name === "CRS"
       );
 
+      const vmmcSummaries = this.props.profile.summaries!.filter(
+          (x) => x.docket.name === "VMMC"
+      );
+
       const formattedMetrics=(met:any)=> {
         met.measure.display= met.measure.display
             .replace('Emr', 'EMR')
@@ -162,8 +166,10 @@ export class ProfileDetail extends Component<Prop, {}> {
         // @ts-ignore
         const logDateA = new Date(a.logDate.toString()).getTime();
         // @ts-ignore
-        const logDateB = new Date(b.logDate.toString()).getTime();
-        return logDateB - logDateA;
+        // const logDateB = new Date(b.logDate.toString()).getTime();
+        // return logDateB - logDateA;
+        return 3000;
+
       });
 
       const dateBodyTemplate = (rowData: any) => {
@@ -271,6 +277,8 @@ export class ProfileDetail extends Component<Prop, {}> {
       const mnch_value = [];
       const prep_value = [];
       const crs_value = [];
+      const vmmc_value = [];
+
       for (const manifest of filteredManifests) {
         const logDate = new Date(manifest.logDate).toLocaleDateString('en-GB', { month: 'short', year: 'numeric' }).replace(/ /g, '-');
         if (!categories.includes(logDate)) {
@@ -338,7 +346,17 @@ export class ProfileDetail extends Component<Prop, {}> {
         } else {
           crs_value.push(null);
         }
-      }
+
+        const vmmc = filteredManifests.filter((obj: { docket: string; logDate: { toLocaleDateString: (arg0: string, arg1: { month: string; year: string; })
+                => { replace: (arg0: RegExp, arg1: string) => string; }; }; }) => obj.docket === 'VMMC'
+            && new Date(obj.logDate.toString()).toLocaleDateString('en-GB', { month: 'short', year: 'numeric' }).replace(/ /g, '-') === logDate);
+
+        if (vmmc && vmmc.length > 0) {
+          vmmc_value.push(vmmc[vmmc.length -1].patientCount);
+        } else {
+          vmmc_value.push(null);
+        }
+    }
 
       const getUploadHistoryOptions = {
         title: {
@@ -385,6 +403,9 @@ export class ProfileDetail extends Component<Prop, {}> {
         },{
           name: 'CRS',
           data: crs_value
+        },{
+          name: 'VMMC',
+          data: vmmc_value
         }],
 
         responsive: {
@@ -504,6 +525,18 @@ export class ProfileDetail extends Component<Prop, {}> {
                   </TabPanel>
                   <TabPanel header="CRS">
                     <DataTable value={crsSummaries}>
+                      <Column field="extract.display" header="Extract" />
+                      <Column field="recieved" header="Recieved" body={this.numRecTemplate}/>
+                      <Column field="expected" header="Expected" body={this.numExpTemplate}/>
+                      <Column
+                          field="updated"
+                          header="Update"
+                          body={this.date2Template}
+                      />
+                    </DataTable>
+                  </TabPanel>
+                  <TabPanel header="VMMC">
+                    <DataTable value={vmmcSummaries}>
                       <Column field="extract.display" header="Extract" />
                       <Column field="recieved" header="Recieved" body={this.numRecTemplate}/>
                       <Column field="expected" header="Expected" body={this.numExpTemplate}/>
